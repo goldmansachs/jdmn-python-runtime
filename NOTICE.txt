@@ -1,0 +1,6 @@
+jDMN
+Copyright 2022 Goldman Sachs
+Licensed under Apache 2.0 license
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
