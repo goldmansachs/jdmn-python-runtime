@@ -1,0 +1,19 @@
+# Intellij files
+.idea/
+*.iml
+
+# Python files
+.pytest_cache/
+.cache
+__pychache__
+**/.ipynb_checkpoints
+
+# CI files
+.eggs
+*egg-info
+dist/
+.coverage
+.venv
+build/
+sphink-doc/
+test-reports/
