@@ -17,3 +17,4 @@ dist/
 build/
 sphink-doc/
 test-reports/
+.tox
