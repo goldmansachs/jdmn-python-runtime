@@ -10,9 +10,10 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
+from com.gs.dmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from com.gs.dmn.feel.lib.type.string.DefaultStringType import DefaultStringType
 
 
-class StandardFEELLib(DefaultStringType):
+class StandardFEELLib(DefaultStringType, DefaultBooleanType):
     def __init__(self):
         super().__init__()
