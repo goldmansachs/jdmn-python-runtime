@@ -1,0 +1,29 @@
+name: "build"
+
+on:
+  [ push, pull_request ]
+
+jobs:
+  main:
+    strategy:
+      matrix:
+        include:
+        # linux
+        - os: ubuntu-latest
+          python: '3.10'
+          toxenv: py
+        - os: ubuntu-latest
+          python: '3.10'
+          toxenv: linters
+        # windows
+        - os: windows-latest
+          python: '3.10'
+          toxenv: py
+    runs-on: ${{ matrix.os }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python }}
+    - run: python -mpip install --upgrade setuptools pip tox virtualenv
+    - run: tox -e ${{ matrix.toxenv }}
