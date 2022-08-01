@@ -1,0 +1,13 @@
+-r ../requirements.txt
+
+tox>=3.25.1 # Command line driven CI frontend and development task automation tool
+
+pytest>=7.1.2 # framework that makes it easy to write small tests
+pytest-cov>=3.0.0 # allows generation of coverage reports with pytest
+
+pylint>=2.14.5 # checks style, syntax and other useful errors
+flake8>=4.0.1 # checks style, syntax and other useful errors
+
+setuptools >= 40.0.4 # build dist
+setuptools_scm >= 2.0.0 # build dist
+wheel >= 0.37.1 # build dist
