@@ -16,9 +16,6 @@ from com.gs.dmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBoolean
 
 
 class DefaultBooleanType:
-    def __init__(self):
-        pass
-
     def isBoolean(self, value: Any) -> bool:
         return isinstance(value, bool)
 

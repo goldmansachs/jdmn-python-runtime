@@ -14,9 +14,6 @@ from typing import Any, Optional
 
 
 class DefaultStringType:
-    def __init__(self):
-        pass
-
     def isString(self, value: Any) -> bool:
         return isinstance(value, str)
 

@@ -11,12 +11,129 @@
 # specific language governing permissions and limitations under the License.
 #
 from decimal import Decimal
+from typing import Any
 from unittest import TestCase
 
 from com.gs.dmn.feel.lib.StandardFEELLib import StandardFEELLib
 
 
 class FEELOperatorsTest(TestCase):
+    #
+    # Numeric operators
+    #
+    def testNumericValue(self):
+        self.assertEqual(None, self.getLib().numericValue(None))
+        self.assertEqual(self.makeNumber("1"), self.getLib().numericValue(self.makeNumber("1")))
+
+    def testNumericIs(self):
+        self.assertTrue(self.getLib().numericIs(None, None))
+        self.assertFalse(self.getLib().numericIs(None, self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericIs(self.makeNumber("1"), None))
+
+        self.assertTrue(self.getLib().numericIs(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericIs(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericEqual(self):
+        self.assertTrue(self.getLib().numericEqual(None, None))
+        self.assertFalse(self.getLib().numericEqual(None, self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericEqual(self.makeNumber("1"), None))
+
+        self.assertTrue(self.getLib().numericEqual(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericEqual(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericNotEqual(self):
+        self.assertFalse(self.getLib().numericNotEqual(None, None))
+        self.assertTrue(self.getLib().numericNotEqual(None, self.makeNumber("1")))
+        self.assertTrue(self.getLib().numericNotEqual(self.makeNumber("1"), None))
+
+        self.assertFalse(self.getLib().numericNotEqual(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertTrue(self.getLib().numericNotEqual(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericLessThan(self):
+        self.assertEqual(None, self.getLib().numericLessThan(None, None))
+        self.assertEqual(None, self.getLib().numericLessThan(None, self.makeNumber("1")))
+        self.assertEqual(None, self.getLib().numericLessThan(self.makeNumber("1"), None))
+
+        self.assertFalse(self.getLib().numericLessThan(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertTrue(self.getLib().numericLessThan(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericGreaterThan(self):
+        self.assertEqual(None, self.getLib().numericGreaterThan(None, None))
+        self.assertEqual(None, self.getLib().numericGreaterThan(None, self.makeNumber("1")))
+        self.assertEqual(None, self.getLib().numericGreaterThan(self.makeNumber("1"), None))
+
+        self.assertFalse(self.getLib().numericGreaterThan(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertTrue(self.getLib().numericGreaterThan(self.makeNumber("2"), self.makeNumber("1")))
+
+    def testNumericLessEqualThan(self):
+        self.assertTrue(self.getLib().numericLessEqualThan(None, None))
+        self.assertEqual(None, self.getLib().numericLessEqualThan(None, self.makeNumber("1")))
+        self.assertEqual(None, self.getLib().numericLessEqualThan(self.makeNumber("1"), None))
+
+        self.assertTrue(self.getLib().numericLessEqualThan(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericLessEqualThan(self.makeNumber("2"), self.makeNumber("1")))
+
+    def testNumericGreaterEqualThan(self):
+        self.assertTrue(self.getLib().numericGreaterEqualThan(None, None))
+        self.assertEqual(None, self.getLib().numericGreaterEqualThan(None, self.makeNumber("1")))
+        self.assertEqual(None, self.getLib().numericGreaterEqualThan(self.makeNumber("1"), None))
+
+        self.assertTrue(self.getLib().numericGreaterEqualThan(self.makeNumber("1"), self.makeNumber("1")))
+        self.assertFalse(self.getLib().numericGreaterEqualThan(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericAdd(self):
+        self.assertEqual(None, self.getLib().numericAdd(None, None))
+        self.assertEqual(None, self.getLib().numericAdd(None, self.makeNumber("1")))
+        self.assertEqual(None, self.getLib().numericAdd(self.makeNumber("1"), None))
+
+        self.assertEqualsNumber(self.makeNumber("3"), self.getLib().numericAdd(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericSubtract(self):
+        self.assertEqual(None, self.getLib().numericSubtract(None, None))
+        self.assertEqual(None, self.getLib().numericSubtract(None, self.makeNumber("2")))
+        self.assertEqual(None, self.getLib().numericSubtract(self.makeNumber("2"), None))
+
+        self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericSubtract(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericMultiply(self):
+        self.assertEqual(None, self.getLib().numericMultiply(None, None))
+        self.assertEqual(None, self.getLib().numericMultiply(None, self.makeNumber("2")))
+        self.assertEqual(None, self.getLib().numericMultiply(self.makeNumber("2"), None))
+
+        self.assertEqualsNumber(self.makeNumber("2"), self.getLib().numericMultiply(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericDivide(self):
+        self.assertEqual(None, self.getLib().numericDivide(None, None))
+        self.assertEqual(None, self.getLib().numericDivide(None, self.makeNumber("2")))
+        self.assertEqual(None, self.getLib().numericDivide(self.makeNumber("2"), None))
+
+        self.assertEqualsNumber("0.5", self.getLib().numericDivide(self.makeNumber("1"), self.makeNumber("2")))
+
+    def testNumericUnaryMinus(self):
+        self.assertEqual(None, self.getLib().numericUnaryMinus(None))
+
+        self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericUnaryMinus(self.makeNumber("1")))
+
+    def testNumericExponentiation(self):
+        self.assertEqual(None, self.getLib().numericExponentiation(None, None))
+        self.assertEqual(None, self.getLib().numericExponentiation(None, self.makeNumber("10")))
+        self.assertEqual(None, self.getLib().numericExponentiation(self.makeNumber("10"), None))
+
+        self.assertEqualsNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0")))
+        self.assertEqualsNumber(self.makeNumber("0.5"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("-1")))
+        self.assertEqualsNumber(self.makeNumber("1024"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("10")))
+
+        self.assertEqualsNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0")))
+
+        self.assertEqualsNumber(self.makeNumber("1.41421356"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0.5")))
+        self.assertEqualsNumber(self.makeNumber("8"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3")))
+        self.assertEqualsNumber(self.makeNumber("11.31370849"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3.5")))
+        self.assertEqualsNumber(self.makeNumber("11.84466611"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.25")))
+        self.assertEqualsNumber(self.makeNumber("15.58845726"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.5")))
+        self.assertEqualsNumber(self.makeNumber("20.51556351"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.75")))
+        self.assertEqualsNumber(self.makeNumber("1.73205080"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0.5")))
+        self.assertEqualsNumber(self.makeNumber("0.11111111"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2")))
+        self.assertEqualsNumber(self.makeNumber("0.04874348"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2.75")))
 
     #
     # String operators
@@ -184,3 +301,9 @@ class FEELOperatorsTest(TestCase):
 
     def makeNumber(self, literal: str):
         return Decimal(literal)
+
+    def assertEqualsNumber(self, expected: Any, actual: Decimal):
+        if isinstance(expected, str):
+            expected = Decimal(expected)
+
+        return self.assertAlmostEqual(expected, actual)

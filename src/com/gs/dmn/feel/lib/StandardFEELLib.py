@@ -11,9 +11,12 @@
 # specific language governing permissions and limitations under the License.
 #
 from com.gs.dmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
+from com.gs.dmn.feel.lib.type.numeric.DefaultNumericType import DefaultNumericType
 from com.gs.dmn.feel.lib.type.string.DefaultStringType import DefaultStringType
 
 
-class StandardFEELLib(DefaultStringType, DefaultBooleanType):
+class StandardFEELLib(DefaultNumericType, DefaultStringType, DefaultBooleanType):
     def __init__(self):
-        super().__init__()
+        DefaultNumericType.__init__(self)
+        DefaultStringType.__init__(self)
+        DefaultBooleanType.__init__(self)
