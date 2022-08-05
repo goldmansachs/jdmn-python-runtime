@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Any, Optional, List
+from typing import Any, Optional
 
 from com.gs.dmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBooleanLogicUtil
 
@@ -26,56 +26,41 @@ class DefaultBooleanType:
         return TernaryBooleanLogicUtil().not_(operand)
 
     def booleanOr(self, *operands) -> Optional[bool]:
-        argLen = len(operands)
-        if argLen < 2:
-            if argLen == 1 and isinstance(operands[0], list):
-                return self.booleanOrList(operands[0])
+        opdLen = len(operands)
+        if opdLen == 0:
+            return None
+        if opdLen == 1:
+            # Operand is list with at least 2 elements
+            opd = operands[0]
+            if isinstance(opd, list) and len(opd) >= 2:
+                operands = opd
             else:
                 return None
-        else:
-            result = operands[0]
-            for i in [1, argLen - 1]:
-                result = self.binaryBooleanOr(result, operands[i])
 
-            return result
-
-    def booleanOrList(self, operands: List[Any]) -> Optional[bool]:
-        argLen = len(operands)
-        if argLen < 2:
-            return None
-        else:
-            result = operands[0]
-            for i in [1, argLen - 1]:
-                result = self.binaryBooleanOr(result, operands[i])
-
-            return result
+        result = operands[0]
+        for opd in operands[1:]:
+            result = self.binaryBooleanOr(result, opd)
+        return result
 
     def binaryBooleanOr(self, first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().or_(first, second)
 
     def booleanAnd(self, *operands) -> Optional[bool]:
-        argLen = len(operands)
-        if argLen < 2:
-            if argLen == 1 and isinstance(operands[0], list):
-                return self.booleanAndList(operands[0])
+        opdLen = len(operands)
+        if opdLen == 0:
+            return None
+        if opdLen == 1:
+            # Operand is list with at least 2 elements
+            opd = operands[0]
+            if isinstance(opd, list) and len(opd) >= 2:
+                operands = opd
             else:
                 return None
-        else:
-            result = operands[0]
-            for i in [1, argLen - 1]:
-                result = self.binaryBooleanAnd(result, operands[i])
 
-            return result
-
-    def booleanAndList(self, operands: List[Any]) -> Optional[bool]:
-        argLen = len(operands)
-        if argLen < 2:
-            return None
-        else:
-            result = operands[0]
-            for i in [1, argLen - 1]:
-                result = self.binaryBooleanAnd(result, operands[i])
-            return result
+        result = operands[0]
+        for opd in operands[1:]:
+            result = self.binaryBooleanAnd(result, opd)
+        return result
 
     def binaryBooleanAnd(self, first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().and_(first, second)
