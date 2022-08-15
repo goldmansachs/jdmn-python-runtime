@@ -12,7 +12,7 @@
 #
 from datetime import date, time, datetime
 from decimal import Decimal
-from typing import Any, Optional
+from typing import Any, Optional, List
 from unittest import TestCase
 
 import isodate as isodate
@@ -698,6 +698,33 @@ class FEELOperatorsTest(TestCase):
         self.assertEqualDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
 
     #
+    # List operators
+    #
+    def testListIs(self):
+        self.assertTrue(self.getLib().listIs(None, None))
+        self.assertFalse(self.getLib().listIs(self.makeList("a"), None))
+        self.assertFalse(self.getLib().listIs(None, self.makeList("a")))
+
+        self.assertFalse(self.getLib().listIs(self.makeList("a"), self.makeList("b")))
+        self.assertTrue(self.getLib().listIs(self.makeList("a"), self.makeList("a")))
+
+    def testListEqual(self):
+        self.assertTrue(self.getLib().listEqual(None, None))
+        self.assertFalse(self.getLib().listEqual(self.makeList("a"), None))
+        self.assertFalse(self.getLib().listEqual(None, self.makeList("a")))
+
+        self.assertFalse(self.getLib().listEqual(self.makeList("a"), self.makeList("b")))
+        self.assertTrue(self.getLib().listEqual(self.makeList("a"), self.makeList("a")))
+
+    def testListNotEqual(self):
+        self.assertFalse(self.getLib().listNotEqual(None, None))
+        self.assertTrue(self.getLib().listNotEqual(self.makeList("a"), None))
+        self.assertTrue(self.getLib().listNotEqual(None, self.makeList("a")))
+
+        self.assertTrue(self.getLib().listNotEqual(self.makeList("a"), self.makeList("b")))
+        self.assertFalse(self.getLib().listNotEqual(self.makeList("a"), self.makeList("a")))
+
+    #
     # Common
     #
     def getLib(self) -> StandardFEELLib:
@@ -728,6 +755,10 @@ class FEELOperatorsTest(TestCase):
     @staticmethod
     def makeDuration(literal: str) -> Duration:
         return isodate.parse_duration(literal)
+
+    @staticmethod
+    def makeList(*args) -> List[Any]:
+        return [x for x in args]
 
     def assertEqualNumber(self, expected: Any, actual: Decimal):
         if isinstance(expected, str):
