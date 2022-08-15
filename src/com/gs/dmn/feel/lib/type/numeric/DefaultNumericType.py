@@ -14,12 +14,12 @@ import decimal
 from decimal import Decimal
 from typing import Any, Optional
 
-from com.gs.dmn.feel.lib.type.ComparableComparator import ComparableComparator
+from com.gs.dmn.feel.lib.type.numeric.NumericComparator import NumericComparator
 
 
 class DefaultNumericType:
     def __init__(self):
-        self.numericComparator = ComparableComparator()
+        self.numericComparator = NumericComparator()
 
     @staticmethod
     def decimalNumericDivide(first: Optional[Decimal], second: Optional[Decimal]) -> Optional[Decimal]:
