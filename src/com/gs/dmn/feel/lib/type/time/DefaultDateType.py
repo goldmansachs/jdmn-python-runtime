@@ -10,51 +10,45 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, datetime
+from datetime import date
 from typing import Optional
 
 from isodate import Duration
 
-from com.gs.dmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
+from com.gs.dmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 from com.gs.dmn.feel.lib.type.time.DefaultDateTimeComparator import DefaultDateTimeComparator
 
 
-class DefaultDateType:
+class DefaultDateType(DefaultCalendarType):
     def __init__(self):
-        self.comparator = DefaultDateTimeComparator()
-        self.booleanType = DefaultBooleanType()
+        super().__init__()
+        self.__dateComparator = DefaultDateTimeComparator()
 
     def dateIs(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        if (first is None or second is None):
+        if first is None or second is None:
             return first == second
 
-        return self.same(first, second)
-
-    def dateValue(self, date: Optional[date]) -> Optional[int]:
-        if date is None:
-            return None
-
-        return self.dateTimeValue(date)
+        return self.sameDate(first, second)
 
     def dateEqual(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.comparator.equalTo(first, second)
+        return self.__dateComparator.equalTo(first, second)
 
     def dateNotEqual(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
         return self.booleanType.booleanNot(self.dateEqual(first, second))
 
     def dateLessThan(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.comparator.lessThan(first, second)
+        return self.__dateComparator.lessThan(first, second)
 
     def dateGreaterThan(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.comparator.greaterThan(first, second)
+        return self.__dateComparator.greaterThan(first, second)
 
     def dateLessEqualThan(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.comparator.lessEqualThan(first, second)
+        return self.__dateComparator.lessEqualThan(first, second)
 
     def dateGreaterEqualThan(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.comparator.greaterEqualThan(first, second)
+        return self.__dateComparator.greaterEqualThan(first, second)
 
-    def dateSubtract(self, first: Optional[date], second: Optional[date]):
+    def dateSubtract(self, first: Optional[date], second: Optional[date]) -> Optional[Duration]:
         if first is None or second is None:
             return None
 
@@ -64,30 +58,17 @@ class DefaultDateType:
         if self.isDate(second):
             second = self.dateToDateTime(second)
 
-        durationInSeconds = (first - second).total_seconds()
+        durationInSeconds = self.dateTimeValue(first) - self.dateTimeValue(second)
         return Duration(seconds=durationInSeconds)
 
-    def dateAddDuration(self, date: Optional[date], duration) -> Optional[date]:
-        if date is None or duration is None:
+    def dateAddDuration(self, date_: Optional[date], duration_) -> Optional[date]:
+        if date_ is None or duration_ is None:
             return None
 
-        pass
+        return date_ + duration_
 
-    def dateSubtractDuration(self, date: Optional[date], duration: Optional[Duration]) -> Optional[date]:
-        if date is None or duration is None:
+    def dateSubtractDuration(self, date_: Optional[date], duration_: Optional[Duration]) -> Optional[date]:
+        if date_ is None or duration_ is None:
             return None
 
-        return self.dateAddDuration(date, - duration)
-
-    def isDate(self, obj):
-        return isinstance(obj, date)
-
-    def dateToDateTime(self, date):
-        return datetime(date.year, date.month, date.day)
-
-    def same(self, first: date, second: date):
-        return first.year == second.year and first.month == second.month and first.day == second.day
-
-    def dateTimeValue(self, date) -> int:
-        epoch = datetime.utcfromtimestamp(0)
-        return int((self.dateToDateTime(date) - epoch).total_seconds())
+        return self.dateAddDuration(date_, - duration_)

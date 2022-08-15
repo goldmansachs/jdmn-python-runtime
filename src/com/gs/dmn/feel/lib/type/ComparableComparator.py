@@ -10,16 +10,22 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Any, Optional
+import datetime
+from typing import Optional, Union
 
 from com.gs.dmn.feel.lib.type.RelationalComparator import RelationalComparator
 
+comparable = Union[float | str | datetime.date | datetime.time | datetime.datetime]
+
 
 class ComparableComparator(RelationalComparator):
-    def compare(self, first: Any, second: Any) -> int:
+    def __init__(self):
+        super().__init__()
+
+    def compare(self, first: comparable, second: comparable) -> int:
         return self.compareTo(first, second)
 
-    def equalTo(self, first: Any, second: Any) -> Optional[bool]:
+    def equalTo(self, first: comparable, second: comparable) -> Optional[bool]:
         return self.applyOperator(first, second, [
             lambda: True,
             lambda: False,
@@ -27,7 +33,7 @@ class ComparableComparator(RelationalComparator):
             lambda: self.compareTo(first, second) == 0
         ])
 
-    def lessThan(self, first: Any, second: Any) -> Optional[bool]:
+    def lessThan(self, first: comparable, second: comparable) -> Optional[bool]:
         return self.applyOperator(first, second, [
             lambda: None,
             lambda: None,
@@ -35,5 +41,5 @@ class ComparableComparator(RelationalComparator):
             lambda: self.compareTo(first, second) < 0
         ])
 
-    def compareTo(self, first: Any, second: Any) -> int:
-        return first.compare(second)
+    def compareTo(self, first: comparable, second: comparable) -> int:
+        pass

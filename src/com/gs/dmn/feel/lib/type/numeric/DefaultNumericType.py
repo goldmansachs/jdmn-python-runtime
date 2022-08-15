@@ -19,7 +19,7 @@ from com.gs.dmn.feel.lib.type.ComparableComparator import ComparableComparator
 
 class DefaultNumericType:
     def __init__(self):
-        self.comparator = ComparableComparator()
+        self.numericComparator = ComparableComparator()
 
     @staticmethod
     def decimalNumericDivide(first: Optional[Decimal], second: Optional[Decimal]) -> Optional[Decimal]:
@@ -47,22 +47,22 @@ class DefaultNumericType:
         return first == second
 
     def numericEqual(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.equalTo(first, second)
+        return self.numericComparator.equalTo(first, second)
 
     def numericNotEqual(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.notEqualTo(first, second)
+        return self.numericComparator.notEqualTo(first, second)
 
     def numericLessThan(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.lessThan(first, second)
+        return self.numericComparator.lessThan(first, second)
 
     def numericGreaterThan(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.greaterThan(first, second)
+        return self.numericComparator.greaterThan(first, second)
 
     def numericLessEqualThan(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.lessEqualThan(first, second)
+        return self.numericComparator.lessEqualThan(first, second)
 
     def numericGreaterEqualThan(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[bool]:
-        return self.comparator.greaterEqualThan(first, second)
+        return self.numericComparator.greaterEqualThan(first, second)
 
     def numericAdd(self, first: Optional[Decimal], second: Optional[Decimal]) -> Optional[Optional[Decimal]]:
         if first is None or second is None:

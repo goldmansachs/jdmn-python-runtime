@@ -17,6 +17,9 @@ from com.gs.dmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBoolean
 
 
 class RelationalComparator(EqualityComparator):
+    def __init__(self):
+        super().__init__()
+
     def compare(self, first: Any, second: Any) -> int:
         pass
 

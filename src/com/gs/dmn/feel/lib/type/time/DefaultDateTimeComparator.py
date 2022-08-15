@@ -10,39 +10,24 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date
-from typing import Optional
+from datetime import datetime, date, time
+from typing import Union
 
-from com.gs.dmn.feel.lib.type.RelationalComparator import RelationalComparator
+from com.gs.dmn.feel.lib.type.time.BaseDateTimeComparator import BaseDateTimeComparator
+from com.gs.dmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 
 
-class DefaultDateTimeComparator(RelationalComparator):
-    def compare(self, first: Optional[date], second: Optional[date]) -> Optional[int]:
-        if first is None or second is None:
-            return None
-        else:
-            return self.compareTo(first, second)
+class DefaultDateTimeComparator(BaseDateTimeComparator):
+    def __init__(self):
+        super().__init__()
+        self.__calendarType = DefaultCalendarType()
 
-    def equalTo(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.applyOperator(first, second, [
-                lambda: True,
-                lambda: False,
-                lambda:False,
-                lambda: self.compareTo(first, second) == 0
-        ])
-
-    def lessThan(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
-        return self.applyOperator(first, second, [
-                lambda: None,
-                lambda: None,
-                lambda: None,
-                lambda: self.compareTo(first, second) == -1
-            ])
-
-    def compareTo(self, first: date, second: date) -> int:
-        if first == second:
+    def compareTo(self, first: Union[date | time | datetime], second: Union[date | time | datetime]) -> int:
+        firstValue = self.__calendarType.value(first)
+        secondValue = self.__calendarType.value(second)
+        if firstValue == secondValue:
             return 0
-        elif first < second:
+        elif firstValue < secondValue:
             return -1
         else:
             return 1

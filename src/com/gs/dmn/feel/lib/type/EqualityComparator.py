@@ -16,13 +16,17 @@ from com.gs.dmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBoolean
 
 
 class EqualityComparator:
+    def __init__(self):
+        pass
+
     def equalTo(self, first: Any, second: Any) -> Optional[bool]:
         pass
 
     def notEqualTo(self, first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().not_(self.equalTo(first, second))
 
-    def applyOperator(self, first: Any, second: Any, result: List[Callable]) -> Optional[bool]:
+    @staticmethod
+    def applyOperator(first: Any, second: Any, result: List[Callable]) -> Optional[bool]:
         if first is None and second is None:
             return result[0]()
         elif first is None:

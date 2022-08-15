@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date
+from datetime import date, time
 from decimal import Decimal
 from typing import Any, Optional
 from unittest import TestCase
@@ -385,28 +385,180 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().dateAddDuration(None, self.makeDuration("P0Y2M")))
         self.assertEqual(None, self.getLib().dateAddDuration(self.makeDate("2016-08-01"), None))
 
-        self.assertEqualDateTime("2016-10-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
-        self.assertEqualDateTime("2016-06-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
+        self.assertEqualDate("2016-10-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
+        self.assertEqualDate("2016-06-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
 
     def testDateSubtractDuration(self):
         self.assertEqual(None, self.getLib().dateSubtractDuration(None, None))
         self.assertEqual(None, self.getLib().dateSubtractDuration(None, self.makeDuration("P0Y2M")))
         self.assertEqual(None, self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), None))
 
-        self.assertEqualDateTime("2016-06-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
-        self.assertEqualDateTime("2016-10-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
+        self.assertEqualDate("2016-06-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
+        self.assertEqualDate("2016-10-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
+
+    #
+    # Time operators
+    #
+    def testTimeValue(self):
+        self.assertEqual(None, self.getLib().timeValue(None))
+
+        # local time
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03")))
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03.0004")))
+
+        # offset time
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03Z")))
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03Z")))
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03+00:00")))
+        self.assertEqual(63, self.getLib().timeValue(self.makeTime("01:02:03+01:01")))
+
+        # zoneid time
+#        self.assertEqual(123, self.getLib().timeValue(self.makeTime("01:02:03@Europe/Paris")))
+#        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03@Etc/UTC")))
+
+    def testTimeIs(self):
+        self.assertTrue(self.getLib().timeIs(None, None))
+        self.assertFalse(self.getLib().timeIs(None, self.makeTime("12:00:00Z")))
+        self.assertFalse(self.getLib().timeIs(self.makeTime("12:00:00Z"), None))
+
+        # same times are is()
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00"), self.makeTime("10:30:00")))
+        # different times are not is()
+        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00"), self.makeTime("10:30:01")))
+        # different times with zero milliseconds are is()
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00.0000"), self.makeTime("10:30:00")))
+        # different times with same milliseconds are is()
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0001")))
+        # different times with different milliseconds are is()
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0002")))
+        # same times in same zone are is()
+#        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
+        # same times - one with zone one without are not is()
+#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
+        # same times with different zones are not is()
+#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
+        # same times = one with offset, the other with zone are not equal
+#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
+        # same times = one with Z zone, the other with UTC are is()
+#        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00Z"), self.makeTime("10:30:00+00:00")))
+
+    def testTimeEqual(self):
+        self.assertTrue(self.getLib().timeEqual(None, None))
+        self.assertFalse(self.getLib().timeEqual(None, self.makeTime("12:00:00Z")))
+        self.assertFalse(self.getLib().timeEqual(self.makeTime("12:00:00Z"), None))
+
+        # same times are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00"), self.makeTime("10:30:00")))
+        # different times are not equal
+        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00"), self.makeTime("10:30:01")))
+        # same times with zero milliseconds are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00.0000"), self.makeTime("10:30:00")))
+        # same times with same milliseconds are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0001")))
+        # same times with different milliseconds are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0002")))
+        # same times in same zone are equal
+#        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
+        # same times - one with zone one without are not equal
+#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
+        # same times with different zones are not equal
+#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
+        # same times = one with offset, the other with zone are not equal
+#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
+        # same times = one with Z zone, the other with UTC are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00Z"), self.makeTime("10:30:00+00:00")))
+
+        # times with equivalent offset and zone id are equal
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("12:00:00"), self.makeTime("12:00:00+00:00")))
+#        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00+00:00"), self.makeTime("00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00Z"), self.makeTime("00:00:00+00:00")))
+#        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00Z"), self.makeTime("00:00:00@Etc/UTC")))
+
+    def testTimeNotEqual(self):
+        self.assertFalse(self.getLib().timeNotEqual(None, None))
+        self.assertTrue(self.getLib().timeNotEqual(None, self.makeTime("12:00:00Z")))
+        self.assertTrue(self.getLib().timeNotEqual(self.makeTime("12:00:00Z"), None))
+
+        self.assertFalse(self.getLib().timeNotEqual(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertTrue(self.getLib().timeNotEqual(self.makeTime("12:00:00Z"), self.makeTime("12:00:01Z")))
+
+    def testTimeLessThan(self):
+        self.assertEqual(None, self.getLib().timeLessThan(None, None))
+        self.assertEqual(None, self.getLib().timeLessThan(None, self.makeTime("12:00:00Z")))
+        self.assertEqual(None, self.getLib().timeLessThan(self.makeTime("12:00:00Z"), None))
+
+        self.assertFalse(self.getLib().timeLessThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertTrue(self.getLib().timeLessThan(self.makeTime("11:00:00Z"), self.makeTime("12:00:01Z")))
+
+    def testTimeGreaterThan(self):
+        self.assertEqual(None, self.getLib().timeGreaterThan(None, None))
+        self.assertEqual(None, self.getLib().timeGreaterThan(None, self.makeTime("12:00:00Z")))
+        self.assertEqual(None, self.getLib().timeGreaterThan(self.makeTime("12:00:00Z"), None))
+
+        self.assertFalse(self.getLib().timeGreaterThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertTrue(self.getLib().timeGreaterThan(self.makeTime("13:00:00Z"), self.makeTime("12:00:01Z")))
+
+    def testTimeLessEqualThan(self):
+        self.assertTrue(self.getLib().timeLessEqualThan(None, None))
+        self.assertEqual(None, self.getLib().timeLessEqualThan(None, self.makeTime("12:00:00Z")))
+        self.assertEqual(None, self.getLib().timeLessEqualThan(self.makeTime("12:00:00Z"), None))
+
+        self.assertTrue(self.getLib().timeLessEqualThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertFalse(self.getLib().timeLessEqualThan(self.makeTime("13:00:00Z"), self.makeTime("12:00:01Z")))
+
+    def testTimeGreaterEqualThan(self):
+        self.assertTrue(self.getLib().timeGreaterEqualThan(None, None))
+        self.assertEqual(None, self.getLib().timeGreaterEqualThan(None, self.makeTime("12:00:00Z")))
+        self.assertEqual(None, self.getLib().timeGreaterEqualThan(self.makeTime("12:00:00Z"), None))
+
+        self.assertTrue(self.getLib().timeGreaterEqualThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertFalse(self.getLib().timeGreaterEqualThan(self.makeTime("11:00:00Z"), self.makeTime("12:00:01Z")))
+
+    def testTimeSubtract(self):
+        self.assertEqual(None, self.getLib().timeSubtract(None, None))
+        self.assertEqual(None, self.getLib().timeSubtract(None, self.makeTime("12:00:00Z")))
+        self.assertEqual(None, self.getLib().timeSubtract(self.makeTime("12:00:00Z"), None))
+
+        self.assertEqual(self.makeDuration("PT1H"), self.getLib().timeSubtract(self.makeTime("13:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertEqual(self.makeDuration("P0D"), self.getLib().timeSubtract(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
+        self.assertEqual(self.makeDuration("-PT1H"), self.getLib().timeSubtract(self.makeTime("12:00:00Z"), self.makeTime("13:00:00Z")))
+
+    def testTimeAddDuration(self):
+        self.assertEqual(None, self.getLib().timeAddDuration(None, None))
+        self.assertEqual(None, self.getLib().timeAddDuration(None, self.makeDuration("P0DT1H")))
+        self.assertEqual(None, self.getLib().timeAddDuration(self.makeTime("12:00:00Z"), None))
+
+        self.assertEqualTime("13:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
+        self.assertEqualTime("12:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
+
+    def testTimeSubtractDuration(self):
+        self.assertEqual(None, self.getLib().timeSubtractDuration(None, None))
+        self.assertEqual(None, self.getLib().timeSubtractDuration(None, self.makeDuration("P0DT1H")))
+        self.assertEqual(None, self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), None))
+
+        self.assertEqualTime("11:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
+        self.assertEqualTime("12:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
 
     def getLib(self) -> StandardFEELLib:
         return StandardFEELLib()
 
-    def makeNumber(self, literal: str) -> Decimal:
+    @staticmethod
+    def makeNumber(literal: str) -> Decimal:
         return Decimal(literal)
 
-    def makeDate(self, literal: str) -> date:
-        # return isodate.parse_date(literal, expanded=True)
+    @staticmethod
+    def makeDate(literal: str) -> date:
         return date.fromisoformat(literal)
+        # return isodate.parse_date(literal, expanded=True)
 
-    def makeDuration(self, literal: str) -> Duration:
+    @staticmethod
+    # TODO ZoneIDs not supported in ISO 8601
+    def makeTime(literal: str) -> time:
+        # return time.fromisoformat(literal)
+        return isodate.parse_time(literal)
+
+    @staticmethod
+    def makeDuration(literal: str) -> Duration:
         return isodate.parse_duration(literal)
 
     def assertEqualNumber(self, expected: Any, actual: Decimal):
@@ -415,8 +567,14 @@ class FEELOperatorsTest(TestCase):
 
         return self.assertAlmostEqual(expected, actual)
 
-    def assertEqualDateTime(self, expected: Any, actual: Optional[date]):
+    def assertEqualDate(self, expected: Any, actual: Optional[date]):
         if isinstance(expected, str):
             expected = self.makeDate(expected)
+
+        return expected == actual
+
+    def assertEqualTime(self, expected: Any, actual: Optional[time]):
+        if isinstance(expected, str):
+            expected = self.makeTime(expected)
 
         return expected == actual
