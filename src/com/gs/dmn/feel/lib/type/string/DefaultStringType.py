@@ -12,35 +12,39 @@
 #
 from typing import Any, Optional
 
+from com.gs.dmn.feel.lib.type.string.StringComparator import StringComparator
+
 
 class DefaultStringType:
+    def __init__(self):
+        self.stringComparator = StringComparator()
+
     def isString(self, value: Any) -> bool:
         return isinstance(value, str)
 
     def stringValue(self, value: Optional[str]) -> Optional[str]:
         return value
 
-    def stringIs(self, first: Optional[str], second: Optional[str]) -> bool:
+    def stringIs(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
         return first is second
 
-    @staticmethod
-    def stringEqual(first: Optional[str], second: Optional[str]) -> bool:
-        return first == second
+    def stringEqual(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.equalTo(first, second)
 
-    def stringNotEqual(self, first: Optional[str], second: Optional[str]) -> bool:
-        return first != second
+    def stringNotEqual(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.notEqualTo(first, second)
 
-    def stringLessThan(self, first: Optional[str], second: Optional[str]) -> bool:
-        return first < second
+    def stringLessThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.lessThan(first, second)
 
-    def stringGreaterThan(self, first: Optional[str], second: Optional[str]) -> bool:
-        return first > second
+    def stringGreaterThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.greaterThan(first, second)
 
-    def stringLessEqualThan(self, first: Optional[str], second: Optional[str]) -> bool:
-        return first <= second
+    def stringLessEqualThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.lessEqualThan(first, second)
 
-    def stringGreaterEqualThan(self, first: Optional[str], second: Optional[str]) -> bool:
-        return first >= second
+    def stringGreaterEqualThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+        return self.stringComparator.greaterEqualThan(first, second)
 
     def stringAdd(self, first: Optional[str], second: Optional[str]) -> Optional[str]:
         if first is None or second is None:
