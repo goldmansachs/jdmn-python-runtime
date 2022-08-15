@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, datetime, time
+from datetime import date, datetime, time, timezone
 from typing import Optional, Any, Union
 
 from com.gs.dmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
@@ -22,7 +22,7 @@ class DefaultCalendarType:
 
     @staticmethod
     def isDate(obj: Any) -> bool:
-        return isinstance(obj, date)
+        return isinstance(obj, date) and not isinstance(obj, datetime)
 
     @staticmethod
     def isTime(obj: Any) -> bool:
@@ -34,7 +34,7 @@ class DefaultCalendarType:
 
     @staticmethod
     def dateToDateTime(date_: date) -> datetime:
-        return datetime(date_.year, date_.month, date_.day)
+        return datetime(date_.year, date_.month, date_.day, tzinfo=timezone.utc)
 
     @staticmethod
     def timeToDateTime(time_: time) -> datetime:
@@ -81,5 +81,12 @@ class DefaultCalendarType:
         if datetime_ is None:
             return None
 
-        epoch = datetime.utcfromtimestamp(0)
-        return int((datetime_ - epoch).total_seconds())
+        # Seconds from EPOCH
+        if datetime_.tzinfo is None:
+            # Add UTC
+            datetime_ = datetime.combine(datetime_.date(), datetime_.time(), timezone.utc)
+        timestamp = datetime_.timestamp()
+        return int(timestamp)
+
+    def canNotSubtract(self, first: datetime, second: datetime) -> bool:
+        return first.tzinfo is None and second.tzinfo is not None or first.tzinfo is not None and second.tzinfo is None

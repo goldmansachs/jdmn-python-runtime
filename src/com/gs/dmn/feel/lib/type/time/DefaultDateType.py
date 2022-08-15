@@ -57,6 +57,8 @@ class DefaultDateType(DefaultCalendarType):
             first = self.dateToDateTime(first)
         if self.isDate(second):
             second = self.dateToDateTime(second)
+        if self.canNotSubtract(first, second):
+            return None
 
         durationInSeconds = self.dateTimeValue(first) - self.dateTimeValue(second)
         return Duration(seconds=durationInSeconds)

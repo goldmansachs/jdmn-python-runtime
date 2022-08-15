@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, time
+from datetime import date, time, datetime
 from decimal import Decimal
 from typing import Any, Optional
 from unittest import TestCase
@@ -539,6 +539,167 @@ class FEELOperatorsTest(TestCase):
         self.assertEqualTime("11:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
         self.assertEqualTime("12:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
 
+    #
+    # Date and time operators
+    #
+    def testDateTimeValue(self):
+        self.assertEqual(None, self.getLib().dateTimeValue(None))
+
+        # local date time
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03")))
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03.0004")))
+        self.assertEqual(315536523, self.getLib().dateTimeValue(self.makeDateAndTime("1980-01-01T01:02:03.0004")))
+#        self.assertEqual(-124649967477, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03.0004")))
+
+        # offset date time
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03Z")))
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03Z")))
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03+00:00")))
+        self.assertEqual(63, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03+01:01")))
+        self.assertEqual(315532863, self.getLib().dateTimeValue(self.makeDateAndTime("1980-01-01T01:02:03+01:01")))
+#        self.assertEqual(-124649971137, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03+01:01")))
+
+        # zoneid date time
+#        self.assertEqual(123, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Europe/Paris")))
+#        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Etc/UTC")))
+#        self.assertEqual(315536523, self.getLib().dateTimeValue(self.makeDateAndTime("1980-01-01T01:02:03@Etc/UTC")))
+#        self.assertEqual(-124649967477, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03@Etc/UTC")))
+
+    def testDateTimeIs(self):
+        # datetime equals None
+        self.assertTrue(self.getLib().dateTimeIs(None, None))
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), None))
+        self.assertFalse(self.getLib().dateTimeIs(None, self.makeDateAndTime("2018-12-08T00:00:00")))
+
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
+
+        # same datetimes are is ()
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T10:30:00"), self.makeDateAndTime("2018-12-08T10:30:00")))
+        # datetimes with no time is is () to datetime with zero time
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08"), self.makeDateAndTime("2018-12-08T00:00:00")))
+        # datetimes with same milliseconds are is ()
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00.0001"), self.makeDateAndTime("2018-12-08T00:00:00.0001")))
+        # datetimes with different milliseconds are is ()
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00.0001"), self.makeDateAndTime("2018-12-08T00:00:00.0002")))
+        # different datetimes are not is ()
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-07T00:00:00")))
+        # same datetimes in same zone are is ()
+#        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        # same datetimes in different zones are not is ()
+#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        # same datetimes, one with zone one without are not is ()
+#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        # same datetimes, one with offset and the other with zone are not is ()
+#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+
+    def testDateTimeEqual(self):
+        # datetime equals None
+        self.assertTrue(self.getLib().dateTimeEqual(None, None))
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), None))
+        self.assertFalse(self.getLib().dateTimeEqual(None, self.makeDateAndTime("2018-12-08T00:00:00")))
+
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
+
+        # same datetimes are equal
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T10:30:00"), self.makeDateAndTime("2018-12-08T10:30:00")))
+        # datetimes with no time is equal to datetime with zero time
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08"), self.makeDateAndTime("2018-12-08T00:00:00")))
+        # datetimes with same milliseconds are equal
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00.0001"), self.makeDateAndTime("2018-12-08T00:00:00.0001")))
+        # datetimes with different milliseconds are equal
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00.0001"), self.makeDateAndTime("2018-12-08T00:00:00.0002")))
+        # different datetimes are not equal
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-07T00:00:00")))
+        # same datetimes in same zone are equal
+#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        # same datetimes in different zones are not equal
+#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        # same datetimes, one with zone one without are not equal
+#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        # same datetimes, one with offset and the other with zone are not equal
+#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+
+        # datetime with equivalent offset and zone id are equal
+#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T12:00:00Z"), self.makeDateAndTime("2018-12-08T12:00:00+00:00")))
+#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00Z"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
+
+    def testDateTimeNotEqual(self):
+        self.assertFalse(self.getLib().dateTimeNotEqual(None, None))
+        self.assertTrue(self.getLib().dateTimeNotEqual(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertTrue(self.getLib().dateTimeNotEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+
+        self.assertFalse(self.getLib().dateTimeNotEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertTrue(self.getLib().dateTimeNotEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
+
+    def testDateTimeLessThan(self):
+        self.assertEqual(None, self.getLib().dateTimeLessThan(None, None))
+        self.assertEqual(None, self.getLib().dateTimeLessThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertEqual(None, self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+
+        self.assertFalse(self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertTrue(self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2017-08-01T11:00:01Z")))
+
+    def testDateTimeGreaterThan(self):
+        self.assertEqual(None, self.getLib().dateTimeGreaterThan(None, None))
+        self.assertEqual(None, self.getLib().dateTimeGreaterThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertEqual(None, self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+
+        self.assertTrue(self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2017-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertFalse(self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
+
+    def testDateTimeLessEqualThan(self):
+        self.assertTrue(self.getLib().dateTimeLessEqualThan(None, None))
+        self.assertEqual(None, self.getLib().dateTimeLessEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertEqual(None, self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+
+        self.assertTrue(self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertFalse(self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:01Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+
+    def testDateTimeGreaterEqualThan(self):
+        self.assertTrue(self.getLib().dateTimeGreaterEqualThan(None, None))
+        self.assertEqual(None, self.getLib().dateTimeGreaterEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertEqual(None, self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+
+        self.assertTrue(self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertFalse(self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2015-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
+
+    def testDateTimeSubtract(self):
+        self.assertEqual(None, self.getLib().dateTimeSubtract(None, None))
+        self.assertEqual(None, self.getLib().dateTimeSubtract(None, self.makeDateAndTime("2016-08-01T12:00:00Z")))
+        self.assertEqual(None, self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+
+        self.assertEqual(self.makeDuration("PT1H"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T13:00:00Z"), self.makeDateAndTime("2016-08-01T12:00:00Z")))
+        self.assertEqual(self.makeDuration("PT0S"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-01T12:00:00Z")))
+        self.assertEqual(self.makeDuration("-P2DT1H"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-03T13:00:00Z")))
+
+    def testDateTimeAddDuration(self):
+        self.assertEqual(None, self.getLib().dateTimeAddDuration(None, None))
+        self.assertEqual(None, self.getLib().dateTimeAddDuration(None, self.makeDuration("P1Y1M")))
+        self.assertEqual(None, self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+
+        self.assertEqualDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
+        self.assertEqualDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
+
+        self.assertEqualDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
+        self.assertEqualDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
+
+    def testDateTimeSubtractDuration(self):
+        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, None))
+        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, self.makeDuration("P1Y1M")))
+        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+
+        self.assertEqualDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
+        self.assertEqualDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
+
+        self.assertEqualDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
+        self.assertEqualDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
+
+    #
+    # Common
+    #
     def getLib(self) -> StandardFEELLib:
         return StandardFEELLib()
 
@@ -556,6 +717,13 @@ class FEELOperatorsTest(TestCase):
     def makeTime(literal: str) -> time:
         # return time.fromisoformat(literal)
         return isodate.parse_time(literal)
+
+    @staticmethod
+    # TODO ZoneIDs not supported in ISO 8601
+    def makeDateAndTime(literal: str) -> datetime:
+        if not ("T" in literal):
+            literal += "T00:00:00"
+        return isodate.parse_datetime(literal)
 
     @staticmethod
     def makeDuration(literal: str) -> Duration:
@@ -576,5 +744,11 @@ class FEELOperatorsTest(TestCase):
     def assertEqualTime(self, expected: Any, actual: Optional[time]):
         if isinstance(expected, str):
             expected = self.makeTime(expected)
+
+        return expected == actual
+
+    def assertEqualDateTime(self, expected: Any, actual: Optional[datetime]):
+        if isinstance(expected, str):
+            expected = self.makeDateAndTime(expected)
 
         return expected == actual
