@@ -13,10 +13,12 @@
 from com.gs.dmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from com.gs.dmn.feel.lib.type.numeric.DefaultNumericType import DefaultNumericType
 from com.gs.dmn.feel.lib.type.string.DefaultStringType import DefaultStringType
+from com.gs.dmn.feel.lib.type.time.DefaultDateType import DefaultDateType
 
 
-class StandardFEELLib(DefaultNumericType, DefaultStringType, DefaultBooleanType):
+class StandardFEELLib(DefaultNumericType, DefaultStringType, DefaultBooleanType, DefaultDateType):
     def __init__(self):
         DefaultNumericType.__init__(self)
         DefaultStringType.__init__(self)
         DefaultBooleanType.__init__(self)
+        DefaultDateType.__init__(self)
