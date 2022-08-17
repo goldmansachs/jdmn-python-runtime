@@ -18,7 +18,7 @@ from unittest import TestCase
 import isodate as isodate
 from isodate import Duration
 
-from jdmn.feel.lib.StandardFEELLib import StandardFEELLib
+from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
 
 
 class FEELOperatorsTest(TestCase):
@@ -727,8 +727,8 @@ class FEELOperatorsTest(TestCase):
     #
     # Common
     #
-    def getLib(self) -> StandardFEELLib:
-        return StandardFEELLib()
+    def getLib(self) -> DefaultStandardFEELLib:
+        return DefaultStandardFEELLib()
 
     @staticmethod
     def makeNumber(literal: str) -> Decimal:
