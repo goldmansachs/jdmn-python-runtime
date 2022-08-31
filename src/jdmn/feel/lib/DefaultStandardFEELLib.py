@@ -10,25 +10,27 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from jdmn.feel.lib.BaseFEELLib import BaseFEELLib
-from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
-from jdmn.feel.lib.type.list.DefaultListType import DefaultListType
-from jdmn.feel.lib.type.numeric.DefaultNumericType import DefaultNumericType
-from jdmn.feel.lib.type.string.DefaultStringType import DefaultStringType
-from jdmn.feel.lib.type.time.DefaultDateTimeType import DefaultDateTimeType
-from jdmn.feel.lib.type.time.DefaultDateType import DefaultDateType
-from jdmn.feel.lib.type.time.DefaultTimeType import DefaultTimeType
+from decimal import Decimal
+
+from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
+from jdmn.feel.lib.Types import LONG, NUMBER
 
 
-class DefaultStandardFEELLib(DefaultNumericType, DefaultStringType, DefaultBooleanType, DefaultDateType, DefaultTimeType, DefaultDateTimeType, DefaultListType, BaseFEELLib):
+class DefaultStandardFEELLib(BaseStandardFEELLib):
     def __init__(self):
-        # Types
-        DefaultNumericType.__init__(self)
-        DefaultStringType.__init__(self)
-        DefaultBooleanType.__init__(self)
-        DefaultDateType.__init__(self)
-        DefaultTimeType.__init__(self)
-        DefaultDateTimeType.__init__(self)
-        DefaultListType.__init__(self)
+        BaseStandardFEELLib.__init__(self)
 
-        BaseFEELLib.__init__(self)
+    #
+    # Extra conversion functions
+    #
+    def valueOf(self, number: LONG) -> NUMBER:
+        if number is None:
+            return None
+        else:
+            return Decimal(number)
+
+    def intValue(self, number: NUMBER) -> LONG:
+        if number is None:
+            return None
+        else:
+            return int(number)

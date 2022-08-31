@@ -12,10 +12,15 @@
 #
 from typing import Any, Optional
 
+from jdmn.feel.lib.Utils import varArgToList
+from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBooleanLogicUtil
 
 
-class DefaultBooleanType:
+class DefaultBooleanType(BaseType):
+    def __init__(self):
+        BaseType.__init__(self)
+
     def isBoolean(self, value: Any) -> bool:
         return isinstance(value, bool)
 
@@ -25,18 +30,11 @@ class DefaultBooleanType:
     def booleanNot(self, operand: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().not_(operand)
 
-    def booleanOr(self, *operands) -> Optional[bool]:
-        opdLen = len(operands)
-        if opdLen == 0:
-            return None
-        if opdLen == 1:
-            # Operand is list with at least 2 elements
-            opd = operands[0]
-            if isinstance(opd, list) and len(opd) >= 2:
-                operands = opd
-            else:
-                return None
+    def booleanOr(self, *args) -> Optional[bool]:
+        operands = varArgToList(*args)
 
+        if len(operands) < 2:
+            return None
         result = operands[0]
         for opd in operands[1:]:
             result = self.binaryBooleanOr(result, opd)
@@ -45,18 +43,11 @@ class DefaultBooleanType:
     def binaryBooleanOr(self, first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().or_(first, second)
 
-    def booleanAnd(self, *operands) -> Optional[bool]:
-        opdLen = len(operands)
-        if opdLen == 0:
-            return None
-        if opdLen == 1:
-            # Operand is list with at least 2 elements
-            opd = operands[0]
-            if isinstance(opd, list) and len(opd) >= 2:
-                operands = opd
-            else:
-                return None
+    def booleanAnd(self, *args) -> Optional[bool]:
+        operands = varArgToList(*args)
 
+        if len(operands) < 2:
+            return None
         result = operands[0]
         for opd in operands[1:]:
             result = self.binaryBooleanAnd(result, opd)

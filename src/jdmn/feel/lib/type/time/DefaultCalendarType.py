@@ -11,13 +11,16 @@
 # specific language governing permissions and limitations under the License.
 #
 from datetime import date, datetime, time, timezone
-from typing import Optional, Any, Union
+from typing import Optional, Any
 
+from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INT, DATE_TIME_UNION
+from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 
 
-class DefaultCalendarType:
+class DefaultCalendarType(BaseType):
     def __init__(self):
+        BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
     @staticmethod
@@ -33,26 +36,26 @@ class DefaultCalendarType:
         return isinstance(obj, datetime)
 
     @staticmethod
-    def dateToDateTime(date_: date) -> datetime:
+    def dateToDateTime(date_: DATE) -> datetime:
         return datetime(date_.year, date_.month, date_.day, tzinfo=timezone.utc)
 
     @staticmethod
-    def timeToDateTime(time_: time) -> datetime:
+    def timeToDateTime(time_: TIME) -> datetime:
         # EPOCH
         return datetime(year=1970, month=1, day=1, hour=time_.hour, minute=time_.minute, second=time_.second, tzinfo=time_.tzinfo)
 
     @staticmethod
-    def sameDate(first: date, second: date) -> bool:
+    def sameDate(first: DATE, second: DATE) -> bool:
         return first.year == second.year and first.month == second.month and first.day == second.day
 
     @staticmethod
-    def sameTime(first: time, second: time) -> bool:
+    def sameTime(first: TIME, second: TIME) -> bool:
         return first.hour == second.hour and first.minute == second.minute and first.second == second.second and first.tzinfo == second.tzinfo
 
-    def sameDateTime(self, first: datetime, second: datetime) -> bool:
+    def sameDateTime(self, first: DATE_TIME, second: DATE_TIME) -> bool:
         return self.sameDate(first.date(), second.date()) and self.sameTime(first.time(), second.time())
 
-    def value(self, calendar: Union[date | time | datetime]) -> Optional[int]:
+    def value(self, calendar: DATE_TIME_UNION) -> INT:
         if self.isDate(calendar):
             return self.dateValue(calendar)
         elif self.isTime(calendar):
@@ -62,22 +65,22 @@ class DefaultCalendarType:
         else:
             return None
 
-    def dateValue(self, date_: Optional[date]) -> Optional[int]:
+    def dateValue(self, date_: DATE) -> INT:
         if date_ is None:
             return None
 
         return self.dateTimeValue(self.dateToDateTime(date_))
 
-    def timeValue(self, time_: Optional[time]) -> Optional[int]:
+    def timeValue(self, time_: TIME) -> INT:
         if time_ is None:
             return None
 
         value = time_.hour * 3600 + time_.minute * 60 + time_.second
         if time_.tzinfo is not None:
-            value -= time_.tzinfo.utcoffset(time_).seconds
+            value -= time_.utcoffset().seconds
         return value
 
-    def dateTimeValue(self, datetime_: Optional[datetime]) -> Optional[int]:
+    def dateTimeValue(self, datetime_: DATE_TIME) -> Optional[int]:
         if datetime_ is None:
             return None
 
@@ -88,5 +91,5 @@ class DefaultCalendarType:
         timestamp = datetime_.timestamp()
         return int(timestamp)
 
-    def canNotSubtract(self, first: datetime, second: datetime) -> bool:
+    def canNotSubtract(self, first: DATE_TIME, second: DATE_TIME) -> bool:
         return first.tzinfo is None and second.tzinfo is not None or first.tzinfo is not None and second.tzinfo is None

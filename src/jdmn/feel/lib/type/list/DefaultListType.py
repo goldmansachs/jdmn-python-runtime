@@ -12,11 +12,13 @@
 #
 from typing import Any, List, Optional
 
+from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 
 
-class DefaultListType:
+class DefaultListType(BaseType):
     def __init__(self):
+        BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
     def isList(self, value: Any) -> bool:

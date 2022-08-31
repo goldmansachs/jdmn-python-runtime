@@ -10,9 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import datetime, date, time
-from typing import Union
-
+from jdmn.feel.lib.Types import DATE_TIME_UNION
 from jdmn.feel.lib.type.time.BaseDateTimeComparator import BaseDateTimeComparator
 from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 
@@ -22,7 +20,7 @@ class DefaultDateTimeComparator(BaseDateTimeComparator):
         super().__init__()
         self.__calendarType = DefaultCalendarType()
 
-    def compareTo(self, first: Union[date | time | datetime], second: Union[date | time | datetime]) -> int:
+    def compareTo(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
         firstValue = self.__calendarType.value(first)
         secondValue = self.__calendarType.value(second)
         if firstValue == secondValue:

@@ -37,5 +37,5 @@ or
 
 ### How to publish the wheel
 
-```twine upload --repository testpypi dist/* ```
+```twine upload --repository testpypi --skip-existing dist/* ```
 

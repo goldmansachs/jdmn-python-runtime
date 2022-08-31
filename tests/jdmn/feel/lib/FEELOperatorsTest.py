@@ -15,13 +15,19 @@ from decimal import Decimal
 from typing import Any, Optional, List
 from unittest import TestCase
 
-import isodate as isodate
 from isodate import Duration
 
+from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
 from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
+from jdmn.runtime.Assert import Assert
 
 
 class FEELOperatorsTest(TestCase):
+    """
+    Base test class for operators
+    """
+    __test__ = False
+
     #
     # Numeric operators
     #
@@ -90,54 +96,54 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().numericAdd(None, self.makeNumber("1")))
         self.assertEqual(None, self.getLib().numericAdd(self.makeNumber("1"), None))
 
-        self.assertEqualNumber(self.makeNumber("3"), self.getLib().numericAdd(self.makeNumber("1"), self.makeNumber("2")))
+        self.assertEqualsNumber(self.makeNumber("3"), self.getLib().numericAdd(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericSubtract(self):
         self.assertEqual(None, self.getLib().numericSubtract(None, None))
         self.assertEqual(None, self.getLib().numericSubtract(None, self.makeNumber("2")))
         self.assertEqual(None, self.getLib().numericSubtract(self.makeNumber("2"), None))
 
-        self.assertEqualNumber(self.makeNumber("-1"), self.getLib().numericSubtract(self.makeNumber("1"), self.makeNumber("2")))
+        self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericSubtract(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericMultiply(self):
         self.assertEqual(None, self.getLib().numericMultiply(None, None))
         self.assertEqual(None, self.getLib().numericMultiply(None, self.makeNumber("2")))
         self.assertEqual(None, self.getLib().numericMultiply(self.makeNumber("2"), None))
 
-        self.assertEqualNumber(self.makeNumber("2"), self.getLib().numericMultiply(self.makeNumber("1"), self.makeNumber("2")))
+        self.assertEqualsNumber(self.makeNumber("2"), self.getLib().numericMultiply(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericDivide(self):
         self.assertEqual(None, self.getLib().numericDivide(None, None))
         self.assertEqual(None, self.getLib().numericDivide(None, self.makeNumber("2")))
         self.assertEqual(None, self.getLib().numericDivide(self.makeNumber("2"), None))
 
-        self.assertEqualNumber("0.5", self.getLib().numericDivide(self.makeNumber("1"), self.makeNumber("2")))
+        self.assertEqualsNumber("0.5", self.getLib().numericDivide(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericUnaryMinus(self):
         self.assertEqual(None, self.getLib().numericUnaryMinus(None))
 
-        self.assertEqualNumber(self.makeNumber("-1"), self.getLib().numericUnaryMinus(self.makeNumber("1")))
+        self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericUnaryMinus(self.makeNumber("1")))
 
     def testNumericExponentiation(self):
         self.assertEqual(None, self.getLib().numericExponentiation(None, None))
         self.assertEqual(None, self.getLib().numericExponentiation(None, self.makeNumber("10")))
         self.assertEqual(None, self.getLib().numericExponentiation(self.makeNumber("10"), None))
 
-        self.assertEqualNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0")))
-        self.assertEqualNumber(self.makeNumber("0.5"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("-1")))
-        self.assertEqualNumber(self.makeNumber("1024"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("10")))
+        self.assertEqualsNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0")))
+        self.assertEqualsNumber(self.makeNumber("0.5"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("-1")))
+        self.assertEqualsNumber(self.makeNumber("1024"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("10")))
 
-        self.assertEqualNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0")))
+        self.assertEqualsNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0")))
 
-        self.assertEqualNumber(self.makeNumber("1.41421356"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0.5")))
-        self.assertEqualNumber(self.makeNumber("8"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3")))
-        self.assertEqualNumber(self.makeNumber("11.31370849"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3.5")))
-        self.assertEqualNumber(self.makeNumber("11.84466611"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.25")))
-        self.assertEqualNumber(self.makeNumber("15.58845726"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.5")))
-        self.assertEqualNumber(self.makeNumber("20.51556351"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.75")))
-        self.assertEqualNumber(self.makeNumber("1.73205080"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0.5")))
-        self.assertEqualNumber(self.makeNumber("0.11111111"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2")))
-        self.assertEqualNumber(self.makeNumber("0.04874348"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2.75")))
+        self.assertEqualsNumber(self.makeNumber("1.41421356"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0.5")))
+        self.assertEqualsNumber(self.makeNumber("8"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3")))
+        self.assertEqualsNumber(self.makeNumber("11.31370849"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("3.5")))
+        self.assertEqualsNumber(self.makeNumber("11.84466611"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.25")))
+        self.assertEqualsNumber(self.makeNumber("15.58845726"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.5")))
+        self.assertEqualsNumber(self.makeNumber("20.51556351"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("2.75")))
+        self.assertEqualsNumber(self.makeNumber("1.73205080"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("0.5")))
+        self.assertEqualsNumber(self.makeNumber("0.11111111"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2")))
+        self.assertEqualsNumber(self.makeNumber("0.04874348"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2.75")))
 
     #
     # String operators
@@ -385,16 +391,16 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().dateAddDuration(None, self.makeDuration("P0Y2M")))
         self.assertEqual(None, self.getLib().dateAddDuration(self.makeDate("2016-08-01"), None))
 
-        self.assertEqualDate("2016-10-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
-        self.assertEqualDate("2016-06-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
+        self.assertEqualsDate("2016-10-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
+        self.assertEqualsDate("2016-06-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
 
     def testDateSubtractDuration(self):
         self.assertEqual(None, self.getLib().dateSubtractDuration(None, None))
         self.assertEqual(None, self.getLib().dateSubtractDuration(None, self.makeDuration("P0Y2M")))
         self.assertEqual(None, self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), None))
 
-        self.assertEqualDate("2016-06-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
-        self.assertEqualDate("2016-10-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
+        self.assertEqualsDate("2016-06-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
+        self.assertEqualsDate("2016-10-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
 
     #
     # Time operators
@@ -528,16 +534,16 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().timeAddDuration(None, self.makeDuration("P0DT1H")))
         self.assertEqual(None, self.getLib().timeAddDuration(self.makeTime("12:00:00Z"), None))
 
-        self.assertEqualTime("13:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
-        self.assertEqualTime("12:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
+        self.assertEqualsTime("13:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
+        self.assertEqualsTime("12:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
 
     def testTimeSubtractDuration(self):
         self.assertEqual(None, self.getLib().timeSubtractDuration(None, None))
         self.assertEqual(None, self.getLib().timeSubtractDuration(None, self.makeDuration("P0DT1H")))
         self.assertEqual(None, self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), None))
 
-        self.assertEqualTime("11:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
-        self.assertEqualTime("12:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
+        self.assertEqualsTime("11:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
+        self.assertEqualsTime("12:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
 
     #
     # Date and time operators
@@ -680,22 +686,22 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().dateTimeAddDuration(None, self.makeDuration("P1Y1M")))
         self.assertEqual(None, self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
 
-        self.assertEqualDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
-        self.assertEqualDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
+        self.assertEqualsDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
+        self.assertEqualsDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
 
-        self.assertEqualDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
-        self.assertEqualDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
+        self.assertEqualsDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
+        self.assertEqualsDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
 
     def testDateTimeSubtractDuration(self):
         self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, None))
         self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, self.makeDuration("P1Y1M")))
         self.assertEqual(None, self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
 
-        self.assertEqualDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
-        self.assertEqualDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
+        self.assertEqualsDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
+        self.assertEqualsDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
 
-        self.assertEqualDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
-        self.assertEqualDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
+        self.assertEqualsDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1DT1H")))
+        self.assertEqualsDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
 
     #
     # List operators
@@ -727,59 +733,54 @@ class FEELOperatorsTest(TestCase):
     #
     # Common
     #
-    def getLib(self) -> DefaultStandardFEELLib:
+    def getLib(self) -> BaseStandardFEELLib:
         return DefaultStandardFEELLib()
 
-    @staticmethod
-    def makeNumber(literal: str) -> Decimal:
-        return Decimal(literal)
+    def makeNumber(self, literal: Any) -> Decimal:
+        return self.getLib().number(literal)
 
-    @staticmethod
-    def makeDate(literal: str) -> date:
-        return date.fromisoformat(literal)
-        # return isodate.parse_date(literal, expanded=True)
+    def makeNumberList(self, *numbers):
+        return [self.makeNumber(str(n)) for n in numbers]
 
-    @staticmethod
-    # TODO ZoneIDs not supported in ISO 8601
-    def makeTime(literal: str) -> time:
-        # return time.fromisoformat(literal)
-        return isodate.parse_time(literal)
+    def makeDate(self, literal: str) -> date:
+        return self.getLib().date(literal)
 
-    @staticmethod
-    # TODO ZoneIDs not supported in ISO 8601
-    def makeDateAndTime(literal: str) -> datetime:
-        if not ("T" in literal):
-            literal += "T00:00:00"
-        return isodate.parse_datetime(literal)
+    def makeTime(self, literal: str) -> time:
+        return self.getLib().time(literal)
 
-    @staticmethod
-    def makeDuration(literal: str) -> Duration:
-        return isodate.parse_duration(literal)
+    def makeDateAndTime(self, literal: str) -> datetime:
+        return self.getLib().dateAndTime(literal)
+
+    def makeDuration(self, literal: str) -> Duration:
+        return self.getLib().duration(literal)
 
     @staticmethod
     def makeList(*args) -> List[Any]:
         return [x for x in args]
 
-    def assertEqualNumber(self, expected: Any, actual: Decimal):
+    def assertEqualsNumber(self, expected: Any, actual: Any, delta: float = None):
         if isinstance(expected, str):
             expected = self.makeNumber(expected)
 
-        return self.assertAlmostEqual(expected, actual)
+        return self.assertAlmostEqual(expected, actual, delta=delta)
 
-    def assertEqualDate(self, expected: Any, actual: Optional[date]):
+    def assertEqualsDate(self, expected: Any, actual: Optional[date]):
         if isinstance(expected, str):
             expected = self.makeDate(expected)
 
         return expected == actual
 
-    def assertEqualTime(self, expected: Any, actual: Optional[time]):
+    def assertEqualsTime(self, expected: Any, actual: Optional[time]):
         if isinstance(expected, str):
             expected = self.makeTime(expected)
 
         return expected == actual
 
-    def assertEqualDateTime(self, expected: Any, actual: Optional[datetime]):
+    def assertEqualsDateTime(self, expected: Any, actual: Optional[datetime]):
         if isinstance(expected, str):
             expected = self.makeDateAndTime(expected)
 
         return expected == actual
+
+    def assertEqualsList(self, expected: Any, actual: Any):
+        Assert().assertEquals(expected, actual)

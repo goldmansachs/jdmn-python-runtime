@@ -12,41 +12,44 @@
 #
 from typing import Any, Optional
 
+from jdmn.feel.lib.Types import STRING
+from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.string.StringComparator import StringComparator
 
 
-class DefaultStringType:
+class DefaultStringType(BaseType):
     def __init__(self):
+        BaseType.__init__(self)
         self.stringComparator = StringComparator()
 
     def isString(self, value: Any) -> bool:
         return isinstance(value, str)
 
-    def stringValue(self, value: Optional[str]) -> Optional[str]:
+    def stringValue(self, value: STRING) -> STRING:
         return value
 
-    def stringIs(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringIs(self, first: STRING, second: STRING) -> Optional[bool]:
         return first is second
 
-    def stringEqual(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringEqual(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.equalTo(first, second)
 
-    def stringNotEqual(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringNotEqual(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.notEqualTo(first, second)
 
-    def stringLessThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringLessThan(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.lessThan(first, second)
 
-    def stringGreaterThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringGreaterThan(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.greaterThan(first, second)
 
-    def stringLessEqualThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringLessEqualThan(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.lessEqualThan(first, second)
 
-    def stringGreaterEqualThan(self, first: Optional[str], second: Optional[str]) -> Optional[bool]:
+    def stringGreaterEqualThan(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.greaterEqualThan(first, second)
 
-    def stringAdd(self, first: Optional[str], second: Optional[str]) -> Optional[str]:
+    def stringAdd(self, first: STRING, second: STRING) -> STRING:
         if first is None or second is None:
             return None
         else:

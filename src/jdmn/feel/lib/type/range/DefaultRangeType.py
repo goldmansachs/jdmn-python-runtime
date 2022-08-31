@@ -10,32 +10,28 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-import logging
 from typing import Any
 
-from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME
+from jdmn.feel.lib.Types import BOOLEAN
+from jdmn.feel.lib.type.BaseType import BaseType
+from jdmn.runtime.Range import Range
 
 
-class FEELLib:
-    LOGGER = logging.getLogger(__name__)
+class DefaultRangeType(BaseType):
+    def __init__(self):
+        BaseType.__init__(self)
 
-    def logError(self, message: str, e: Exception = None) -> None:
-        if e is None:
-            self.LOGGER.error(message)
-        else:
-            self.LOGGER.exception(message)
-
-    def toDate(self, from_: Any) -> DATE:
+    def isRange(self, value: Any) -> bool:
         raise Exception("Not supported yet")
 
-    def toTime(self, from_: Any) -> TIME:
+    def rangeValue(self, value: Range) -> Range:
         raise Exception("Not supported yet")
 
-    def toDateTime(self, from_: Any) -> DATE_TIME:
+    def rangeIs(self, c1: Any, c2: Any) -> BOOLEAN:
         raise Exception("Not supported yet")
 
-    #
-    # Error conversions
-    #
-    def toNull(self, obj: Any) -> Any:
-        return None
+    def rangeEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+        raise Exception("Not supported yet")
+
+    def rangeNotEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+        raise Exception("Not supported yet")

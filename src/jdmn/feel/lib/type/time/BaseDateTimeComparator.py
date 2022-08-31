@@ -10,9 +10,9 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import datetime, date, time
-from typing import Optional, Union
+from typing import Optional
 
+from jdmn.feel.lib.Types import DATE_TIME_UNION
 from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
 
 
@@ -20,13 +20,13 @@ class BaseDateTimeComparator(RelationalComparator):
     def __init__(self):
         super().__init__()
 
-    def compare(self, first: Optional[Union[date | time | datetime]], second: Optional[Union[date | time | datetime]]) -> Optional[int]:
+    def compare(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[int]:
         if first is None or second is None:
             return None
         else:
             return self.compareTo(first, second)
 
-    def equalTo(self, first: Optional[Union[date | time | datetime]], second: Optional[Union[date | time | datetime]]) -> Optional[bool]:
+    def equalTo(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[bool]:
         return self.applyOperator(first, second, [
                 lambda: True,
                 lambda: False,
@@ -34,7 +34,7 @@ class BaseDateTimeComparator(RelationalComparator):
                 lambda: self.compareTo(first, second) == 0
         ])
 
-    def lessThan(self, first: Optional[Union[date | time | datetime]], second: Optional[Union[date | time | datetime]]) -> Optional[bool]:
+    def lessThan(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[bool]:
         return self.applyOperator(first, second, [
                 lambda: None,
                 lambda: None,
@@ -43,5 +43,5 @@ class BaseDateTimeComparator(RelationalComparator):
             ])
 
     @staticmethod
-    def compareTo(first: Union[date | time | datetime], second: Union[date | time | datetime]) -> int:
+    def compareTo(first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
         pass
