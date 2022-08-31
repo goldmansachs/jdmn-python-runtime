@@ -1,5 +1,9 @@
 # jdmn-python-runtime
 
+## How to install
+
+```> pip install jdmn-python-runtime``` 
+
 ## SDLC
 * Check-out project
 * Create a venv (see below) if you do not have one already
@@ -9,25 +13,29 @@
 * Make sure the test coverage is decent (e.g. around 70-75%)
 * Commit changes
 
-## How to create a venv
+### How to create a venv
 
-Run script ci/make_env.bat
+```> ci/make_env.bat``` 
 
-## How to run tests
+### How to run tests
 
 ```> tox -e py310``` 
 or
-```> python -m pytest --cov=com tests/``` 
+```> python -m pytest --cov=jdmn tests/``` 
 
-## How to run pylint
+### How to run pylint
 
 ```> tox -e pylint``` 
 
-## How to run flake8
+### How to run flake8
 
 ```> tox -e flake8``` 
 
-## How to build the wheel
+### How to build the wheel
+
+```> tox -e build``` 
+
+### How to publish the wheel
 
 ```twine upload --repository testpypi dist/* ```
 
