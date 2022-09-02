@@ -24,11 +24,11 @@ BOOLEAN = typing.Optional[bool]
 DATE = typing.Optional[date]
 TIME = typing.Optional[time]
 DATE_TIME = typing.Optional[datetime]
-DATE_TIME_UNION = typing.Optional[typing.Union[date | time | datetime]]
+DATE_TIME_UNION = typing.Optional[typing.Union[date, time, datetime]]
 DURATION = typing.Optional[Duration]
 LIST = typing.Optional[typing.List[typing.Any]]
 
 LONG = typing.Optional[int]
 INT = typing.Optional[int]
 
-POINT_RANGE_UNION = typing.Optional[typing.Any | Range]
+POINT_RANGE_UNION = typing.Optional[typing.Union[typing.Any, Range]]

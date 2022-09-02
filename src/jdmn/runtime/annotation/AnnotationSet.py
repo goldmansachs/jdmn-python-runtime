@@ -16,8 +16,8 @@ from jdmn.runtime.annotation.Annotation import Annotation
 
 
 class AnnotationSet(list):
-    def addAnnotation(self, decisionName: str, ruleIndex: int, annotation: Union[str | List[str]]) -> None:
-        if isinstance(annotation, List):
+    def addAnnotation(self, decisionName: str, ruleIndex: int, annotation: Union[str, List[str]]) -> None:
+        if isinstance(annotation, list):
             if not (annotation is None) and not len(annotation) == 0:
                 annotation = " ".join(annotation)
                 self.addAnnotation(decisionName, ruleIndex, annotation)

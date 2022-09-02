@@ -10,12 +10,21 @@ jobs:
         include:
         # linux
         - os: ubuntu-latest
+          python: '3.8'
+          toxenv: py
+        - os: ubuntu-latest
+          python: '3.8'
+          toxenv: linters
+        - os: ubuntu-latest
           python: '3.10'
           toxenv: py
         - os: ubuntu-latest
           python: '3.10'
           toxenv: linters
         # windows
+        - os: windows-latest
+          python: '3.10'
+          toxenv: py
         - os: windows-latest
           python: '3.10'
           toxenv: py

@@ -967,7 +967,7 @@ class BaseFEELLib(FEELLib):
     #
     # Conversion functions
     #
-    def asList(self, *args) -> list[Any]:
+    def asList(self, *args) -> LIST:
         if len(args) == 0:
             return []
         else:

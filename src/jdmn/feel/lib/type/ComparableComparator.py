@@ -15,7 +15,7 @@ from typing import Optional, Union
 
 from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
 
-comparable = Union[float | str | datetime.date | datetime.time | datetime.datetime]
+comparable = Union[float, str, datetime.date, datetime.time, datetime.datetime]
 
 
 class ComparableComparator(RelationalComparator):

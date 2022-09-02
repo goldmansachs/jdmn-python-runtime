@@ -22,7 +22,6 @@ from jdmn.feel.lib.type.range.DefaultRangeLib import DefaultRangeLib
 from jdmn.feel.lib.type.string.DefaultStringLib import DefaultStringLib
 from jdmn.feel.lib.type.time.DefaultDateTimeLib import DefaultDateTimeLib
 from jdmn.feel.lib.type.time.DefaultDurationLib import DefaultDurationLib
-from jdmn.runtime.Context import Context
 from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
 from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 from jdmn.runtime.Range import Range
@@ -202,7 +201,7 @@ class BaseStandardFEELLib(BaseFEELLib):
 
     def abs(self, n: Any) -> Any:
         try:
-            if isinstance(n, NUMBER):
+            if self.isNumber(n):
                 return self.numberLib.abs(n)
             else:
                 return self.durationLib.abs(n)
@@ -558,11 +557,11 @@ class BaseStandardFEELLib(BaseFEELLib):
             elif type(value1) != type(value2):
                 # Different kind
                 return False
-            elif isinstance(value1, NUMBER):
+            elif self.isNumber(value1):
                 return self.numericType.numericIs(value1, value2)
-            elif isinstance(value1, BOOLEAN):
+            elif self.isBoolean(value1):
                 return self.booleanType.booleanIs(value1, value2)
-            elif isinstance(value1, STRING):
+            elif self.isString(value1):
                 return self.stringType.stringIs(value1, value2)
             elif self.isDate(value1):
                 return self.dateType.dateIs(value1, value2)
@@ -572,11 +571,11 @@ class BaseStandardFEELLib(BaseFEELLib):
                 return self.dateTimeType.dateTimeIs(value1, value2)
             elif self.isDuration(value1):
                 return self.durationType.durationIs(value1, value2)
-            elif isinstance(value1, LIST):
+            elif self.isList(value1):
                 return self.listType.listIs(value1, value2)
-            elif isinstance(value1, Range):
+            elif self.isRange(value1):
                 return self.rangeType.rangeIs(value1, value2)
-            elif isinstance(value1, Context):
+            elif self.isContext(value1):
                 return self.contextType.contextIs(value1, value2)
             else:
                 self.logError("'{}' is not supported yet".format(value1.getClass().getSimpleName()))

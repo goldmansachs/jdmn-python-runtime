@@ -47,7 +47,7 @@ class DefaultContextType(BaseType):
         return self.booleanType.booleanNot(self.contextEqual(c1, c2))
 
     def getEntries(self, m: Any) -> LIST:
-        if isinstance(m, Context):
+        if self.isContext(m):
             result = []
             keys = m.getBindings().keys()
             for key in keys:
@@ -57,7 +57,7 @@ class DefaultContextType(BaseType):
             return None
 
     def getValue(self, context: Any, key: Any) -> Any:
-        if isinstance(context, Context):
+        if self.isContext(context):
             return context.get(key)
         else:
             return None
