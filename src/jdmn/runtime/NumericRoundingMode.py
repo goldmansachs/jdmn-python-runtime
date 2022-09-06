@@ -14,12 +14,12 @@ from enum import Enum
 
 
 class NumericRoundingMode(Enum):
-    UP = "up",
-    DOWN = "down",
-    HALF_UP = "half up",
-    HALF_DOWN = "half down",
-    HALF_EVEN = "half even",
-    UNKNOWN = ""
+    UP = "up", "ROUND_UP",
+    DOWN = "down", "ROUND_DOWN",
+    HALF_UP = "half up", "ROUND_HALF_UP"
+    HALF_DOWN = "half down", "ROUND_HALF_DOWN"
+    HALF_EVEN = "half even", "ROUND_HALF_EVEN",
+    UNKNOWN = "", ""
 
     def __new__(cls, *args, **kwds):
         value = len(cls.__members__) + 1
@@ -27,14 +27,16 @@ class NumericRoundingMode(Enum):
         obj._value_ = value
         return obj
 
-    def __init__(self, name):
+    def __init__(self, name, pMode):
         self.displayName = name
+        self.pMode = pMode
 
-    def fromName(self, name: str) -> 'NumericRoundingMode':
-        for policy in NumericRoundingMode:
-            if policy.displayName == name:
-                return policy
-        return self.UNKNOWN
+    @staticmethod
+    def fromName(name: str) -> 'NumericRoundingMode':
+        for mode in NumericRoundingMode:
+            if mode.displayName == name:
+                return mode
+        return NumericRoundingMode.UNKNOWN
 
     def allowedValues(self):
         return [x for x in NumericRoundingMode if x != NumericRoundingMode.UNKNOWN]

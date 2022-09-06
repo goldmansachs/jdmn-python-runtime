@@ -23,6 +23,7 @@ from jdmn.feel.lib.type.string.DefaultStringLib import DefaultStringLib
 from jdmn.feel.lib.type.time.DefaultDateTimeLib import DefaultDateTimeLib
 from jdmn.feel.lib.type.time.DefaultDurationLib import DefaultDurationLib
 from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
+from jdmn.runtime.LambdaExpression import LambdaExpression
 from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 from jdmn.runtime.Range import Range
 
@@ -636,9 +637,9 @@ class BaseStandardFEELLib(BaseFEELLib):
 
     def append(self, list: LIST, *items):
         try:
-            return self.listLib.append(list, items)
+            return self.listLib.append(list, *items)
         except Exception as e:
-            message: STRING = "append({}, {})".format(list, items)
+            message: STRING = "append({}, {})".format(list, *items)
             self.logError(message, e)
             return None
 
@@ -684,7 +685,7 @@ class BaseStandardFEELLib(BaseFEELLib):
 
     def concatenate(self, *lists) -> LIST:
         try:
-            return self.listLib.concatenate(lists)
+            return self.listLib.concatenate(*lists)
         except Exception as e:
             message: STRING = "concatenate({})".format(str(lists))
             self.logError(message, e)
@@ -756,9 +757,9 @@ class BaseStandardFEELLib(BaseFEELLib):
 
     def median(self, *args) -> NUMBER:
         try:
-            return self.numberLib.median(args)
+            return self.numberLib.median(*args)
         except Exception as e:
-            message: STRING = "median({})".format(args)
+            message: STRING = "median({})".format(*args)
             self.logError(message, e)
             return None
 
@@ -766,15 +767,15 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.stddev(*args)
         except Exception as e:
-            message: STRING = "stddev({})".format(args)
+            message: STRING = "stddev({})".format(*args)
             self.logError(message, e)
             return None
 
     def mode(self, *args) -> LIST:
         try:
-            return self.numberLib.mode(args)
+            return self.numberLib.mode(*args)
         except Exception as e:
-            message: STRING = "mode({})".format(args)
+            message: STRING = "mode({})".format(*args)
             self.logError(message, e)
             return None
 
@@ -785,9 +786,9 @@ class BaseStandardFEELLib(BaseFEELLib):
             message: STRING = "collect({}, {})".format(result, list)
             self.logError(message, e)
 
-    def sort(self, list: LIST, comparator):
+    def sort(self, list: LIST, precedes: LambdaExpression) -> LIST:
         try:
-            return self.listLib.sort(list, comparator)
+            return self.listLib.sort(list, precedes)
         except Exception as e:
             message: STRING = "sort({})".format(list)
             self.logError(message, e)

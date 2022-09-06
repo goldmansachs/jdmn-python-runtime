@@ -15,6 +15,7 @@ from typing import List, Any
 
 from jdmn.feel.lib.Types import STRING, NUMBER
 from jdmn.feel.lib.Utils import varArgToList
+from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 
 
 class DefaultNumericLib:
@@ -50,8 +51,18 @@ class DefaultNumericLib:
             return context.create_decimal(n)
 
     # Extension to DMN 1.3
-    def round(self, n: NUMBER, scale: NUMBER, mode) -> NUMBER:
-        raise Exception("Not supported yet")
+    def round(self, n: NUMBER, scale: NUMBER, mode: NumericRoundingMode) -> NUMBER:
+        if n is None or scale is None or mode is None or mode == NumericRoundingMode.UNKNOWN:
+            return None
+
+        prec = int(scale)
+        if prec < 0:
+            raise Exception("Scale '{}' is not supported yet".format(scale))
+        elif prec == 0:
+            fmt = "1"
+        else:
+            fmt = ".{}1".format("0" * (prec - 1))
+        return n.quantize(Decimal(fmt), rounding=mode.pMode)
 
     def floor(self, n: NUMBER, scale: NUMBER = None) -> NUMBER:
         # if scale is None:

@@ -10,9 +10,11 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Any, Callable
+from functools import cmp_to_key
+from typing import Any
 
 from jdmn.feel.lib.Types import BOOLEAN, LIST, INT
+from jdmn.runtime.LambdaExpression import LambdaExpression
 
 
 class DefaultListLib:
@@ -26,10 +28,22 @@ class DefaultListLib:
         raise Exception("Not supported yet")
 
     def sublist(self, list_: LIST, position: INT, length: INT = None) -> LIST:
-        raise Exception("Not supported yet")
+        result = []
+        if list_ is None or self.isOutOfBounds(list_, position):
+            return result
+        if position < 0:
+            startIndex = len(list_) + position
+        else:
+            startIndex = position - 1
+        endIndex = startIndex + length
+        return list_[startIndex: endIndex]
 
     def concatenate(self, *lists) -> LIST:
-        raise Exception("Not supported yet")
+        result = []
+        if lists is not None:
+            for list_ in lists:
+                result.extend(list_)
+        return result
 
     def insertBefore(self, list_: LIST, position: INT, newItem: Any) -> LIST:
         raise Exception("Not supported yet")
@@ -61,5 +75,15 @@ class DefaultListLib:
                 else:
                     result.append(obj)
 
-    def sort(self, list_: LIST, comparator: Callable) -> LIST:
-        raise Exception("Not supported yet")
+    def sort(self, list_: LIST, precedes: LambdaExpression) -> LIST:
+        clone = []
+        clone.extend(list_)
+        clone.sort(key=cmp_to_key(lambda o1, o2: -1 if precedes.apply(o1, o2) else (0 if o1 is o1 == o2 else 1)))
+        return clone
+
+    def isOutOfBounds(self, list_: LIST, position: int) -> bool:
+        length = len(list_)
+        if position < 0:
+            return not (-length <= position)
+        else:
+            return not (1 <= position <= length)
