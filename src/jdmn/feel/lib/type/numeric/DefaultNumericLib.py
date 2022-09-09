@@ -41,14 +41,7 @@ class DefaultNumericLib:
         if n is None or scale is None:
             return None
 
-        prec = int(scale)
-        if prec < 0:
-            raise Exception("Scale '{}' is not supported yet".format(scale))
-        elif prec == 0:
-            return n.to_integral(rounding=ROUND_HALF_EVEN)
-        else:
-            context = Context(prec=prec, rounding=ROUND_HALF_EVEN)
-            return context.create_decimal(n)
+        return self.round(n, scale, NumericRoundingMode.HALF_EVEN)
 
     # Extension to DMN 1.3
     def round(self, n: NUMBER, scale: NUMBER, mode: NumericRoundingMode) -> NUMBER:
@@ -57,11 +50,11 @@ class DefaultNumericLib:
 
         prec = int(scale)
         if prec < 0:
-            raise Exception("Scale '{}' is not supported yet".format(scale))
+            fmt = "1E{}".format(- prec)
         elif prec == 0:
-            fmt = "1"
+            fmt = "1E0"
         else:
-            fmt = ".{}1".format("0" * (prec - 1))
+            fmt = "1E-{}".format(prec)
         return n.quantize(Decimal(fmt), rounding=mode.pMode)
 
     def floor(self, n: NUMBER, scale: NUMBER = None) -> NUMBER:

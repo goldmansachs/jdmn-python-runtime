@@ -13,6 +13,7 @@
 from jdmn.feel.lib.BaseFEELLibTest import BaseFEELLibTest
 from jdmn.feel.lib.Types import STRING
 from jdmn.runtime.Context import Context
+from jdmn.runtime.LambdaExpression import LambdaExpression
 from jdmn.runtime.Range import Range
 
 
@@ -955,13 +956,7 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertEqual(["1", "2", "3"], result)
 
     def testSort(self):
-        comparator = None
-        # new LambdaExpression<Boolean>() {
-        #     @Override
-        #     public Boolean apply(Object... args) {
-        #         String s1 = (String) args[0]
-        #         String s2 = (String) args[1]
-        #         return s1.compareTo(s2) < 0
+        comparator = LambdaExpression(lambda *args: (x := args[0], y := args[1], self.getLib().stringLessThan(x, y)))
 
         self.assertIsNone(self.getLib().sort(None, None))
         self.assertIsNone(self.getLib().sort(None, comparator))

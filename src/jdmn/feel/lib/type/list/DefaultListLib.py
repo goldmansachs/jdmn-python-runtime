@@ -78,7 +78,7 @@ class DefaultListLib:
     def sort(self, list_: LIST, precedes: LambdaExpression) -> LIST:
         clone = []
         clone.extend(list_)
-        clone.sort(key=cmp_to_key(lambda o1, o2: -1 if precedes.apply(o1, o2) else (0 if o1 is o1 == o2 else 1)))
+        clone.sort(key=cmp_to_key(lambda o1, o2: -1 if precedes.apply(o1, o2) else (0 if o1 == o2 else 1)))
         return clone
 
     def isOutOfBounds(self, list_: LIST, position: int) -> bool:

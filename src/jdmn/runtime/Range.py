@@ -57,4 +57,4 @@ class Range:
         return result
 
     def __str__(self):
-        return "Range({},{},{},{})".format(self.startIncluded, self.start.toString(), self.end.toString(), self.endIncluded)
+        return "Range({},{},{},{})".format(self.startIncluded, self.start, self.end, self.endIncluded)

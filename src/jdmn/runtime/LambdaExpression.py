@@ -15,4 +15,8 @@ class LambdaExpression:
         self.lambda_ = lambda_
 
     def apply(self, *args):
-        return self.lambda_(*args)
+        res = self.lambda_(*args)
+        if isinstance(res, tuple):
+            return res[len(res) - 1]
+        else:
+            return res
