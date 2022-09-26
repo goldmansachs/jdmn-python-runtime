@@ -10,23 +10,22 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from decimal import Decimal
-from typing import Any
+from jdmn.feel.lib.Types import DATE_TIME_UNION
+from jdmn.feel.lib.type.time.BaseDateTimeComparator import BaseDateTimeComparator
+from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 
-from jdmn.feel.lib.type.ComparableComparator import ComparableComparator
 
-
-class NumericComparator(ComparableComparator):
+class DefaultBaseDateTimeComparator(BaseDateTimeComparator):
     def __init__(self):
         super().__init__()
+        self.__calendarType = DefaultCalendarType()
 
-    def compareTo(self, first: str, second: str) -> int:
-        if first == second:
+    def compareTo(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
+        firstValue = self.__calendarType.value(first)
+        secondValue = self.__calendarType.value(second)
+        if firstValue == secondValue:
             return 0
-        elif first < second:
+        elif firstValue < secondValue:
             return -1
         else:
             return 1
-
-    def isType(self, arg: Any) -> bool:
-        return isinstance(arg, Decimal)

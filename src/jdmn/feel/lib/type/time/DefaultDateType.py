@@ -16,13 +16,13 @@ from typing import Optional
 from isodate import Duration
 
 from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
-from jdmn.feel.lib.type.time.DefaultDateTimeComparator import DefaultDateTimeComparator
+from jdmn.feel.lib.type.time.DefaultDateComparator import DefaultDateComparator
 
 
 class DefaultDateType(DefaultCalendarType):
     def __init__(self):
         super().__init__()
-        self.__dateComparator = DefaultDateTimeComparator()
+        self.__dateComparator = DefaultDateComparator()
 
     def dateIs(self, first: Optional[date], second: Optional[date]) -> Optional[bool]:
         if first is None or second is None:

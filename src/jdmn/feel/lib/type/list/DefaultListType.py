@@ -38,7 +38,7 @@ class DefaultListType(BaseType):
         elif list2 is None:
             return False
         else:
-            return list1 == list2
+            return self.isList(list1) and self.isList(list2) and list1 == list2
 
     def listNotEqual(self, list1: Optional[List[Any]], list2: Optional[List[Any]]) -> Optional[bool]:
         return self.booleanType.booleanNot(self.listEqual(list1, list2))

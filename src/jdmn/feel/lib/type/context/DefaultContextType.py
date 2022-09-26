@@ -43,7 +43,7 @@ class DefaultContextType(BaseType):
         elif c2 is None:
             return False
         else:
-            return c1 == c2
+            return self.isContext(c1) and self.isContext(c2) and c1 == c2
 
     def contextNotEqual(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         return self.booleanType.booleanNot(self.contextEqual(c1, c2))

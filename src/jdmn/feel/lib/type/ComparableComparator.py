@@ -11,8 +11,9 @@
 # specific language governing permissions and limitations under the License.
 #
 import datetime
-from typing import Optional, Union
+from typing import Union, Any
 
+from jdmn.feel.lib.Types import BOOLEAN
 from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
 
 comparable = Union[float, str, datetime.date, datetime.time, datetime.datetime]
@@ -25,21 +26,24 @@ class ComparableComparator(RelationalComparator):
     def compare(self, first: comparable, second: comparable) -> int:
         return self.compareTo(first, second)
 
-    def equalTo(self, first: comparable, second: comparable) -> Optional[bool]:
+    def equalTo(self, first: comparable, second: comparable) -> BOOLEAN:
         return self.applyOperator(first, second, [
             lambda: True,
             lambda: False,
             lambda: False,
-            lambda: self.compareTo(first, second) == 0
+            lambda: self.isType(first) and self.isType(second) and self.compareTo(first, second) == 0
         ])
 
-    def lessThan(self, first: comparable, second: comparable) -> Optional[bool]:
+    def lessThan(self, first: comparable, second: comparable) -> BOOLEAN:
         return self.applyOperator(first, second, [
             lambda: None,
             lambda: None,
             lambda: None,
-            lambda: self.compareTo(first, second) < 0
+            lambda: self.isType(first) and self.isType(second) and self.compareTo(first, second) < 0
         ])
 
     def compareTo(self, first: comparable, second: comparable) -> int:
+        pass
+
+    def isType(self, arg: Any) -> bool:
         pass

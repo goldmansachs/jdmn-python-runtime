@@ -67,7 +67,7 @@ class DefaultBooleanType(BaseType):
         elif second is None:
             return False
         else:
-            return first == second
+            return self.isBoolean(first) and self.isBoolean(second) and first == second
 
     def booleanNotEqual(self, first: Optional[bool], second: Optional[bool]) -> Optional[bool]:
         return self.booleanNot(self.booleanEqual(first, second))

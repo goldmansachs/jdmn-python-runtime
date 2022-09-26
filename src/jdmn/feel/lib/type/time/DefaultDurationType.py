@@ -16,13 +16,13 @@ from typing import Optional
 from isodate import Duration
 
 from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
-from jdmn.feel.lib.type.time.DefaultDateTimeComparator import DefaultDateTimeComparator
+from jdmn.feel.lib.type.time.DefaultDurationComparator import DefaultDurationComparator
 
 
 class DefaultDurationType(DefaultCalendarType):
     def __init__(self):
         super().__init__()
-        self.__timeComparator = DefaultDateTimeComparator()
+        self.__timeComparator = DefaultDurationComparator()
 
     def isYearsAndMonthsDuration(self, value):
         raise Exception("Not supported yet")
