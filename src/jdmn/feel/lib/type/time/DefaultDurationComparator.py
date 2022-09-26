@@ -10,10 +10,8 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Any
 
-from isodate import Duration
-
+from jdmn.feel.lib.Types import DURATION
 from jdmn.feel.lib.type.time.DefaultBaseDateTimeComparator import DefaultBaseDateTimeComparator
 
 
@@ -21,6 +19,12 @@ class DefaultDurationComparator(DefaultBaseDateTimeComparator):
     def __init__(self):
         super().__init__()
 
-    @staticmethod
-    def isType(obj: Any) -> bool:
-        return isinstance(obj, Duration)
+    def compareTo(self, first: DURATION, second: DURATION) -> int:
+        firstValue = self.calendarType.durationValue(first)
+        secondValue = self.calendarType.durationValue(second)
+        if firstValue == secondValue:
+            return 0
+        elif firstValue < secondValue:
+            return -1
+        else:
+            return 1

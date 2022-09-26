@@ -10,76 +10,129 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import datetime
-from typing import Optional
+import decimal
+from decimal import Decimal
 
 from isodate import Duration
 
+from jdmn.feel.lib.Types import DURATION, BOOLEAN, NUMBER
 from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 from jdmn.feel.lib.type.time.DefaultDurationComparator import DefaultDurationComparator
+from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
 
 
 class DefaultDurationType(DefaultCalendarType):
     def __init__(self):
         super().__init__()
-        self.__timeComparator = DefaultDurationComparator()
+        self.__durationComparator = DefaultDurationComparator()
 
-    def isYearsAndMonthsDuration(self, value):
-        raise Exception("Not supported yet")
-
-    def isDaysAndTimeDuration(self, value):
-        raise Exception("Not supported yet")
-
-    @staticmethod
-    def hasTimezone(calendar: datetime) -> bool:
-        return calendar.tzinfo is None
-
-    def durationIs(self, first: Duration, second: Duration) -> Optional[bool]:
+    def durationIs(self, first: DURATION, second: DURATION) -> BOOLEAN:
         if first is None or second is None:
             return first == second
 
-        return self.sameTime(first, second)
+        if self.isYearsAndMonthsDuration(first) and self.isYearsAndMonthsDuration(second):
+            return first == second
+        elif self.isDaysAndTimeDuration(first) and self.isDaysAndTimeDuration(second):
+            return first == second
+        else:
+            return False
 
-    def durationValue(self, duration):
-        raise Exception("Not supported yet")
+    def durationEqual(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.equalTo(first, second)
 
-    def durationEqual(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.__timeComparator.equalTo(first, second)
+    def durationNotEqual(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.notEqualTo(first, second)
 
-    def durationNotEqual(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.booleanType.booleanNot(self.timeEqual(first, second))
+    def durationLessThan(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.lessThan(first, second)
 
-    def durationLessThan(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.__timeComparator.lessThan(first, second)
+    def durationGreaterThan(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.greaterThan(first, second)
 
-    def durationGreaterThan(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.__timeComparator.greaterThan(first, second)
+    def durationLessEqualThan(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.lessEqualThan(first, second)
 
-    def durationLessEqualThan(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.__timeComparator.lessEqualThan(first, second)
+    def durationGreaterEqualThan(self, first: DURATION, second: DURATION) -> BOOLEAN:
+        return self.__durationComparator.greaterEqualThan(first, second)
 
-    def durationGreaterEqualThan(self, first: Duration, second: Duration) -> Optional[bool]:
-        return self.__timeComparator.greaterEqualThan(first, second)
-
-    def durationAdd(self, first: Duration, second: Duration) -> Optional[Duration]:
+    def durationAdd(self, first: DURATION, second: DURATION) -> DURATION:
         if first is None or second is None:
             return None
 
-        durationInSeconds = self.durationValue(first) + self.durationValue(second)
-        return Duration(seconds=durationInSeconds)
+        if self.isYearsAndMonthsDuration(first) and self.isYearsAndMonthsDuration(second):
+            totalMonths = self.monthsValue(first) + self.monthsValue(second)
+            return Duration(months=totalMonths)
+        elif self.isDaysAndTimeDuration(first) and self.isDaysAndTimeDuration(second):
+            durationInSeconds = self.secondsValue(first) + self.secondsValue(second)
+            return Duration(seconds=durationInSeconds)
+        else:
+            raise DMNRuntimeException("Cannot add '{}' and '{}'".format(first, second))
 
-    def durationSubtract(self, first: Duration, second: Duration) -> Optional[Duration]:
+    def durationSubtract(self, first: DURATION, second: DURATION) -> DURATION:
         if first is None or second is None:
             return None
 
-        durationInSeconds = self.durationValue(first) - self.durationValue(second)
-        return Duration(seconds=durationInSeconds)
+        return self.durationAdd(first, second.__neg__())
 
-    def durationDivide(self, first, second):
-        raise Exception("Not supported yet")
+    def durationDivide(self, first: DURATION, second: DURATION) -> NUMBER:
+        if first is None or second is None:
+            return None
 
-    def durationMultiplyNumber(self, first, second):
-        raise Exception("Not supported yet")
+        if self.isYearsAndMonthsDuration(first) and self.isYearsAndMonthsDuration(second):
+            firstValue = Decimal(self.monthsValue(first))
+            secondValue = Decimal(self.monthsValue(second))
+            return self.divideNumber(firstValue, secondValue)
+        elif self.isDaysAndTimeDuration(first) and self.isDaysAndTimeDuration(second):
+            firstValue = Decimal(self.secondsValue(first))
+            secondValue = Decimal(self.secondsValue(second))
+            return self.divideNumber(firstValue, secondValue)
+        else:
+            raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
 
-    def durationDivideNumber(self, first, second):
-        raise Exception("Not supported yet")
+    def durationMultiplyNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+        if first is None or second is None:
+            return None
+
+        if self.isYearsAndMonthsDuration(first):
+            firstValue = Decimal(self.monthsValue(first))
+            totalMonths = self.multiplyNumber(firstValue, second)
+            return Duration(months=totalMonths.to_integral())
+        elif self.isDaysAndTimeDuration(first):
+            firstValue = Decimal(self.secondsValue(first))
+            durationInSeconds = int(self.multiplyNumber(firstValue, second))
+            return Duration(seconds=durationInSeconds)
+        else:
+            raise DMNRuntimeException("Cannot multiply '{}' and '{}'".format(first, second))
+
+    def durationDivideNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+        if first is None or second is None:
+            return None
+
+        if self.isYearsAndMonthsDuration(first):
+            firstValue = Decimal(self.monthsValue(first))
+            totalMonths = self.divideNumber(firstValue, second)
+            return Duration(months=totalMonths.to_integral())
+        elif self.isDaysAndTimeDuration(first):
+            firstValue = Decimal(self.secondsValue(first))
+            durationInSeconds = int(self.divideNumber(firstValue, second))
+            return Duration(seconds=durationInSeconds)
+        else:
+            raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
+
+    @staticmethod
+    def multiplyNumber(firstValue: NUMBER, secondValue: NUMBER) -> NUMBER:
+        # DECIMAL 128
+        with decimal.localcontext() as ctx:
+            ctx.prec = 34
+            return firstValue * secondValue
+
+    @staticmethod
+    def divideNumber(firstValue: NUMBER, secondValue: NUMBER) -> NUMBER:
+        if secondValue == 0:
+            return None
+
+        # DECIMAL 128
+        with decimal.localcontext() as ctx:
+            ctx.rounding = decimal.ROUND_HALF_DOWN
+            ctx.prec = 34
+            return firstValue / secondValue

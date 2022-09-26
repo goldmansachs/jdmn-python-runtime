@@ -10,8 +10,6 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, datetime
-from typing import Any
 
 from jdmn.feel.lib.type.time.DefaultBaseDateTimeComparator import DefaultBaseDateTimeComparator
 
@@ -19,7 +17,3 @@ from jdmn.feel.lib.type.time.DefaultBaseDateTimeComparator import DefaultBaseDat
 class DefaultDateComparator(DefaultBaseDateTimeComparator):
     def __init__(self):
         super().__init__()
-
-    @staticmethod
-    def isType(obj: Any) -> bool:
-        return isinstance(obj, date) and not isinstance(obj, datetime)

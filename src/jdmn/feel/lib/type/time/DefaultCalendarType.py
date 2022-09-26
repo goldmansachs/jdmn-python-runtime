@@ -10,10 +10,12 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, datetime, time, timezone
+from datetime import date, datetime, time, timezone, timedelta
 from typing import Optional, Any
 
-from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INT, DATE_TIME_UNION
+from isodate import Duration
+
+from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INT, DATE_TIME_UNION, DURATION, LONG
 from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 
@@ -34,6 +36,18 @@ class DefaultCalendarType(BaseType):
     @staticmethod
     def isDateTime(obj: Any) -> bool:
         return isinstance(obj, datetime)
+
+    def isDuration(self, value: Any):
+        return isinstance(value, Duration)
+
+    def isYearsAndMonthsDuration(self, value):
+        return isinstance(value, Duration) and value.tdelta.total_seconds() == 0.0
+
+    def isDaysAndTimeDuration(self, value: Any):
+        if value is None:
+            return False
+        else:
+            return isinstance(value, timedelta)
 
     @staticmethod
     def dateToDateTime(date_: DATE) -> datetime:
@@ -93,3 +107,31 @@ class DefaultCalendarType(BaseType):
 
     def canNotSubtract(self, first: DATE_TIME, second: DATE_TIME) -> bool:
         return first.tzinfo is None and second.tzinfo is not None or first.tzinfo is not None and second.tzinfo is None
+
+    def durationValue(self, duration: Duration) -> LONG:
+        if duration is None:
+            return None
+
+        if self.isYearsAndMonthsDuration(duration):
+            return self.monthsValue(duration)
+        elif self.isDaysAndTimeDuration(duration):
+            return self.secondsValue(duration)
+        else:
+            return int((datetime(1970, 1, 1) + duration).timestamp())
+
+    @staticmethod
+    def monthsValue(duration: DURATION) -> LONG:
+        if duration is None:
+            return None
+
+        years = 0 if duration.years is None else duration.years
+        months = 0 if duration.months is None else duration.months
+        totalMonths = 12 * years + months
+        return totalMonths
+
+    @staticmethod
+    def secondsValue(duration: DURATION) -> LONG:
+        if duration is None:
+            return None
+
+        return int(duration.total_seconds())

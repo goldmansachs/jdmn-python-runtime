@@ -11,7 +11,7 @@
 # specific language governing permissions and limitations under the License.
 #
 import typing
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from decimal import Decimal
 
 from isodate import Duration
@@ -26,7 +26,7 @@ DATE = typing.Optional[date]
 TIME = typing.Optional[time]
 DATE_TIME = typing.Optional[datetime]
 DATE_TIME_UNION = typing.Optional[typing.Union[date, time, datetime]]
-DURATION = typing.Optional[Duration]
+DURATION = typing.Optional[typing.Union[Duration, timedelta]]
 LIST = typing.Optional[typing.List[typing.Any]]
 CONTEXT = typing.Optional[Context]
 RANGE = typing.Optional[Range]

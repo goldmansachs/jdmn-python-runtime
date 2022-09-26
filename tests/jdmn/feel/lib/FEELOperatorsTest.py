@@ -706,6 +706,178 @@ class FEELOperatorsTest(TestCase):
         self.assertEqualsDateTime("2016-02-02T13:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
 
     #
+    # Duration operators
+    #
+    def testIsDuration(self):
+        self.assertFalse(self.getLib().isDuration(None))
+
+        # years and months
+        self.assertTrue(self.getLib().isYearsAndMonthsDuration(self.makeDuration("P1Y2M")))
+        self.assertTrue(self.getLib().isYearsAndMonthsDuration(self.makeDuration("-P1Y2M")))
+
+        # days and time
+        self.assertTrue(self.getLib().isDaysAndTimeDuration(self.makeDuration("P1DT2H3M4S")))
+        self.assertTrue(self.getLib().isDaysAndTimeDuration(self.makeDuration("-P1DT2H3M4S")))
+
+        # mixture
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("P1Y2M1DT2H3M4S")))
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("-P1Y2M1DT2H3M4S")))
+
+    def testDurationValue(self):
+        self.assertIsNone(self.getLib().durationValue(None))
+
+        # years and months
+        self.assertEqual(12 + 2, self.getLib().durationValue(self.makeDuration("P1Y2M")))
+        self.assertEqual(-(12 + 2), self.getLib().durationValue(self.makeDuration("-P1Y2M")))
+
+        # days and time
+        self.assertEqual((24 + 2) * 3600 + 3 * 60 + 4, self.getLib().durationValue(self.makeDuration("P1DT2H3M4S")))
+        self.assertEqual(- ((24 + 2) * 3600 + 3 * 60 + 4), self.getLib().durationValue(self.makeDuration("-P1DT2H3M4S")))
+
+        # mixture
+        self.assertEqual(36727384, self.getLib().durationValue(self.makeDuration("P1Y2M1DT2H3M4S")))
+#        self.assertEqual(-36727384, self.getLib().durationValue(self.makeDuration("-P1Y2M1DT2H3M4S")))
+
+    def testDurationIs(self):
+        self.assertTrue(self.getLib().durationIs(None, None))
+        self.assertFalse(self.getLib().durationIs(None, self.makeDuration("P1Y1M")))
+        self.assertFalse(self.getLib().durationIs(self.makeDuration("P1Y1M"), None))
+
+        self.assertTrue(self.getLib().durationIs(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertTrue(self.getLib().durationIs(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertFalse(self.getLib().durationIs(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertTrue(self.getLib().durationIs(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertTrue(self.getLib().durationIs(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertFalse(self.getLib().durationIs(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+        # different semantic domains
+        # both are timedelta
+#        self.assertFalse(self.getLib().durationIs(self.makeDuration("P0Y"), self.makeDuration("P0D")))
+
+    def testDurationEqual(self):
+        self.assertTrue(self.getLib().durationEqual(None, None))
+        self.assertFalse(self.getLib().durationEqual(None, self.makeDuration("P1Y1M")))
+        self.assertFalse(self.getLib().durationEqual(self.makeDuration("P1Y1M"), None))
+
+        self.assertTrue(self.getLib().durationEqual(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertTrue(self.getLib().durationEqual(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertFalse(self.getLib().durationEqual(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertTrue(self.getLib().durationEqual(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertTrue(self.getLib().durationEqual(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertFalse(self.getLib().durationEqual(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationNotEqual(self):
+        self.assertFalse(self.getLib().durationNotEqual(None, None))
+        self.assertTrue(self.getLib().durationNotEqual(None, self.makeDuration("P1Y1M")))
+        self.assertTrue(self.getLib().durationNotEqual(self.makeDuration("P1Y1M"), None))
+
+        self.assertFalse(self.getLib().durationNotEqual(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertFalse(self.getLib().durationNotEqual(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertTrue(self.getLib().durationNotEqual(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertFalse(self.getLib().durationNotEqual(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertFalse(self.getLib().durationNotEqual(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertTrue(self.getLib().durationNotEqual(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationLessThan(self):
+        self.assertIsNone(self.getLib().durationLessThan(None, None))
+        self.assertIsNone(self.getLib().durationLessThan(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationLessThan(self.makeDuration("P1Y1M"), None))
+
+        self.assertFalse(self.getLib().durationLessThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertFalse(self.getLib().durationLessThan(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertTrue(self.getLib().durationLessThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertFalse(self.getLib().durationLessThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertFalse(self.getLib().durationLessThan(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertTrue(self.getLib().durationLessThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationGreaterThan(self):
+        self.assertIsNone(self.getLib().durationGreaterThan(None, None))
+        self.assertIsNone(self.getLib().durationGreaterThan(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationGreaterThan(self.makeDuration("P1Y1M"), None))
+
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertFalse(self.getLib().durationGreaterThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationLessEqualThan(self):
+        self.assertTrue(self.getLib().durationLessEqualThan(None, None))
+        self.assertIsNone(self.getLib().durationLessEqualThan(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationLessEqualThan(self.makeDuration("P1Y1M"), None))
+
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertTrue(self.getLib().durationLessEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationGreaterEqualThan(self):
+        self.assertTrue(self.getLib().durationGreaterEqualThan(None, None))
+        self.assertIsNone(self.getLib().durationGreaterEqualThan(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationGreaterEqualThan(self.makeDuration("P1Y1M"), None))
+
+        self.assertTrue(self.getLib().durationGreaterEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertTrue(self.getLib().durationGreaterEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P0Y13M")))
+        self.assertFalse(self.getLib().durationGreaterEqualThan(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertTrue(self.getLib().durationGreaterEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertTrue(self.getLib().durationGreaterEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P0DT25H")))
+        self.assertFalse(self.getLib().durationGreaterEqualThan(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationAdd(self):
+        self.assertIsNone(self.getLib().durationAdd(None, None))
+        self.assertIsNone(self.getLib().durationAdd(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationAdd(self.makeDuration("P1Y1M"), None))
+
+        self.assertEqual(self.makeDuration("P2Y2M"), self.getLib().durationAdd(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertEqual(self.makeDuration("P2Y3M"), self.getLib().durationAdd(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertEqual(self.makeDuration("P2DT2H"), self.getLib().durationAdd(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertEqual(self.makeDuration("P2DT3H"), self.getLib().durationAdd(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationSubtract(self):
+        self.assertIsNone(self.getLib().durationSubtract(None, None))
+        self.assertIsNone(self.getLib().durationSubtract(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().durationSubtract(self.makeDuration("P1Y1M"), None))
+
+        self.assertEqual(self.makeDuration("P0Y0M"), self.getLib().durationSubtract(self.makeDuration("P1Y1M"), self.makeDuration("P1Y1M")))
+        self.assertEqual(self.makeDuration("-P0Y1M"), self.getLib().durationSubtract(self.makeDuration("P1Y1M"), self.makeDuration("P1Y2M")))
+
+        self.assertEqual(self.makeDuration("P0DT0H"), self.getLib().durationSubtract(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
+        self.assertEqual(self.makeDuration("-P0DT1H"), self.getLib().durationSubtract(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+    def testDurationMultiply(self):
+        self.assertIsNone(self.getLib().durationMultiplyNumber(None, None))
+        self.assertIsNone(self.getLib().durationMultiplyNumber(None, self.makeNumber("2")))
+        self.assertIsNone(self.getLib().durationMultiplyNumber(self.makeDuration("P1Y1M"), None))
+
+        self.assertEqual(self.makeDuration("P2Y2M"), self.getLib().durationMultiplyNumber(self.makeDuration("P1Y1M"), self.makeNumber("2")))
+        self.assertEqual(self.makeDuration("-P2Y2M"), self.getLib().durationMultiplyNumber(self.makeDuration("P1Y1M"), self.makeNumber("-2")))
+
+        self.assertEqual(self.makeDuration("P2DT2H"), self.getLib().durationMultiplyNumber(self.makeDuration("P1DT1H"), self.makeNumber("2")))
+        self.assertEqual(self.makeDuration("-P2DT2H"), self.getLib().durationMultiplyNumber(self.makeDuration("P1DT1H"), self.makeNumber("-2")))
+
+    def testDurationDivide(self):
+        self.assertIsNone(self.getLib().durationDivideNumber(None, None))
+        self.assertIsNone(self.getLib().durationDivideNumber(None, self.makeNumber("2")))
+        self.assertIsNone(self.getLib().durationDivideNumber(self.makeDuration("P1Y1M"), None))
+
+        self.assertEqual(self.makeDuration("P0Y6M"), self.getLib().durationDivideNumber(self.makeDuration("P1Y1M"), self.makeNumber("2")))
+        self.assertEqual(self.makeDuration("P1Y1M"), self.getLib().durationDivideNumber(self.makeDuration("P2Y2M"), self.makeNumber("2")))
+
+        self.assertEqual(self.makeDuration("P0DT12H30M"), self.getLib().durationDivideNumber(self.makeDuration("P1DT1H"), self.makeNumber("2")))
+        self.assertEqual(self.makeDuration("P1DT1H"), self.getLib().durationDivideNumber(self.makeDuration("P2DT2H"), self.makeNumber("2")))
+
+    #
     # List operators
     #
     def testListIs(self):

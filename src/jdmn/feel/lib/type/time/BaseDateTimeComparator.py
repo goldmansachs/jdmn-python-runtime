@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Optional, Any
+from typing import Optional
 
 from jdmn.feel.lib.Types import DATE_TIME_UNION
 from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
@@ -31,7 +31,7 @@ class BaseDateTimeComparator(RelationalComparator):
                 lambda: True,
                 lambda: False,
                 lambda:False,
-                lambda: self.isType(first) and self.isType(second) and self.compareTo(first, second) == 0
+                lambda: type(first) == type(second) and self.compareTo(first, second) == 0
         ])
 
     def lessThan(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[bool]:
@@ -39,13 +39,9 @@ class BaseDateTimeComparator(RelationalComparator):
                 lambda: None,
                 lambda: None,
                 lambda: None,
-                lambda: self.isType(first) and self.isType(second) and self.compareTo(first, second) == -1
+                lambda: type(first) == type(second) and self.compareTo(first, second) == -1
             ])
 
     @staticmethod
     def compareTo(first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
-        pass
-
-    @staticmethod
-    def isType(obj: Any) -> bool:
         pass
