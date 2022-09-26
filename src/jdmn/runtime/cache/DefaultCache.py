@@ -26,13 +26,13 @@ class DefaultCache(Cache):
         return key in self.bindings.keys()
 
     def bind(self, key: str, value: Any) -> None:
-        self.LOGGER.debug("Bind '{}' to '{}'", key, value)
+        self.LOGGER.debug("Bind '%s' to '%s'", key, value)
         self.bindings[key] = value
 
     def lookup(self, key: str) -> Any:
         value = self.bindings[key]
 
-        self.LOGGER.debug("Retrieve '{}' = '{}'", key, value)
+        self.LOGGER.debug("Retrieve '%s' = '%s'", key, value)
 
         return value
 

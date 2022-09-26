@@ -16,6 +16,7 @@ from decimal import Decimal
 
 from isodate import Duration
 
+from jdmn.runtime.Context import Context
 from jdmn.runtime.Range import Range
 
 NUMBER = typing.Optional[Decimal]
@@ -27,6 +28,7 @@ DATE_TIME = typing.Optional[datetime]
 DATE_TIME_UNION = typing.Optional[typing.Union[date, time, datetime]]
 DURATION = typing.Optional[Duration]
 LIST = typing.Optional[typing.List[typing.Any]]
+CONTEXT = typing.Optional[Context]
 
 LONG = typing.Optional[int]
 INT = typing.Optional[int]

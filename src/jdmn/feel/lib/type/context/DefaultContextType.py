@@ -12,14 +12,13 @@
 #
 from typing import Any
 
-from jdmn.feel.lib.Types import BOOLEAN, LIST
+from jdmn.feel.lib.Types import BOOLEAN, LIST, CONTEXT
 from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from jdmn.runtime.Context import Context
 
 
 class DefaultContextType(BaseType):
-
     def __init__(self):
         BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
@@ -27,13 +26,16 @@ class DefaultContextType(BaseType):
     def isContext(self, value: Any) -> bool:
         return isinstance(value, Context)
 
-    def contextValue(self, value: Context) -> Context:
-        return value
+    def contextValue(self, value: CONTEXT) -> CONTEXT:
+        if isinstance(value, Context):
+            return value
+        else:
+            return None
 
-    def contextIs(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextIs(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         return self.contextEqual(c1, c2)
 
-    def contextEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextEqual(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         if c1 is None and c2 is None:
             return True
         elif c1 is None:
@@ -43,10 +45,10 @@ class DefaultContextType(BaseType):
         else:
             return c1 == c2
 
-    def contextNotEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextNotEqual(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         return self.booleanType.booleanNot(self.contextEqual(c1, c2))
 
-    def getEntries(self, m: Any) -> LIST:
+    def getEntries(self, m: CONTEXT) -> LIST:
         if self.isContext(m):
             result = []
             keys = m.getBindings().keys()
@@ -56,7 +58,7 @@ class DefaultContextType(BaseType):
         else:
             return None
 
-    def getValue(self, context: Any, key: Any) -> Any:
+    def getValue(self, context: CONTEXT, key: Any) -> Any:
         if self.isContext(context):
             return context.get(key)
         else:

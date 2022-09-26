@@ -20,6 +20,7 @@ from isodate import Duration
 from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
 from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
 from jdmn.runtime.Assert import Assert
+from jdmn.runtime.Context import Context
 
 
 class FEELOperatorsTest(TestCase):
@@ -729,6 +730,60 @@ class FEELOperatorsTest(TestCase):
 
         self.assertTrue(self.getLib().listNotEqual(self.makeList("a"), self.makeList("b")))
         self.assertFalse(self.getLib().listNotEqual(self.makeList("a"), self.makeList("a")))
+
+    #
+    # Context operators
+    #
+    def testIsContext(self):
+        c1 = Context()
+
+        self.assertFalse(self.getLib().isContext(None))
+        self.assertFalse(self.getLib().isContext(self.getLib().number("1")))
+        self.assertTrue(self.getLib().isContext(c1))
+
+    def testContextValue(self):
+        c1 = Context()
+
+        self.assertIsNone(self.getLib().contextValue(None))
+        self.assertIsNone(self.getLib().contextValue(self.getLib().number("123")))
+        self.assertEqual(c1, self.getLib().contextValue(c1))
+
+    def testContextIs(self):
+        c1 = Context().add("m", "a")
+        c2 = Context().add("m", "b")
+        c3 = Context().add("m", "a")
+
+        self.assertTrue(self.getLib().contextIs(None, None))
+        self.assertFalse(self.getLib().contextIs(c1, None))
+        self.assertFalse(self.getLib().contextIs(None, c1))
+
+        self.assertTrue(self.getLib().contextIs(c1, c1))
+        self.assertFalse(self.getLib().contextIs(c1, c2))
+        self.assertTrue(self.getLib().contextIs(c1, c3))
+
+    def testContextEqual(self):
+        c1 = Context().add("m", "a")
+        c2 = Context().add("m", "b")
+        c3 = Context().add("m", "a")
+
+        self.assertTrue(self.getLib().contextEqual(None, None))
+        self.assertFalse(self.getLib().contextEqual(c1, None))
+        self.assertFalse(self.getLib().contextEqual(None, c1))
+
+        self.assertFalse(self.getLib().contextEqual(c1, c2))
+        self.assertTrue(self.getLib().contextEqual(c1, c3))
+
+    def testContextNotEqual(self):
+        c1 = Context().add("m", "a")
+        c2 = Context().add("m", "b")
+        c3 = Context().add("m", "a")
+
+        self.assertFalse(self.getLib().contextNotEqual(None, None))
+        self.assertTrue(self.getLib().contextNotEqual(c1, None))
+        self.assertTrue(self.getLib().contextNotEqual(None, c1))
+
+        self.assertTrue(self.getLib().contextNotEqual(c1, c2))
+        self.assertFalse(self.getLib().contextNotEqual(c1, c3))
 
     #
     # Common

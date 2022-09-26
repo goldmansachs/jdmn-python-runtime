@@ -13,7 +13,7 @@
 from typing import Any, Optional
 
 from jdmn.feel.lib.FEELLib import FEELLib
-from jdmn.feel.lib.Types import NUMBER, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, LONG, STRING
+from jdmn.feel.lib.Types import NUMBER, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, LONG, STRING, CONTEXT
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from jdmn.feel.lib.type.context.DefaultContextType import DefaultContextType
 from jdmn.feel.lib.type.function.DefaultFunctionType import DefaultFunctionType
@@ -25,7 +25,6 @@ from jdmn.feel.lib.type.time.DefaultDateTimeType import DefaultDateTimeType
 from jdmn.feel.lib.type.time.DefaultDateType import DefaultDateType
 from jdmn.feel.lib.type.time.DefaultDurationType import DefaultDurationType
 from jdmn.feel.lib.type.time.DefaultTimeType import DefaultTimeType
-from jdmn.runtime.Context import Context
 from jdmn.runtime.LazyEval import LazyEval
 from jdmn.runtime.Range import Range
 from jdmn.runtime.listener.EventListener import EventListener
@@ -827,7 +826,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def contextValue(self, value: Context) -> Context:
+    def contextValue(self, value: CONTEXT) -> CONTEXT:
         try:
             return self.contextType.contextValue(value)
         except Exception as e:
@@ -835,7 +834,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def contextIs(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextIs(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         try:
             return self.contextType.contextIs(c1, c2)
         except Exception as e:
@@ -843,7 +842,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def contextEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextEqual(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         try:
             return self.contextType.contextEqual(c1, c2)
         except Exception as e:
@@ -851,7 +850,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def contextNotEqual(self, c1: Any, c2: Any) -> BOOLEAN:
+    def contextNotEqual(self, c1: CONTEXT, c2: CONTEXT) -> BOOLEAN:
         try:
             return self.contextType.contextNotEqual(c1, c2)
         except Exception as e:
@@ -862,7 +861,7 @@ class BaseFEELLib(FEELLib):
     #
     # Context functions
     #
-    def getEntries(self, m: Any) -> LIST:
+    def getEntries(self, m: CONTEXT) -> LIST:
         try:
             return self.contextType.getEntries(m)
         except Exception as e:
@@ -870,7 +869,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def getValue(self, m: Any, key: Any) -> Any:
+    def getValue(self, m: CONTEXT, key: Any) -> Any:
         try:
             return self.contextType.getValue(m, key)
         except Exception as e:
