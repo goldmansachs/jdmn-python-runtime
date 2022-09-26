@@ -21,6 +21,7 @@ from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
 from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
 from jdmn.runtime.Assert import Assert
 from jdmn.runtime.Context import Context
+from jdmn.runtime.Range import Range
 
 
 class FEELOperatorsTest(TestCase):
@@ -784,6 +785,59 @@ class FEELOperatorsTest(TestCase):
 
         self.assertTrue(self.getLib().contextNotEqual(c1, c2))
         self.assertFalse(self.getLib().contextNotEqual(c1, c3))
+
+    #
+    # Range operators
+    #
+    def testIsRange(self):
+        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+
+        self.assertFalse(self.getLib().isRange(None))
+        self.assertFalse(self.getLib().isRange(self.getLib().number("1")))
+        self.assertTrue(self.getLib().isRange(r1))
+
+    def testRangeValue(self):
+        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+
+        self.assertIsNone(self.getLib().rangeValue(None))
+        self.assertEqual(r1, self.getLib().rangeValue(r1))
+
+    def testRangeIs(self):
+        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+        r2 = Range(True, self.getLib().number("1"), True, self.getLib().number("3"))
+        r3 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+
+        self.assertTrue(self.getLib().rangeIs(None, None))
+        self.assertFalse(self.getLib().rangeIs(r1, None))
+        self.assertFalse(self.getLib().rangeIs(None, r1))
+
+        self.assertTrue(self.getLib().rangeIs(r1, r1))
+        self.assertFalse(self.getLib().rangeIs(r1, r2))
+        self.assertTrue(self.getLib().rangeIs(r1, r3))
+
+    def testRangeEqual(self):
+        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+        r2 = Range(True, self.getLib().number("1"), True, self.getLib().number("3"))
+        r3 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+
+        self.assertTrue(self.getLib().rangeEqual(None, None))
+        self.assertFalse(self.getLib().rangeEqual(r1, None))
+        self.assertFalse(self.getLib().rangeEqual(None, r1))
+
+        self.assertFalse(self.getLib().rangeEqual(r1, r2))
+        self.assertTrue(self.getLib().rangeEqual(r1, r3))
+
+    def testRangeNotEqual(self):
+        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+        r2 = Range(True, self.getLib().number("1"), True, self.getLib().number("3"))
+        r3 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
+
+        self.assertFalse(self.getLib().rangeNotEqual(None, None))
+        self.assertTrue(self.getLib().rangeNotEqual(r1, None))
+        self.assertTrue(self.getLib().rangeNotEqual(None, r1))
+
+        self.assertTrue(self.getLib().rangeNotEqual(r1, r2))
+        self.assertFalse(self.getLib().rangeNotEqual(r1, r3))
 
     #
     # Common

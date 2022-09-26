@@ -12,26 +12,38 @@
 #
 from typing import Any
 
-from jdmn.feel.lib.Types import BOOLEAN
+from jdmn.feel.lib.Types import BOOLEAN, RANGE
 from jdmn.feel.lib.type.BaseType import BaseType
+from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from jdmn.runtime.Range import Range
 
 
 class DefaultRangeType(BaseType):
     def __init__(self):
         BaseType.__init__(self)
+        self.booleanType = DefaultBooleanType()
 
     def isRange(self, value: Any) -> bool:
-        raise Exception("Not supported yet")
+        return isinstance(value, Range)
 
-    def rangeValue(self, value: Range) -> Range:
-        raise Exception("Not supported yet")
+    def rangeValue(self, value: RANGE) -> RANGE:
+        if isinstance(value, Range):
+            return value
+        else:
+            return None
 
-    def rangeIs(self, c1: Any, c2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+    def rangeIs(self, r1: RANGE, r2: RANGE) -> BOOLEAN:
+        return self.rangeEqual(r1, r2)
 
-    def rangeEqual(self, c1: Any, c2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+    def rangeEqual(self, r1: RANGE, r2: RANGE) -> BOOLEAN:
+        if r1 is None and r2 is None:
+            return True
+        elif r1 is None:
+            return False
+        elif r2 is None:
+            return False
+        else:
+            return self.isRange(r1) and self.isRange(r2) and r1 == r2
 
-    def rangeNotEqual(self, c1: Any, c2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+    def rangeNotEqual(self, r1: RANGE, r2: RANGE) -> BOOLEAN:
+        return self.booleanType.booleanNot(self.rangeEqual(r1, r2))

@@ -10,10 +10,10 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from typing import Any, Optional
+from typing import Any
 
 from jdmn.feel.lib.FEELLib import FEELLib
-from jdmn.feel.lib.Types import NUMBER, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, LONG, STRING, CONTEXT
+from jdmn.feel.lib.Types import NUMBER, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, LONG, STRING, CONTEXT, RANGE
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from jdmn.feel.lib.type.context.DefaultContextType import DefaultContextType
 from jdmn.feel.lib.type.function.DefaultFunctionType import DefaultFunctionType
@@ -26,7 +26,6 @@ from jdmn.feel.lib.type.time.DefaultDateType import DefaultDateType
 from jdmn.feel.lib.type.time.DefaultDurationType import DefaultDurationType
 from jdmn.feel.lib.type.time.DefaultTimeType import DefaultTimeType
 from jdmn.runtime.LazyEval import LazyEval
-from jdmn.runtime.Range import Range
 from jdmn.runtime.listener.EventListener import EventListener
 from jdmn.runtime.listener.Rule import Rule
 
@@ -614,9 +613,9 @@ class BaseFEELLib(FEELLib):
 
     def dateTimeSubtract(self, first: DATE_TIME, second: DATE_TIME) -> DURATION:
         try:
-            if (self.isDate(first)):
+            if self.isDate(first):
                 first = self.toDateTime(first)
-            if (self.isDate(second)):
+            if self.isDate(second):
                 second = self.toDateTime(second)
 
             return self.dateTimeType.dateTimeSubtract(first, second)
@@ -888,7 +887,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def rangeValue(self, value: Range) -> Optional[Range]:
+    def rangeValue(self, value: RANGE) -> RANGE:
         try:
             return self.rangeType.rangeValue(value)
         except Exception as e:
@@ -896,7 +895,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def rangeIs(self, range1: Range, range2: Range) -> BOOLEAN:
+    def rangeIs(self, range1: RANGE, range2: RANGE) -> BOOLEAN:
         try:
             return self.rangeType.rangeIs(range1, range2)
         except Exception as e:
@@ -904,7 +903,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def rangeEqual(self, range1: Range, range2: Range) -> BOOLEAN:
+    def rangeEqual(self, range1: RANGE, range2: RANGE) -> BOOLEAN:
         try:
             return self.rangeType.rangeEqual(range1, range2)
         except Exception as e:
@@ -912,7 +911,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def rangeNotEqual(self, range1: Range, range2: Range) -> BOOLEAN:
+    def rangeNotEqual(self, range1: RANGE, range2: RANGE) -> BOOLEAN:
         try:
             return self.rangeType.rangeNotEqual(range1, range2)
         except Exception as e:
@@ -972,11 +971,11 @@ class BaseFEELLib(FEELLib):
         else:
             return list(args)
 
-    def asElement(self, list: LIST) -> Any:
-        if list is None:
+    def asElement(self, list_: LIST) -> Any:
+        if list_ is None:
             return None
-        elif len(list) == 1:
-            return list[0]
+        elif len(list_) == 1:
+            return list_[0]
         else:
             return None
 
