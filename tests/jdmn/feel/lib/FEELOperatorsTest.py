@@ -161,58 +161,6 @@ class FEELOperatorsTest(TestCase):
         self.assertEqualsNumber(self.makeNumber("0.04874348"), self.getLib().numericExponentiation(self.makeNumber("3"), self.makeNumber("-2.75")))
 
     #
-    # String operators
-    #
-    def testIsString(self):
-        self.assertFalse(self.getLib().isString(None))
-        self.assertFalse(self.getLib().isString(self.getLib().number("1")))
-        self.assertTrue(self.getLib().isString("abc"))
-        self.assertFalse(self.getLib().isString(True))
-        self.assertFalse(self.getLib().isString(self.getLib().date("2020-01-01")))
-        self.assertFalse(self.getLib().isString(self.getLib().time("12:00:00")))
-        self.assertFalse(self.getLib().isString(self.getLib().dateAndTime("2020-01-01T12:00:00")))
-        self.assertFalse(self.getLib().isString(self.getLib().duration("P1Y1M")))
-        self.assertFalse(self.getLib().isString(self.getLib().asList("a")))
-        self.assertFalse(self.getLib().isString(Context()))
-        self.assertFalse(self.getLib().isString(Range(True, 0, True, 1)))
-
-    def testStringValue(self):
-        self.assertEqual(None, self.getLib().stringValue(None))
-        self.assertEqual("a", self.getLib().stringValue("a"))
-
-    def testStringIs(self):
-        self.assertTrue(self.getLib().stringIs(None, None))
-        self.assertFalse(self.getLib().stringIs("a", None))
-        self.assertFalse(self.getLib().stringIs(None, "b"))
-
-        self.assertFalse(self.getLib().stringIs("a", "b"))
-        self.assertTrue(self.getLib().stringIs("b", "b"))
-
-    def testStringEqual(self):
-        self.assertTrue(self.getLib().stringEqual(None, None))
-        self.assertFalse(self.getLib().stringEqual("a", None))
-        self.assertFalse(self.getLib().stringEqual(None, "b"))
-
-        self.assertFalse(self.getLib().stringEqual("a", "b"))
-        self.assertTrue(self.getLib().stringEqual("b", "b"))
-
-    def testStringNotEqual(self):
-        self.assertFalse(self.getLib().stringNotEqual(None, None))
-        self.assertTrue(self.getLib().stringNotEqual("a", None))
-        self.assertTrue(self.getLib().stringNotEqual(None, "b"))
-
-        self.assertTrue(self.getLib().stringNotEqual("a", "b"))
-        self.assertFalse(self.getLib().stringNotEqual("b", "b"))
-
-    def testStringAdd(self):
-        self.assertEqual(None, self.getLib().stringAdd(None, None))
-        self.assertEqual(None, self.getLib().stringAdd("a", None))
-        self.assertEqual(None, self.getLib().stringAdd(None, "b"))
-
-        self.assertEqual("ab", self.getLib().stringAdd("a", "b"))
-        self.assertEqual("ba", self.getLib().stringAdd("b", "a"))
-
-    #
     # Boolean operators
     #
     def testIsBoolean(self):
@@ -346,6 +294,58 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(None, self.getLib().binaryBooleanAnd(None, True))
         self.assertEqual(None, self.getLib().binaryBooleanAnd(None, None))
         self.assertEqual(None, self.getLib().binaryBooleanAnd("123", "123"))
+
+    #
+    # String operators
+    #
+    def testIsString(self):
+        self.assertFalse(self.getLib().isString(None))
+        self.assertFalse(self.getLib().isString(self.getLib().number("1")))
+        self.assertTrue(self.getLib().isString("abc"))
+        self.assertFalse(self.getLib().isString(True))
+        self.assertFalse(self.getLib().isString(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isString(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isString(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isString(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isString(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isString(Context()))
+        self.assertFalse(self.getLib().isString(Range(True, 0, True, 1)))
+
+    def testStringValue(self):
+        self.assertEqual(None, self.getLib().stringValue(None))
+        self.assertEqual("a", self.getLib().stringValue("a"))
+
+    def testStringIs(self):
+        self.assertTrue(self.getLib().stringIs(None, None))
+        self.assertFalse(self.getLib().stringIs("a", None))
+        self.assertFalse(self.getLib().stringIs(None, "b"))
+
+        self.assertFalse(self.getLib().stringIs("a", "b"))
+        self.assertTrue(self.getLib().stringIs("b", "b"))
+
+    def testStringEqual(self):
+        self.assertTrue(self.getLib().stringEqual(None, None))
+        self.assertFalse(self.getLib().stringEqual("a", None))
+        self.assertFalse(self.getLib().stringEqual(None, "b"))
+
+        self.assertFalse(self.getLib().stringEqual("a", "b"))
+        self.assertTrue(self.getLib().stringEqual("b", "b"))
+
+    def testStringNotEqual(self):
+        self.assertFalse(self.getLib().stringNotEqual(None, None))
+        self.assertTrue(self.getLib().stringNotEqual("a", None))
+        self.assertTrue(self.getLib().stringNotEqual(None, "b"))
+
+        self.assertTrue(self.getLib().stringNotEqual("a", "b"))
+        self.assertFalse(self.getLib().stringNotEqual("b", "b"))
+
+    def testStringAdd(self):
+        self.assertEqual(None, self.getLib().stringAdd(None, None))
+        self.assertEqual(None, self.getLib().stringAdd("a", None))
+        self.assertEqual(None, self.getLib().stringAdd(None, "b"))
+
+        self.assertEqual("ab", self.getLib().stringAdd("a", "b"))
+        self.assertEqual("ba", self.getLib().stringAdd("b", "a"))
 
     #
     # Date operators
