@@ -33,6 +33,19 @@ class FEELOperatorsTest(TestCase):
     #
     # Numeric operators
     #
+    def testIsNumeric(self):
+        self.assertFalse(self.getLib().isNumber(None))
+        self.assertTrue(self.getLib().isNumber(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isNumber("abc"))
+        self.assertFalse(self.getLib().isNumber(True))
+        self.assertFalse(self.getLib().isNumber(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isNumber(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isNumber(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isNumber(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isNumber(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isNumber(Context()))
+        self.assertFalse(self.getLib().isNumber(Range(True, 0, True, 1)))
+
     def testNumericValue(self):
         self.assertEqual(None, self.getLib().numericValue(None))
         self.assertEqual(self.makeNumber("1"), self.getLib().numericValue(self.makeNumber("1")))
@@ -150,6 +163,19 @@ class FEELOperatorsTest(TestCase):
     #
     # String operators
     #
+    def testIsString(self):
+        self.assertFalse(self.getLib().isString(None))
+        self.assertFalse(self.getLib().isString(self.getLib().number("1")))
+        self.assertTrue(self.getLib().isString("abc"))
+        self.assertFalse(self.getLib().isString(True))
+        self.assertFalse(self.getLib().isString(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isString(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isString(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isString(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isString(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isString(Context()))
+        self.assertFalse(self.getLib().isString(Range(True, 0, True, 1)))
+
     def testStringValue(self):
         self.assertEqual(None, self.getLib().stringValue(None))
         self.assertEqual("a", self.getLib().stringValue("a"))
@@ -189,6 +215,19 @@ class FEELOperatorsTest(TestCase):
     #
     # Boolean operators
     #
+    def testIsBoolean(self):
+        self.assertFalse(self.getLib().isBoolean(None))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isBoolean("abc"))
+        self.assertTrue(self.getLib().isBoolean(True))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isBoolean(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isBoolean(Context()))
+        self.assertFalse(self.getLib().isBoolean(Range(True, 0, True, 1)))
+
     def testBooleanValue(self):
         self.assertEqual(None, self.getLib().booleanValue(None))
         self.assertTrue(self.getLib().booleanValue(True))
@@ -311,6 +350,19 @@ class FEELOperatorsTest(TestCase):
     #
     # Date operators
     #
+    def testIsDate(self):
+        self.assertFalse(self.getLib().isDate(None))
+        self.assertFalse(self.getLib().isDate(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isDate("abc"))
+        self.assertFalse(self.getLib().isDate(True))
+        self.assertTrue(self.getLib().isDate(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isDate(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isDate(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isDate(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isDate(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isDate(Context()))
+        self.assertFalse(self.getLib().isDate(Range(True, 0, True, 1)))
+
     def testDateValue(self):
         self.assertEqual(None, self.getLib().dateValue(None))
 
@@ -407,6 +459,19 @@ class FEELOperatorsTest(TestCase):
     #
     # Time operators
     #
+    def testIsTime(self):
+        self.assertFalse(self.getLib().isTime(None))
+        self.assertFalse(self.getLib().isTime(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isTime("abc"))
+        self.assertFalse(self.getLib().isTime(True))
+        self.assertFalse(self.getLib().isTime(self.getLib().date("2020-01-01")))
+        self.assertTrue(self.getLib().isTime(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isTime(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isTime(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isTime(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isTime(Context()))
+        self.assertFalse(self.getLib().isTime(Range(True, 0, True, 1)))
+
     def testTimeValue(self):
         self.assertEqual(None, self.getLib().timeValue(None))
 
@@ -550,6 +615,19 @@ class FEELOperatorsTest(TestCase):
     #
     # Date and time operators
     #
+    def testIsDateTime(self):
+        self.assertFalse(self.getLib().isDateTime(None))
+        self.assertFalse(self.getLib().isDateTime(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isDateTime("abc"))
+        self.assertFalse(self.getLib().isDateTime(True))
+        self.assertFalse(self.getLib().isDateTime(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isDateTime(self.getLib().time("12:00:00")))
+        self.assertTrue(self.getLib().isDateTime(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isDateTime(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isDateTime(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isDateTime(Context()))
+        self.assertFalse(self.getLib().isDateTime(Range(True, 0, True, 1)))
+
     def testDateTimeValue(self):
         self.assertEqual(None, self.getLib().dateTimeValue(None))
 
@@ -880,6 +958,19 @@ class FEELOperatorsTest(TestCase):
     #
     # List operators
     #
+    def testIsList(self):
+        self.assertFalse(self.getLib().isList(None))
+        self.assertFalse(self.getLib().isList(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isList("abc"))
+        self.assertFalse(self.getLib().isList(True))
+        self.assertFalse(self.getLib().isList(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isList(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isList(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isList(self.getLib().duration("P1Y1M")))
+        self.assertTrue(self.getLib().isList(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isList(Context()))
+        self.assertFalse(self.getLib().isList(Range(True, 0, True, 1)))
+
     def testListIs(self):
         self.assertTrue(self.getLib().listIs(None, None))
         self.assertFalse(self.getLib().listIs(self.makeList("a"), None))
@@ -908,11 +999,17 @@ class FEELOperatorsTest(TestCase):
     # Context operators
     #
     def testIsContext(self):
-        c1 = Context()
-
         self.assertFalse(self.getLib().isContext(None))
         self.assertFalse(self.getLib().isContext(self.getLib().number("1")))
-        self.assertTrue(self.getLib().isContext(c1))
+        self.assertFalse(self.getLib().isContext("abc"))
+        self.assertFalse(self.getLib().isContext(True))
+        self.assertFalse(self.getLib().isContext(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isContext(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isContext(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isContext(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isContext(self.getLib().asList("a")))
+        self.assertTrue(self.getLib().isContext(Context()))
+        self.assertFalse(self.getLib().isContext(Range(True, 0, True, 1)))
 
     def testContextValue(self):
         c1 = Context()
@@ -962,11 +1059,17 @@ class FEELOperatorsTest(TestCase):
     # Range operators
     #
     def testIsRange(self):
-        r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
-
         self.assertFalse(self.getLib().isRange(None))
         self.assertFalse(self.getLib().isRange(self.getLib().number("1")))
-        self.assertTrue(self.getLib().isRange(r1))
+        self.assertFalse(self.getLib().isRange("abc"))
+        self.assertFalse(self.getLib().isRange(True))
+        self.assertFalse(self.getLib().isRange(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isRange(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isRange(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isRange(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isRange(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isRange(Context()))
+        self.assertTrue(self.getLib().isRange(Range(True, 0, True, 1)))
 
     def testRangeValue(self):
         r1 = Range(True, self.getLib().number("1"), True, self.getLib().number("2"))
@@ -1010,6 +1113,51 @@ class FEELOperatorsTest(TestCase):
 
         self.assertTrue(self.getLib().rangeNotEqual(r1, r2))
         self.assertFalse(self.getLib().rangeNotEqual(r1, r3))
+
+    #
+    # Function operators
+    #
+    def testIsFunction(self):
+        self.assertTrue(self.getLib().isFunction(None))
+        self.assertFalse(self.getLib().isFunction(self.getLib().number("1")))
+        self.assertFalse(self.getLib().isFunction("abc"))
+        self.assertFalse(self.getLib().isFunction(True))
+        self.assertFalse(self.getLib().isFunction(self.getLib().date("2020-01-01")))
+        self.assertFalse(self.getLib().isFunction(self.getLib().time("12:00:00")))
+        self.assertFalse(self.getLib().isFunction(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isFunction(self.getLib().dateAndTime("2020-01-01T12:00:00")))
+        self.assertFalse(self.getLib().isFunction(self.getLib().duration("P1Y1M")))
+        self.assertFalse(self.getLib().isFunction(self.getLib().asList("a")))
+        self.assertFalse(self.getLib().isFunction(Context()))
+        self.assertFalse(self.getLib().isFunction(Range(True, 0, True, 1)))
+
+    def testFunctionValue(self):
+        self.assertIsNone(self.getLib().functionValue(None))
+        self.assertIsNone(self.getLib().functionValue("a"))
+
+    def testFunctionIs(self):
+        self.assertTrue(self.getLib().functionIs(None, None))
+        self.assertIsNone(self.getLib().functionIs("a", None))
+        self.assertIsNone(self.getLib().functionIs(None, "b"))
+
+        self.assertIsNone(self.getLib().functionIs("a", "b"))
+        self.assertIsNone(self.getLib().functionIs("b", "b"))
+
+    def testFunctionEqual(self):
+        self.assertTrue(self.getLib().functionEqual(None, None))
+        self.assertIsNone(self.getLib().functionEqual("a", None))
+        self.assertIsNone(self.getLib().functionEqual(None, "b"))
+
+        self.assertIsNone(self.getLib().functionEqual("a", "b"))
+        self.assertIsNone(self.getLib().functionEqual("b", "b"))
+
+    def testFunctionNotEqual(self):
+        self.assertFalse(self.getLib().functionNotEqual(None, None))
+        self.assertIsNone(self.getLib().functionNotEqual("a", None))
+        self.assertIsNone(self.getLib().functionNotEqual(None, "b"))
+
+        self.assertIsNone(self.getLib().functionNotEqual("a", "b"))
+        self.assertIsNone(self.getLib().functionNotEqual("b", "b"))
 
     #
     # Common

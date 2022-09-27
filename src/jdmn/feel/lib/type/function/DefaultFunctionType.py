@@ -14,23 +14,34 @@ from typing import Any
 
 from jdmn.feel.lib.Types import BOOLEAN
 from jdmn.feel.lib.type.BaseType import BaseType
+from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 
 
 class DefaultFunctionType(BaseType):
     def __init__(self):
         BaseType.__init__(self)
+        self.booleanType = DefaultBooleanType()
 
     def isFunction(self, value: Any) -> bool:
+        if value is None:
+            return True
+
         raise Exception("Not supported yet")
 
     def functionValue(self, value: Any) -> Any:
-        raise Exception("Not supported yet")
+        if (self.isFunction(value)):
+            return value
+        else:
+            return None
 
     def functionIs(self, function1: Any, function2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+        return self.functionEqual(function1, function2)
 
     def functionEqual(self, function1: Any, function2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+        if self.isFunction(function1) and self.isFunction(function2):
+            return function1 == function2
+        else:
+            return None
 
     def functionNotEqual(self, function1: Any, function2: Any) -> BOOLEAN:
-        raise Exception("Not supported yet")
+        return self.booleanType.booleanNot(self.functionEqual(function1, function2))
