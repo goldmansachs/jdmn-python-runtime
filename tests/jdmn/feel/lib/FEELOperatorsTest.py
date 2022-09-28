@@ -47,7 +47,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isNumber(Range(True, 0, True, 1)))
 
     def testNumericValue(self):
-        self.assertEqual(None, self.getLib().numericValue(None))
+        self.assertIsNone(self.getLib().numericValue(None))
         self.assertEqual(self.makeNumber("1"), self.getLib().numericValue(self.makeNumber("1")))
 
     def testNumericIs(self):
@@ -75,74 +75,74 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().numericNotEqual(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericLessThan(self):
-        self.assertEqual(None, self.getLib().numericLessThan(None, None))
-        self.assertEqual(None, self.getLib().numericLessThan(None, self.makeNumber("1")))
-        self.assertEqual(None, self.getLib().numericLessThan(self.makeNumber("1"), None))
+        self.assertIsNone(self.getLib().numericLessThan(None, None))
+        self.assertIsNone(self.getLib().numericLessThan(None, self.makeNumber("1")))
+        self.assertIsNone(self.getLib().numericLessThan(self.makeNumber("1"), None))
 
         self.assertFalse(self.getLib().numericLessThan(self.makeNumber("1"), self.makeNumber("1")))
         self.assertTrue(self.getLib().numericLessThan(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericGreaterThan(self):
-        self.assertEqual(None, self.getLib().numericGreaterThan(None, None))
-        self.assertEqual(None, self.getLib().numericGreaterThan(None, self.makeNumber("1")))
-        self.assertEqual(None, self.getLib().numericGreaterThan(self.makeNumber("1"), None))
+        self.assertIsNone(self.getLib().numericGreaterThan(None, None))
+        self.assertIsNone(self.getLib().numericGreaterThan(None, self.makeNumber("1")))
+        self.assertIsNone(self.getLib().numericGreaterThan(self.makeNumber("1"), None))
 
         self.assertFalse(self.getLib().numericGreaterThan(self.makeNumber("1"), self.makeNumber("1")))
         self.assertTrue(self.getLib().numericGreaterThan(self.makeNumber("2"), self.makeNumber("1")))
 
     def testNumericLessEqualThan(self):
         self.assertTrue(self.getLib().numericLessEqualThan(None, None))
-        self.assertEqual(None, self.getLib().numericLessEqualThan(None, self.makeNumber("1")))
-        self.assertEqual(None, self.getLib().numericLessEqualThan(self.makeNumber("1"), None))
+        self.assertIsNone(self.getLib().numericLessEqualThan(None, self.makeNumber("1")))
+        self.assertIsNone(self.getLib().numericLessEqualThan(self.makeNumber("1"), None))
 
         self.assertTrue(self.getLib().numericLessEqualThan(self.makeNumber("1"), self.makeNumber("1")))
         self.assertFalse(self.getLib().numericLessEqualThan(self.makeNumber("2"), self.makeNumber("1")))
 
     def testNumericGreaterEqualThan(self):
         self.assertTrue(self.getLib().numericGreaterEqualThan(None, None))
-        self.assertEqual(None, self.getLib().numericGreaterEqualThan(None, self.makeNumber("1")))
-        self.assertEqual(None, self.getLib().numericGreaterEqualThan(self.makeNumber("1"), None))
+        self.assertIsNone(self.getLib().numericGreaterEqualThan(None, self.makeNumber("1")))
+        self.assertIsNone(self.getLib().numericGreaterEqualThan(self.makeNumber("1"), None))
 
         self.assertTrue(self.getLib().numericGreaterEqualThan(self.makeNumber("1"), self.makeNumber("1")))
         self.assertFalse(self.getLib().numericGreaterEqualThan(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericAdd(self):
-        self.assertEqual(None, self.getLib().numericAdd(None, None))
-        self.assertEqual(None, self.getLib().numericAdd(None, self.makeNumber("1")))
-        self.assertEqual(None, self.getLib().numericAdd(self.makeNumber("1"), None))
+        self.assertIsNone(self.getLib().numericAdd(None, None))
+        self.assertIsNone(self.getLib().numericAdd(None, self.makeNumber("1")))
+        self.assertIsNone(self.getLib().numericAdd(self.makeNumber("1"), None))
 
         self.assertEqualsNumber(self.makeNumber("3"), self.getLib().numericAdd(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericSubtract(self):
-        self.assertEqual(None, self.getLib().numericSubtract(None, None))
-        self.assertEqual(None, self.getLib().numericSubtract(None, self.makeNumber("2")))
-        self.assertEqual(None, self.getLib().numericSubtract(self.makeNumber("2"), None))
+        self.assertIsNone(self.getLib().numericSubtract(None, None))
+        self.assertIsNone(self.getLib().numericSubtract(None, self.makeNumber("2")))
+        self.assertIsNone(self.getLib().numericSubtract(self.makeNumber("2"), None))
 
         self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericSubtract(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericMultiply(self):
-        self.assertEqual(None, self.getLib().numericMultiply(None, None))
-        self.assertEqual(None, self.getLib().numericMultiply(None, self.makeNumber("2")))
-        self.assertEqual(None, self.getLib().numericMultiply(self.makeNumber("2"), None))
+        self.assertIsNone(self.getLib().numericMultiply(None, None))
+        self.assertIsNone(self.getLib().numericMultiply(None, self.makeNumber("2")))
+        self.assertIsNone(self.getLib().numericMultiply(self.makeNumber("2"), None))
 
         self.assertEqualsNumber(self.makeNumber("2"), self.getLib().numericMultiply(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericDivide(self):
-        self.assertEqual(None, self.getLib().numericDivide(None, None))
-        self.assertEqual(None, self.getLib().numericDivide(None, self.makeNumber("2")))
-        self.assertEqual(None, self.getLib().numericDivide(self.makeNumber("2"), None))
+        self.assertIsNone(self.getLib().numericDivide(None, None))
+        self.assertIsNone(self.getLib().numericDivide(None, self.makeNumber("2")))
+        self.assertIsNone(self.getLib().numericDivide(self.makeNumber("2"), None))
 
         self.assertEqualsNumber("0.5", self.getLib().numericDivide(self.makeNumber("1"), self.makeNumber("2")))
 
     def testNumericUnaryMinus(self):
-        self.assertEqual(None, self.getLib().numericUnaryMinus(None))
+        self.assertIsNone(self.getLib().numericUnaryMinus(None))
 
         self.assertEqualsNumber(self.makeNumber("-1"), self.getLib().numericUnaryMinus(self.makeNumber("1")))
 
     def testNumericExponentiation(self):
-        self.assertEqual(None, self.getLib().numericExponentiation(None, None))
-        self.assertEqual(None, self.getLib().numericExponentiation(None, self.makeNumber("10")))
-        self.assertEqual(None, self.getLib().numericExponentiation(self.makeNumber("10"), None))
+        self.assertIsNone(self.getLib().numericExponentiation(None, None))
+        self.assertIsNone(self.getLib().numericExponentiation(None, self.makeNumber("10")))
+        self.assertIsNone(self.getLib().numericExponentiation(self.makeNumber("10"), None))
 
         self.assertEqualsNumber(self.makeNumber("1"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("0")))
         self.assertEqualsNumber(self.makeNumber("0.5"), self.getLib().numericExponentiation(self.makeNumber("2"), self.makeNumber("-1")))
@@ -177,7 +177,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isBoolean(Range(True, 0, True, 1)))
 
     def testBooleanValue(self):
-        self.assertEqual(None, self.getLib().booleanValue(None))
+        self.assertIsNone(self.getLib().booleanValue(None))
         self.assertTrue(self.getLib().booleanValue(True))
         self.assertFalse(self.getLib().booleanValue(False))
 
@@ -208,18 +208,18 @@ class FEELOperatorsTest(TestCase):
     def testBooleanNot(self):
         self.assertTrue(self.getLib().booleanNot(False))
         self.assertFalse(self.getLib().booleanNot(True))
-        self.assertEqual(None, self.getLib().booleanNot(None))
+        self.assertIsNone(self.getLib().booleanNot(None))
 
-        self.assertEqual(None, self.getLib().booleanNot("abc"))
-        self.assertEqual(None, self.getLib().booleanNot(self.makeNumber("123")))
+        self.assertIsNone(self.getLib().booleanNot("abc"))
+        self.assertIsNone(self.getLib().booleanNot(self.makeNumber("123")))
 
     def testBooleanOr(self):
         self.assertFalse(self.getLib().booleanOr(False, False))
         self.assertTrue(self.getLib().booleanOr(False, True))
         self.assertTrue(self.getLib().booleanOr(True, False))
         self.assertTrue(self.getLib().booleanOr(True, True))
-        self.assertEqual(None, self.getLib().booleanOr(False, None))
-        self.assertEqual(None, self.getLib().booleanOr(None, False))
+        self.assertIsNone(self.getLib().booleanOr(False, None))
+        self.assertIsNone(self.getLib().booleanOr(None, False))
         self.assertTrue(self.getLib().booleanOr(True, None))
         self.assertTrue(self.getLib().booleanOr(None, True))
         self.assertTrue(self.getLib().booleanOr(True, self.makeNumber("123")))
@@ -228,21 +228,21 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().booleanOr(True, None))
         self.assertTrue(self.getLib().booleanOr(None, True))
         self.assertTrue(self.getLib().booleanOr("123", True))
-        self.assertEqual(None, self.getLib().booleanOr(None, None))
-        self.assertEqual(None, self.getLib().booleanOr("123", "123"))
+        self.assertIsNone(self.getLib().booleanOr(None, None))
+        self.assertIsNone(self.getLib().booleanOr("123", "123"))
 
-        self.assertEqual(None, self.getLib().booleanOr(True))
+        self.assertIsNone(self.getLib().booleanOr(True))
         self.assertTrue(self.getLib().booleanOr(False, False, True))
         self.assertTrue(self.getLib().booleanOr([False, False, True]))
-        self.assertEqual(None, self.getLib().booleanOr([[False, False, True]]))
+        self.assertIsNone(self.getLib().booleanOr([[False, False, True]]))
 
     def testBinaryBooleanOr(self):
         self.assertFalse(self.getLib().binaryBooleanOr(False, False))
         self.assertTrue(self.getLib().binaryBooleanOr(False, True))
         self.assertTrue(self.getLib().binaryBooleanOr(True, False))
         self.assertTrue(self.getLib().binaryBooleanOr(True, True))
-        self.assertEqual(None, self.getLib().binaryBooleanOr(False, None))
-        self.assertEqual(None, self.getLib().binaryBooleanOr(None, False))
+        self.assertIsNone(self.getLib().binaryBooleanOr(False, None))
+        self.assertIsNone(self.getLib().binaryBooleanOr(None, False))
         self.assertTrue(self.getLib().binaryBooleanOr(True, None))
         self.assertTrue(self.getLib().binaryBooleanOr(None, True))
         self.assertTrue(self.getLib().binaryBooleanOr(True, self.makeNumber("123")))
@@ -251,8 +251,8 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().binaryBooleanOr(True, None))
         self.assertTrue(self.getLib().binaryBooleanOr(None, True))
         self.assertTrue(self.getLib().binaryBooleanOr("123", True))
-        self.assertEqual(None, self.getLib().binaryBooleanOr(None, None))
-        self.assertEqual(None, self.getLib().binaryBooleanOr("123", "123"))
+        self.assertIsNone(self.getLib().binaryBooleanOr(None, None))
+        self.assertIsNone(self.getLib().binaryBooleanOr("123", "123"))
 
     def testBooleanAnd(self):
         self.assertFalse(self.getLib().booleanAnd(False, False))
@@ -267,15 +267,15 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().booleanAnd(False, None))
         self.assertFalse(self.getLib().booleanAnd(None, False))
         self.assertFalse(self.getLib().booleanAnd("123", False))
-        self.assertEqual(None, self.getLib().booleanAnd(True, None))
-        self.assertEqual(None, self.getLib().booleanAnd(None, True))
-        self.assertEqual(None, self.getLib().booleanAnd(None, None))
-        self.assertEqual(None, self.getLib().booleanAnd("123", "123"))
+        self.assertIsNone(self.getLib().booleanAnd(True, None))
+        self.assertIsNone(self.getLib().booleanAnd(None, True))
+        self.assertIsNone(self.getLib().booleanAnd(None, None))
+        self.assertIsNone(self.getLib().booleanAnd("123", "123"))
 
-        self.assertEqual(None, self.getLib().booleanAnd(True))
+        self.assertIsNone(self.getLib().booleanAnd(True))
         self.assertFalse(self.getLib().booleanAnd(True, True, False))
         self.assertFalse(self.getLib().booleanAnd([False, False, True]))
-        self.assertEqual(None, self.getLib().booleanAnd([[False, False, True]]))
+        self.assertIsNone(self.getLib().booleanAnd([[False, False, True]]))
 
     def testBinaryBooleanAnd(self):
         self.assertFalse(self.getLib().binaryBooleanAnd(False, False))
@@ -290,10 +290,10 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().binaryBooleanAnd(False, None))
         self.assertFalse(self.getLib().binaryBooleanAnd(None, False))
         self.assertFalse(self.getLib().binaryBooleanAnd("123", False))
-        self.assertEqual(None, self.getLib().binaryBooleanAnd(True, None))
-        self.assertEqual(None, self.getLib().binaryBooleanAnd(None, True))
-        self.assertEqual(None, self.getLib().binaryBooleanAnd(None, None))
-        self.assertEqual(None, self.getLib().binaryBooleanAnd("123", "123"))
+        self.assertIsNone(self.getLib().binaryBooleanAnd(True, None))
+        self.assertIsNone(self.getLib().binaryBooleanAnd(None, True))
+        self.assertIsNone(self.getLib().binaryBooleanAnd(None, None))
+        self.assertIsNone(self.getLib().binaryBooleanAnd("123", "123"))
 
     #
     # String operators
@@ -312,7 +312,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isString(Range(True, 0, True, 1)))
 
     def testStringValue(self):
-        self.assertEqual(None, self.getLib().stringValue(None))
+        self.assertIsNone(self.getLib().stringValue(None))
         self.assertEqual("a", self.getLib().stringValue("a"))
 
     def testStringIs(self):
@@ -340,9 +340,9 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().stringNotEqual("b", "b"))
 
     def testStringAdd(self):
-        self.assertEqual(None, self.getLib().stringAdd(None, None))
-        self.assertEqual(None, self.getLib().stringAdd("a", None))
-        self.assertEqual(None, self.getLib().stringAdd(None, "b"))
+        self.assertIsNone(self.getLib().stringAdd(None, None))
+        self.assertIsNone(self.getLib().stringAdd("a", None))
+        self.assertIsNone(self.getLib().stringAdd(None, "b"))
 
         self.assertEqual("ab", self.getLib().stringAdd("a", "b"))
         self.assertEqual("ba", self.getLib().stringAdd("b", "a"))
@@ -364,7 +364,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isDate(Range(True, 0, True, 1)))
 
     def testDateValue(self):
-        self.assertEqual(None, self.getLib().dateValue(None))
+        self.assertIsNone(self.getLib().dateValue(None))
 
         self.assertEqual(0, self.getLib().dateValue(self.makeDate("1970-01-01")))
         self.assertEqual(86400, self.getLib().dateValue(self.makeDate("1970-01-02")))
@@ -401,57 +401,57 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().dateEqual(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
 
     def testDateLessThan(self):
-        self.assertEqual(None, self.getLib().dateLessThan(None, None))
-        self.assertEqual(None, self.getLib().dateLessThan(None, self.makeDate("2016-08-01")))
-        self.assertEqual(None, self.getLib().dateLessThan(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateLessThan(None, None))
+        self.assertIsNone(self.getLib().dateLessThan(None, self.makeDate("2016-08-01")))
+        self.assertIsNone(self.getLib().dateLessThan(self.makeDate("2016-08-01"), None))
 
         self.assertFalse(self.getLib().dateLessThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
         self.assertTrue(self.getLib().dateLessThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-02")))
 
     def testDateGreaterThan(self):
-        self.assertEqual(None, self.getLib().dateGreaterThan(None, None))
-        self.assertEqual(None, self.getLib().dateGreaterThan(None, self.makeDate("2016-08-01")))
-        self.assertEqual(None, self.getLib().dateGreaterThan(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateGreaterThan(None, None))
+        self.assertIsNone(self.getLib().dateGreaterThan(None, self.makeDate("2016-08-01")))
+        self.assertIsNone(self.getLib().dateGreaterThan(self.makeDate("2016-08-01"), None))
 
         self.assertFalse(self.getLib().dateGreaterThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
         self.assertTrue(self.getLib().dateGreaterThan(self.makeDate("2016-08-02"), self.makeDate("2016-08-01")))
 
     def testDateLessEqualThan(self):
         self.assertTrue(self.getLib().dateLessEqualThan(None, None))
-        self.assertEqual(None, self.getLib().dateLessEqualThan(None, self.makeDate("2016-08-01")))
-        self.assertEqual(None, self.getLib().dateLessEqualThan(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateLessEqualThan(None, self.makeDate("2016-08-01")))
+        self.assertIsNone(self.getLib().dateLessEqualThan(self.makeDate("2016-08-01"), None))
 
         self.assertTrue(self.getLib().dateLessEqualThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
         self.assertFalse(self.getLib().dateLessEqualThan(self.makeDate("2016-08-03"), self.makeDate("2016-08-02")))
 
     def testDateGreaterEqualThan(self):
         self.assertTrue(self.getLib().dateGreaterEqualThan(None, None))
-        self.assertEqual(None, self.getLib().dateGreaterEqualThan(None, self.makeDate("2016-08-01")))
-        self.assertEqual(None, self.getLib().dateGreaterEqualThan(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateGreaterEqualThan(None, self.makeDate("2016-08-01")))
+        self.assertIsNone(self.getLib().dateGreaterEqualThan(self.makeDate("2016-08-01"), None))
 
         self.assertTrue(self.getLib().dateGreaterEqualThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
         self.assertFalse(self.getLib().dateGreaterEqualThan(self.makeDate("2016-08-01"), self.makeDate("2016-08-03")))
 
     def testDateSubtract(self):
-        self.assertEqual(None, self.getLib().dateSubtract(None, None))
-        self.assertEqual(None, self.getLib().dateSubtract(None, self.makeDate("2016-08-01")))
-        self.assertEqual(None, self.getLib().dateSubtract(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateSubtract(None, None))
+        self.assertIsNone(self.getLib().dateSubtract(None, self.makeDate("2016-08-01")))
+        self.assertIsNone(self.getLib().dateSubtract(self.makeDate("2016-08-01"), None))
 
         self.assertEqual(self.makeDuration("PT0S"), self.getLib().dateSubtract(self.makeDate("2016-08-01"), self.makeDate("2016-08-01")))
         self.assertEqual(self.makeDuration("-P2D"), self.getLib().dateSubtract(self.makeDate("2016-08-01"), self.makeDate("2016-08-03")))
 
     def testDateAddDuration(self):
-        self.assertEqual(None, self.getLib().dateAddDuration(None, None))
-        self.assertEqual(None, self.getLib().dateAddDuration(None, self.makeDuration("P0Y2M")))
-        self.assertEqual(None, self.getLib().dateAddDuration(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateAddDuration(None, None))
+        self.assertIsNone(self.getLib().dateAddDuration(None, self.makeDuration("P0Y2M")))
+        self.assertIsNone(self.getLib().dateAddDuration(self.makeDate("2016-08-01"), None))
 
         self.assertEqualsDate("2016-10-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
         self.assertEqualsDate("2016-06-01", self.getLib().dateAddDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
 
     def testDateSubtractDuration(self):
-        self.assertEqual(None, self.getLib().dateSubtractDuration(None, None))
-        self.assertEqual(None, self.getLib().dateSubtractDuration(None, self.makeDuration("P0Y2M")))
-        self.assertEqual(None, self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), None))
+        self.assertIsNone(self.getLib().dateSubtractDuration(None, None))
+        self.assertIsNone(self.getLib().dateSubtractDuration(None, self.makeDuration("P0Y2M")))
+        self.assertIsNone(self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), None))
 
         self.assertEqualsDate("2016-06-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("P0Y2M")))
         self.assertEqualsDate("2016-10-01", self.getLib().dateSubtractDuration(self.makeDate("2016-08-01"), self.makeDuration("-P0Y2M")))
@@ -473,7 +473,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isTime(Range(True, 0, True, 1)))
 
     def testTimeValue(self):
-        self.assertEqual(None, self.getLib().timeValue(None))
+        self.assertIsNone(self.getLib().timeValue(None))
 
         # local time
         self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03")))
@@ -556,58 +556,58 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().timeNotEqual(self.makeTime("12:00:00Z"), self.makeTime("12:00:01Z")))
 
     def testTimeLessThan(self):
-        self.assertEqual(None, self.getLib().timeLessThan(None, None))
-        self.assertEqual(None, self.getLib().timeLessThan(None, self.makeTime("12:00:00Z")))
-        self.assertEqual(None, self.getLib().timeLessThan(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeLessThan(None, None))
+        self.assertIsNone(self.getLib().timeLessThan(None, self.makeTime("12:00:00Z")))
+        self.assertIsNone(self.getLib().timeLessThan(self.makeTime("12:00:00Z"), None))
 
         self.assertFalse(self.getLib().timeLessThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertTrue(self.getLib().timeLessThan(self.makeTime("11:00:00Z"), self.makeTime("12:00:01Z")))
 
     def testTimeGreaterThan(self):
-        self.assertEqual(None, self.getLib().timeGreaterThan(None, None))
-        self.assertEqual(None, self.getLib().timeGreaterThan(None, self.makeTime("12:00:00Z")))
-        self.assertEqual(None, self.getLib().timeGreaterThan(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeGreaterThan(None, None))
+        self.assertIsNone(self.getLib().timeGreaterThan(None, self.makeTime("12:00:00Z")))
+        self.assertIsNone(self.getLib().timeGreaterThan(self.makeTime("12:00:00Z"), None))
 
         self.assertFalse(self.getLib().timeGreaterThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertTrue(self.getLib().timeGreaterThan(self.makeTime("13:00:00Z"), self.makeTime("12:00:01Z")))
 
     def testTimeLessEqualThan(self):
         self.assertTrue(self.getLib().timeLessEqualThan(None, None))
-        self.assertEqual(None, self.getLib().timeLessEqualThan(None, self.makeTime("12:00:00Z")))
-        self.assertEqual(None, self.getLib().timeLessEqualThan(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeLessEqualThan(None, self.makeTime("12:00:00Z")))
+        self.assertIsNone(self.getLib().timeLessEqualThan(self.makeTime("12:00:00Z"), None))
 
         self.assertTrue(self.getLib().timeLessEqualThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertFalse(self.getLib().timeLessEqualThan(self.makeTime("13:00:00Z"), self.makeTime("12:00:01Z")))
 
     def testTimeGreaterEqualThan(self):
         self.assertTrue(self.getLib().timeGreaterEqualThan(None, None))
-        self.assertEqual(None, self.getLib().timeGreaterEqualThan(None, self.makeTime("12:00:00Z")))
-        self.assertEqual(None, self.getLib().timeGreaterEqualThan(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeGreaterEqualThan(None, self.makeTime("12:00:00Z")))
+        self.assertIsNone(self.getLib().timeGreaterEqualThan(self.makeTime("12:00:00Z"), None))
 
         self.assertTrue(self.getLib().timeGreaterEqualThan(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertFalse(self.getLib().timeGreaterEqualThan(self.makeTime("11:00:00Z"), self.makeTime("12:00:01Z")))
 
     def testTimeSubtract(self):
-        self.assertEqual(None, self.getLib().timeSubtract(None, None))
-        self.assertEqual(None, self.getLib().timeSubtract(None, self.makeTime("12:00:00Z")))
-        self.assertEqual(None, self.getLib().timeSubtract(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeSubtract(None, None))
+        self.assertIsNone(self.getLib().timeSubtract(None, self.makeTime("12:00:00Z")))
+        self.assertIsNone(self.getLib().timeSubtract(self.makeTime("12:00:00Z"), None))
 
         self.assertEqual(self.makeDuration("PT1H"), self.getLib().timeSubtract(self.makeTime("13:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertEqual(self.makeDuration("P0D"), self.getLib().timeSubtract(self.makeTime("12:00:00Z"), self.makeTime("12:00:00Z")))
         self.assertEqual(self.makeDuration("-PT1H"), self.getLib().timeSubtract(self.makeTime("12:00:00Z"), self.makeTime("13:00:00Z")))
 
     def testTimeAddDuration(self):
-        self.assertEqual(None, self.getLib().timeAddDuration(None, None))
-        self.assertEqual(None, self.getLib().timeAddDuration(None, self.makeDuration("P0DT1H")))
-        self.assertEqual(None, self.getLib().timeAddDuration(self.makeTime("12:00:00Z"), None))
+        self.assertIsNone(self.getLib().timeAddDuration(None, None))
+        self.assertIsNone(self.getLib().timeAddDuration(None, self.makeDuration("P0DT1H")))
+        self.assertIsNone(self.getLib().timeAddDuration(self.makeTime("12:00:00Z"), None))
 
         self.assertEqualsTime("13:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
         self.assertEqualsTime("12:00:01Z", self.getLib().timeAddDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
 
     def testTimeSubtractDuration(self):
-        self.assertEqual(None, self.getLib().timeSubtractDuration(None, None))
-        self.assertEqual(None, self.getLib().timeSubtractDuration(None, self.makeDuration("P0DT1H")))
-        self.assertEqual(None, self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), None))
+        self.assertIsNone(self.getLib().timeSubtractDuration(None, None))
+        self.assertIsNone(self.getLib().timeSubtractDuration(None, self.makeDuration("P0DT1H")))
+        self.assertIsNone(self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), None))
 
         self.assertEqualsTime("11:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P0DT1H")))
         self.assertEqualsTime("12:00:01Z", self.getLib().timeSubtractDuration(self.makeTime("12:00:01Z"), self.makeDuration("P1DT0H")))
@@ -629,7 +629,7 @@ class FEELOperatorsTest(TestCase):
         self.assertFalse(self.getLib().isDateTime(Range(True, 0, True, 1)))
 
     def testDateTimeValue(self):
-        self.assertEqual(None, self.getLib().dateTimeValue(None))
+        self.assertIsNone(self.getLib().dateTimeValue(None))
 
         # local date time
         self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03")))
@@ -721,50 +721,50 @@ class FEELOperatorsTest(TestCase):
         self.assertTrue(self.getLib().dateTimeNotEqual(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
 
     def testDateTimeLessThan(self):
-        self.assertEqual(None, self.getLib().dateTimeLessThan(None, None))
-        self.assertEqual(None, self.getLib().dateTimeLessThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
-        self.assertEqual(None, self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeLessThan(None, None))
+        self.assertIsNone(self.getLib().dateTimeLessThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertIsNone(self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
 
         self.assertFalse(self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
         self.assertTrue(self.getLib().dateTimeLessThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2017-08-01T11:00:01Z")))
 
     def testDateTimeGreaterThan(self):
-        self.assertEqual(None, self.getLib().dateTimeGreaterThan(None, None))
-        self.assertEqual(None, self.getLib().dateTimeGreaterThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
-        self.assertEqual(None, self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeGreaterThan(None, None))
+        self.assertIsNone(self.getLib().dateTimeGreaterThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertIsNone(self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
 
         self.assertTrue(self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2017-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
         self.assertFalse(self.getLib().dateTimeGreaterThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
 
     def testDateTimeLessEqualThan(self):
         self.assertTrue(self.getLib().dateTimeLessEqualThan(None, None))
-        self.assertEqual(None, self.getLib().dateTimeLessEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
-        self.assertEqual(None, self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeLessEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertIsNone(self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
 
         self.assertTrue(self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
         self.assertFalse(self.getLib().dateTimeLessEqualThan(self.makeDateAndTime("2016-08-01T11:00:01Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
 
     def testDateTimeGreaterEqualThan(self):
         self.assertTrue(self.getLib().dateTimeGreaterEqualThan(None, None))
-        self.assertEqual(None, self.getLib().dateTimeGreaterEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
-        self.assertEqual(None, self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeGreaterEqualThan(None, self.makeDateAndTime("2016-08-01T11:00:00Z")))
+        self.assertIsNone(self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), None))
 
         self.assertTrue(self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2016-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:00Z")))
         self.assertFalse(self.getLib().dateTimeGreaterEqualThan(self.makeDateAndTime("2015-08-01T11:00:00Z"), self.makeDateAndTime("2016-08-01T11:00:01Z")))
 
     def testDateTimeSubtract(self):
-        self.assertEqual(None, self.getLib().dateTimeSubtract(None, None))
-        self.assertEqual(None, self.getLib().dateTimeSubtract(None, self.makeDateAndTime("2016-08-01T12:00:00Z")))
-        self.assertEqual(None, self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeSubtract(None, None))
+        self.assertIsNone(self.getLib().dateTimeSubtract(None, self.makeDateAndTime("2016-08-01T12:00:00Z")))
+        self.assertIsNone(self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
 
         self.assertEqual(self.makeDuration("PT1H"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T13:00:00Z"), self.makeDateAndTime("2016-08-01T12:00:00Z")))
         self.assertEqual(self.makeDuration("PT0S"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-01T12:00:00Z")))
         self.assertEqual(self.makeDuration("-P2DT1H"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-03T13:00:00Z")))
 
     def testDateTimeAddDuration(self):
-        self.assertEqual(None, self.getLib().dateTimeAddDuration(None, None))
-        self.assertEqual(None, self.getLib().dateTimeAddDuration(None, self.makeDuration("P1Y1M")))
-        self.assertEqual(None, self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeAddDuration(None, None))
+        self.assertIsNone(self.getLib().dateTimeAddDuration(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
 
         self.assertEqualsDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
         self.assertEqualsDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))
@@ -773,9 +773,9 @@ class FEELOperatorsTest(TestCase):
         self.assertEqualsDateTime("2016-01-31T11:00:01Z", self.getLib().dateTimeAddDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1DT1H")))
 
     def testDateTimeSubtractDuration(self):
-        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, None))
-        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(None, self.makeDuration("P1Y1M")))
-        self.assertEqual(None, self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
+        self.assertIsNone(self.getLib().dateTimeSubtractDuration(None, None))
+        self.assertIsNone(self.getLib().dateTimeSubtractDuration(None, self.makeDuration("P1Y1M")))
+        self.assertIsNone(self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-08-01T12:00:00Z"), None))
 
         self.assertEqualsDateTime("2015-01-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("P1Y1M")))
         self.assertEqualsDateTime("2017-03-01T12:00:01Z", self.getLib().dateTimeSubtractDuration(self.makeDateAndTime("2016-02-01T12:00:01Z"), self.makeDuration("-P1Y1M")))

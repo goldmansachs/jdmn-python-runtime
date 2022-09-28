@@ -503,8 +503,8 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertFalse(self.getLib().contains("aBc1", "bcg"))
 
         self.assertEqual(False, self.getLib().contains("foobar", "of"))
-        self.assertEqual(True, self.getLib().startsWith("foobar", "fo"))
-        self.assertEqual(True, self.getLib().endsWith("foobar", "r"))
+        self.assertEqual(True, self.getLib().contains("foobar", "fo"))
+        self.assertEqual(True, self.getLib().contains("foobar", "r"))
 
     def testStartsWith(self):
         self.assertIsNone(self.getLib().startsWith(None, None))
@@ -834,7 +834,6 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertIsNone(self.getLib().any(None))
         self.assertIsNone(self.getLib().any(None, None))
         self.assertIsNone(self.getLib().any(None, False))
-        self.assertIsNone(self.getLib().any([]))
         self.assertIsNone(self.getLib().any([None, None]))
         self.assertIsNone(self.getLib().any([None, False]))
 
