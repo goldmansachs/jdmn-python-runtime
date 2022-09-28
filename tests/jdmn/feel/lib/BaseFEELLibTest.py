@@ -288,7 +288,6 @@ class BaseFEELLibTest(FEELOperatorsTest):
         self.assertIsNone(self.getLib().min(self.makeNumber(1), None, self.makeNumber(3)))
         self.assertEqualsNumber(self.makeNumber("1"), self.getLib().min(self.makeNumber(1), self.makeNumber(2), self.makeNumber(3)))
 
-
     def testMax(self):
         self.assertIsNone(self.getLib().max(None))
         self.assertIsNone(self.getLib().max(self.makeNumberList()))

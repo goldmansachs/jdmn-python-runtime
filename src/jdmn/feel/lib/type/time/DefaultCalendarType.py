@@ -67,7 +67,9 @@ class DefaultCalendarType(BaseType):
         return first.hour == second.hour and first.minute == second.minute and first.second == second.second and first.tzinfo == second.tzinfo
 
     def sameDateTime(self, first: DATE_TIME, second: DATE_TIME) -> bool:
-        return self.sameDate(first.date(), second.date()) and self.sameTime(first.time(), second.time())
+        #        return self.sameDate(first.date(), second.date()) and self.sameTime(first.time(), second.time())
+        return first.year == second.year and first.month == second.month and \
+               first.day == second.day and first.hour == second.hour and first.minute == second.minute and first.second == second.second and first.tzinfo == second.tzinfo
 
     def value(self, calendar: DATE_TIME_UNION) -> INT:
         if self.isDate(calendar):

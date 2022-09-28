@@ -10,7 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from datetime import date, time, datetime
+from datetime import date, time, datetime, timedelta
 from decimal import Decimal
 from typing import Any, Optional, List
 from unittest import TestCase
@@ -1206,8 +1206,12 @@ class FEELOperatorsTest(TestCase):
         return expected == actual
 
     def assertEqualsDateTime(self, expected: Any, actual: Optional[datetime]):
-        if isinstance(expected, str):
+        if isinstance(actual, date):
             expected = self.makeDateAndTime(expected)
+        elif isinstance(actual, Duration):
+            expected = self.makeDuration(expected)
+        elif isinstance(actual, timedelta):
+            expected = self.makeDuration(expected)
 
         return expected == actual
 

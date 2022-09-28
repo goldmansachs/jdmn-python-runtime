@@ -553,7 +553,7 @@ class BaseStandardFEELLib(BaseFEELLib):
 
     def is_(self, value1: Any, value2: Any) -> BOOLEAN:
         try:
-            if (value1 is None or value2 is None):
+            if value1 is None or value2 is None:
                 return value1 == value2
             elif type(value1) != type(value2):
                 # Different kind

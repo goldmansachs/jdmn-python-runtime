@@ -30,8 +30,6 @@ class DefaultNumericLib:
             return None
 
         if groupingSeparator is not None:
-            if groupingSeparator == ".":
-                groupingSeparator = "\\" + groupingSeparator
             literal = literal.replace(groupingSeparator, "")
         if decimalSeparator is not None and not (decimalSeparator == "."):
             literal = literal.replace(decimalSeparator, ".")

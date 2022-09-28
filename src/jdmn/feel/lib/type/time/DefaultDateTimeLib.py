@@ -14,8 +14,12 @@ from datetime import date, time, datetime
 from typing import Any
 
 import isodate
+from isodate import Duration, tzinfo
 
 from jdmn.feel.lib.Types import STRING, DATE, TIME, DATE_TIME, DURATION, INT
+
+DAY_NAMES = ["", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
 
 class DefaultDateTimeLib:
@@ -54,7 +58,7 @@ class DefaultDateTimeLib:
             if isinstance(arg, str):
                 # From literal
                 # return time.fromisoformat(literal)
-                return isodate.parse_time(arg)
+                return isodate.parse_time(arg.upper())
             elif isinstance(arg, time):
                 # From time
                 return arg
@@ -78,7 +82,7 @@ class DefaultDateTimeLib:
                 # From literal
                 if "-" in arg and not ("T" in arg):
                     arg += "T00:00:00"
-                return isodate.parse_datetime(arg)
+                return isodate.parse_datetime(arg.upper())
             elif isinstance(arg, time):
                 # From time
                 return arg
@@ -94,61 +98,117 @@ class DefaultDateTimeLib:
     # Date properties
     #
     def year(self, date: DATE) -> INT:
-        raise Exception("Not supported yet")
+        if date is None:
+            return None
+
+        return date.year
 
     def yearDateTime(self, dateTime: DATE_TIME) -> INT:
-        raise Exception("Not supported yet")
+        return self.year(dateTime)
 
     def month(self, date: DATE) -> INT:
-        raise Exception("Not supported yet")
+        if date is None:
+            return None
 
-    def monthDateTime(self, dateTime: DATE_TIME) -> int:
-        raise Exception("Not supported yet")
+        return date.month
+
+    def monthDateTime(self, dateTime: DATE_TIME) -> INT:
+        return self.month(dateTime)
 
     def day(self, date: DATE) -> INT:
-        raise Exception("Not supported yet")
+        if date is None:
+            return None
 
-    def dayDateTime(self, dateTime: DATE_TIME) -> int:
-        raise Exception("Not supported yet")
+        return date.day
+
+    def dayDateTime(self, dateTime: DATE_TIME) -> INT:
+        return self.day(dateTime)
 
     def weekday(self, date: DATE) -> INT:
-        raise Exception("Not supported yet")
+        if date is None:
+            return None
 
-    def weekdayDateTime(self, dateTime: DATE_TIME) -> int:
-        raise Exception("Not supported yet")
+        return date.weekday() + 1
+
+    def weekdayDateTime(self, dateTime: DATE_TIME) -> INT:
+        return self.weekday(dateTime)
 
     #
     # Time properties
     #
     def hour(self, time: TIME) -> INT:
-        raise Exception("Not supported yet")
+        if time is None:
+            return None
+
+        return time.hour
 
     def hourDateTime(self, dateTime: DATE_TIME) -> INT:
-        raise Exception("Not supported yet")
+        return self.hourDateTime(dateTime)
 
     def minute(self, time: TIME) -> INT:
-        raise Exception("Not supported yet")
+        if time is None:
+            return None
+
+        return time.minute
 
     def minuteDateTime(self, dateTime: DATE_TIME) -> INT:
-        raise Exception("Not supported yet")
+        return self.minute(dateTime)
 
     def second(self, time: TIME) -> INT:
-        raise Exception("Not supported yet")
+        if time is None:
+            return None
+
+        return time.second
 
     def secondDateTime(self, dateTime: DATE_TIME) -> INT:
-        raise Exception("Not supported yet")
+        return self.second(dateTime)
 
     def timeOffset(self, time: TIME) -> DURATION:
-        raise Exception("Not supported yet")
+        if time is None:
+            return None
+
+        return self.toDuration(time.tzinfo)
 
     def timeOffsetDateTime(self, dateTime: DATE_TIME) -> DURATION:
-        raise Exception("Not supported yet")
+        return self.timeOffset(dateTime)
 
     def timezone(self, time: TIME) -> STRING:
-        raise Exception("Not supported yet")
+        if time is None:
+            return None
+
+        return self.toTimeZone(time.tzinfo)
 
     def timezoneDateTime(self, dateTime: DATE_TIME) -> STRING:
-        raise Exception("Not supported yet")
+        return self.timezone(dateTime)
+
+    #
+    # Temporal functions
+    #
+    def dayOfYear(self, date: DATE) -> INT:
+        if date is None:
+            return None
+
+        return date.timetuple().tm_yday
+
+    def dayOfWeek(self, date: DATE) -> STRING:
+        if date is None:
+            return None
+
+        dow: int = date.isocalendar()[2]
+        return DAY_NAMES[dow]
+
+    def weekOfYear(self, date: DATE) -> INT:
+        if (date is None):
+            return None
+
+        return date.isocalendar()[1]
+
+    def monthOfYear(self, date: DATE) -> STRING:
+        if date is None:
+            return None
+
+        moy: int = date.month
+        return MONTH_NAMES[moy - 1]
 
     #
     # Extra conversion functions
@@ -176,3 +236,18 @@ class DefaultDateTimeLib:
             return from_
         else:
             return None
+
+    def toDuration(self, info: tzinfo) -> DURATION:
+        if info is None:
+            return None
+
+        delta = info.utcoffset(None)
+        seconds = int(delta.total_seconds())
+        return Duration(seconds=seconds)
+
+    def toTimeZone(self, info: tzinfo) -> STRING:
+        if info is None:
+            return None
+
+        tzname = info.tzname(None)
+        return tzname
