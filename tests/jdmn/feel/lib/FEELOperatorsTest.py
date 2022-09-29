@@ -19,6 +19,7 @@ from isodate import Duration
 
 from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
 from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
+from jdmn.feel.lib.type.string.DefaultStringLib import DefaultStringLib
 from jdmn.runtime.Assert import Assert
 from jdmn.runtime.Context import Context
 from jdmn.runtime.Range import Range
@@ -1217,3 +1218,8 @@ class FEELOperatorsTest(TestCase):
 
     def assertEqualsList(self, expected: Any, actual: Any):
         Assert().assertEquals(expected, str(actual))
+
+    def assertEqualsUnicodeString(self, expected: Any, actual: Any):
+        uexpected = DefaultStringLib.normalizeSurrogatePairs(expected)
+        uactual = DefaultStringLib.normalizeSurrogatePairs(actual)
+        Assert().assertEquals(uexpected, uactual)

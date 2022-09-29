@@ -535,9 +535,9 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertEqual("a", self.getLib().substring("foobar", self.makeNumber("-2"), self.makeNumber("1")))
 
         # horse + grinning face emoji
-        self.assertEqual("\uD83D\uDE00", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("8")))
-        self.assertEqual("\uD83D\uDC0E", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("4"), self.makeNumber("1")))
-        self.assertEqual("\uD83D\uDC0Ebar", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("4"), self.makeNumber("4")))
+        self.assertEqualsUnicodeString("\uD83D\uDE00", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("8")))
+        self.assertEqualsUnicodeString("\uD83D\uDC0E", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("4"), self.makeNumber("1")))
+        self.assertEqualsUnicodeString("\uD83D\uDC0Ebar", self.getLib().substring("foo\ud83d\udc0ebar\uD83D\uDE00", self.makeNumber("4"), self.makeNumber("4")))
 
     def testStringLength(self):
         self.assertIsNone(self.getLib().stringLength(None))
@@ -584,6 +584,7 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertIsNone(self.getLib().substringAfter("foobar", None))
 
         self.assertEqual("ar", self.getLib().substringAfter("foobar", "ob"))
+        self.assertEqual("", self.getLib().substringAfter("foobar", "xyz"))
 
     def testReplace(self):
         self.assertIsNone(self.getLib().replace("", "", ""))
@@ -631,11 +632,11 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertTrue(self.getLib().matches(input, "kiki", "i"))
 
     def testSplit(self):
-        self.assertIsNone("", self.getLib().split(None, None))
-        self.assertIsNone("", self.getLib().split("", ""))
+        self.assertIsNone(self.getLib().split(None, None))
+        self.assertIsNone(self.getLib().split("", ""))
 
         self.assertEqual(self.getLib().asList("John", "Doe"), self.getLib().split("John Doe", "\\s"))
-        self.assertEqual(self.getLib().asList("a", "b", "c", "", ""), self.getLib().split("abc;;", ""))
+        self.assertEqual(self.getLib().asList("a", "b", "c", "", ""), self.getLib().split("a;b;c;;", ";"))
 
     #
     # Boolean functions

@@ -21,4 +21,4 @@ def varArgToList(*operands) -> List[Any]:
             operands = operands[0]
         else:
             operands = [operands[0]]
-    return operands
+    return list(operands)

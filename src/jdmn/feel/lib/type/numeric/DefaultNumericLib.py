@@ -155,4 +155,7 @@ class DefaultNumericLib:
         raise Exception("Not supported yet")
 
     def toNumber(self, number: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if isinstance(number, Decimal):
+            return number
+        else:
+            return None

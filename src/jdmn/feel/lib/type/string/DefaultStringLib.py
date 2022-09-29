@@ -10,6 +10,7 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
+import re
 from datetime import datetime
 from typing import Optional, Any
 
@@ -39,16 +40,42 @@ class DefaultStringLib:
         return string.startswith(match)
 
     def endsWith(self, string: STRING, match: STRING) -> BOOLEAN:
-        raise Exception("Not supported yet")
+        if string is None or match is None:
+            return None
+
+        return string.endswith(match)
 
     def stringLength(self, string: STRING) -> INT:
-        raise Exception("Not supported yet")
+        if string is None:
+            return None
+
+        # The number of Unicode code units in the string
+        bytes = string.encode('utf-16', 'surrogatepass')
+        # The number of characters (Unicode code point)
+        transformed = bytes.decode('utf-16')
+        result = len(transformed)
+        return result
 
     def substring(self, string: STRING, startPosition: NUMBER, length: NUMBER) -> STRING:
-        raise Exception("Not supported yet")
+        if string is None or startPosition is None:
+            return None
+
+        start = int(startPosition)
+        if start < 0:
+            start = len(string) + start
+        else:
+            start -= 1
+
+        normal = self.normalizeSurrogatePairs(string)
+        end = len(normal) if length is None else start + int(length)
+        result = self.substringCodePoints(normal, start, end)
+        return result
 
     def upperCase(self, string: STRING) -> STRING:
-        raise Exception("Not supported yet")
+        if string is None:
+            return None
+
+        return string.upper()
 
     def lowerCase(self, string: STRING) -> STRING:
         if string is None:
@@ -57,13 +84,27 @@ class DefaultStringLib:
         return string.lower()
 
     def substringBefore(self, string: STRING, match: STRING) -> STRING:
-        raise Exception("Not supported yet")
+        if string is None or match is None:
+            return None
+
+        i = string.find(match)
+        return "" if i == -1 else string[0:i]
 
     def substringAfter(self, string: STRING, match: STRING) -> STRING:
-        raise Exception("Not supported yet")
+        if string is None or match is None:
+            return None
+
+        i = string.find(match)
+        return "" if i == -1 else string[i + len(match):]
 
     def replace(self, input: STRING, pattern: STRING, replacement: STRING, flags: STRING) -> STRING:
-        raise Exception("Not supported yet")
+        if input is None or pattern is None or replacement is None:
+            return None
+        if flags is None:
+            flags = ""
+
+        expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
+        return self.evaluateXPath(input, expression)
 
     def matches(self, input: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
         if input is None or pattern is None:
@@ -76,9 +117,27 @@ class DefaultStringLib:
         return len(value) != 0
 
     def split(self, string: STRING, delimiter: STRING) -> LIST:
-        raise Exception("Not supported yet")
+        if string is None or delimiter is None:
+            return None
+        if string.strip() == "" or delimiter.strip() == "":
+            return None
 
-    def evaluateXPath(self, input, expression):
+        result = []
+        pattern = re.compile(delimiter)
+        start = 0
+        for match in re.finditer(pattern, string):
+            delimiterStart = match.start()
+            delimiterEnd = match.end()
+            token = string[start:delimiterStart]
+            result.append(token)
+            start = delimiterEnd
+        if start <= len(string):
+            token = string[start:]
+            result.append(token)
+        return result
+
+    @staticmethod
+    def evaluateXPath(input, expression):
         # Read document
         xmlStr = "<root>" + input + "</root>"
         root = etree.fromstring(xmlStr)
@@ -86,3 +145,23 @@ class DefaultStringLib:
         # Evaluate xpath
         res1 = elementpath.select(root, expression)
         return res1
+
+    @staticmethod
+    def normalizeSurrogatePairs(string):
+        if string is None:
+            return None
+
+        # Roundtrip to utf-16 to replace surrogate pairs
+        utf16bytes = string.encode('utf-16', 'surrogatepass')
+        utf16chars = utf16bytes.decode('utf-16')
+        utf8 = utf16chars.encode('utf-8').decode('utf-8')
+        return utf8
+
+    @staticmethod
+    def substringCodePoints(string, start: int, end: int) -> str:
+        result = ""
+        cps = [ord(c) for c in string]
+        for i, v in enumerate(cps):
+            if start <= i < end:
+                result += chr(v)
+        return result
