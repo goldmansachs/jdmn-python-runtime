@@ -135,7 +135,7 @@ class BaseFEELLibTest(FEELOperatorsTest):
     # Implicit conversion functions
     #
     def testAsList(self):
-        self.assertEqualsList([None], self.getLib().asList(None))
+        self.assertEqualsList("[None]", self.getLib().asList(None))
         self.assertEqual([], self.getLib().asList())
         self.assertEqual([None, "a"], self.getLib().asList(None, "a"))
 
@@ -264,12 +264,12 @@ class BaseFEELLibTest(FEELOperatorsTest):
     def testFlattenFirstLevel(self):
         self.assertIsNone(self.getLib().flattenFirstLevel(None))
 
-        self.assertEqualsList([], self.getLib().flattenFirstLevel([]))
-        self.assertEqualsList(["l11", "l12", "l13"], self.getLib().flattenFirstLevel(["l11", "l12", "l13"]))
-        self.assertEqualsList(["l11", "l21", "l22", "l13"], self.getLib().flattenFirstLevel(["l11", ["l21", "l22"], "l13"]))
-        self.assertEqualsList(["l11", "l21", ["l31", "l32"], "l13"], self.getLib().flattenFirstLevel(["l11", ["l21", ["l31", "l32"]], "l13"]))
+        self.assertEqual([], self.getLib().flattenFirstLevel([]))
+        self.assertEqual(["l11", "l12", "l13"], self.getLib().flattenFirstLevel(["l11", "l12", "l13"]))
+        self.assertEqual(["l11", "l21", "l22", "l13"], self.getLib().flattenFirstLevel(["l11", ["l21", "l22"], "l13"]))
+        self.assertEqual(["l11", "l21", ["l31", "l32"], "l13"], self.getLib().flattenFirstLevel(["l11", ["l21", ["l31", "l32"]], "l13"]))
 
-        self.assertEqualsList(["l11", None, [None, "l32"], "l13"], self.getLib().flattenFirstLevel(["l11", [None, [None, "l32"]], "l13"]))
+        self.assertEqual(["l11", None, [None, "l32"], "l13"], self.getLib().flattenFirstLevel(["l11", [None, [None, "l32"]], "l13"]))
 
     def testCount(self):
         self.assertEqualsNumber(self.makeNumber("0"), self.getLib().count(None))

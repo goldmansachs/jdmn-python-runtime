@@ -881,7 +881,7 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
     def testFlatten(self):
         self.assertIsNone(self.getLib().flatten(None))
 
-        self.assertEqualsList(self.makeList("1", "2", "3", "4"), self.getLib().flatten([
+        self.assertEqual(self.makeList("1", "2", "3", "4"), self.getLib().flatten([
             [["1", "2"]],
             [["3"]],
             "4"

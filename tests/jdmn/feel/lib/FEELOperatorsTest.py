@@ -1216,4 +1216,4 @@ class FEELOperatorsTest(TestCase):
         return expected == actual
 
     def assertEqualsList(self, expected: Any, actual: Any):
-        Assert().assertEquals(expected, actual)
+        Assert().assertEquals(expected, str(actual))
