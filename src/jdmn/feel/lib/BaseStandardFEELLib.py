@@ -184,19 +184,19 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def floor(self, n: NUMBER, scale: NUMBER = None) -> NUMBER:
+    def floor(self, *args) -> NUMBER:
         try:
-            return self.numberLib.floor(n, scale)
+            return self.numberLib.floor(*args)
         except Exception as e:
-            message: STRING = "floor({}, {})".format(n, scale)
+            message: STRING = "floor({})".format(*args)
             self.logError(message, e)
             return None
 
-    def ceiling(self, number: NUMBER, scale: NUMBER = None) -> NUMBER:
+    def ceiling(self, *args) -> NUMBER:
         try:
-            return self.numberLib.ceiling(number, scale)
+            return self.numberLib.ceiling(*args)
         except Exception as e:
-            message: STRING = "ceiling({}, {})".format(number, scale)
+            message: STRING = "ceiling({})".format(*args)
             self.logError(message, e)
             return None
 

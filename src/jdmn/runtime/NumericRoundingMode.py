@@ -19,6 +19,8 @@ class NumericRoundingMode(Enum):
     HALF_UP = "half up", "ROUND_HALF_UP"
     HALF_DOWN = "half down", "ROUND_HALF_DOWN"
     HALF_EVEN = "half even", "ROUND_HALF_EVEN",
+    ROUND_FLOOR = "round floor", "ROUND_FLOOR"
+    ROUND_CEILING = "round floor", "ROUND_CEILING"
     UNKNOWN = "", ""
 
     def __new__(cls, *args, **kwds):

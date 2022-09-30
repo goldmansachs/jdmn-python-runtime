@@ -415,6 +415,7 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
     def testCeiling(self):
         self.assertIsNone(self.getLib().ceiling(None))
         self.assertIsNone(self.getLib().ceiling(None, None))
+        self.assertIsNone(self.getLib().ceiling(self.makeNumber(1), None))
 
         self.assertEqualsNumber(self.makeNumber("1"), self.getLib().ceiling(self.makeNumber(1)))
         self.assertEqualsNumber(self.makeNumber("2"), self.getLib().ceiling(self.makeNumber(1.23)))

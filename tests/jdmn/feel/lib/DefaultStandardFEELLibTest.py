@@ -17,7 +17,7 @@ class DefaultStandardFEELLibTest(BaseStandardFEELLibTest):
     """
     Base test class for DefaultStandardFEELLib
     """
-    __test__ = False
+    __test__ = True
 
     #
     # Time operators

@@ -10,11 +10,13 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-from decimal import Decimal, Context, ROUND_HALF_EVEN
-from typing import List, Any
+from collections import defaultdict
+from decimal import Decimal
+from typing import List, Any, Optional
 
-from jdmn.feel.lib.Types import STRING, NUMBER
+from jdmn.feel.lib.Types import STRING, NUMBER, BOOLEAN
 from jdmn.feel.lib.Utils import varArgToList
+from jdmn.feel.lib.type.numeric.DefaultNumericType import DefaultNumericType
 from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 
 
@@ -33,7 +35,7 @@ class DefaultNumericLib:
             literal = literal.replace(groupingSeparator, "")
         if decimalSeparator is not None and not (decimalSeparator == "."):
             literal = literal.replace(decimalSeparator, ".")
-        return Decimal(literal, Context(prec=34, rounding=ROUND_HALF_EVEN))
+        return Decimal(literal, DefaultNumericType.DECIMAL128)
 
     def decimal(self, n: NUMBER, scale: NUMBER) -> NUMBER:
         if n is None or scale is None:
@@ -55,13 +57,39 @@ class DefaultNumericLib:
             fmt = "1E-{}".format(prec)
         return n.quantize(Decimal(fmt), rounding=mode.pMode)
 
-    def floor(self, n: NUMBER, scale: NUMBER = None) -> NUMBER:
-        # if scale is None:
-        #     scale = self.valueOf(0)
-        raise Exception("Not supported yet")
+    def floor(self, *args) -> NUMBER:
+        # Extract n ans scale
+        operands = varArgToList(*args)
+        size = len(operands)
+        if size == 0 or size > 2:
+            return None
+        elif size == 1:
+            n = operands[0]
+            scale = Decimal(0)
+        else:
+            n = operands[0]
+            scale = operands[1]
 
-    def ceiling(self, n: NUMBER, scale: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if n is None or scale is None:
+            return None
+        return self.round(n, scale, NumericRoundingMode.ROUND_FLOOR)
+
+    def ceiling(self, *args) -> NUMBER:
+        # Extract n ans scale
+        operands = varArgToList(*args)
+        size = len(operands)
+        if size == 0 or size > 2:
+            return None
+        elif size == 1:
+            n = operands[0]
+            scale = Decimal(0)
+        else:
+            n = operands[0]
+            scale = operands[1]
+
+        if n is None or scale is None:
+            return None
+        return self.round(n, scale, NumericRoundingMode.ROUND_CEILING)
 
     def abs(self, n: NUMBER) -> NUMBER:
         if n is None:
@@ -70,34 +98,56 @@ class DefaultNumericLib:
         return n.copy_abs()
 
     def intModulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if dividend is None or divisor is None:
+            return None
+
+        return Decimal(dividend % int(divisor))
 
     def modulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if dividend is None or divisor is None:
+            return None
+
+        # dividend - divisor*floor(dividend/divisor)
+        return dividend - (divisor * self.floor(dividend / divisor, Decimal(0)))
 
     def sqrt(self, number: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if number is None:
+            return None
+
+        return number.sqrt(context=DefaultNumericType.DECIMAL128)
 
     def log(self, number: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if number is None:
+            return None
+
+        return number.ln(context=DefaultNumericType.DECIMAL128)
 
     def exp(self, number: NUMBER) -> NUMBER:
-        raise Exception("Not supported yet")
+        if number is None:
+            return None
 
-    def odd(self, number: NUMBER) -> bool:
-        raise Exception("Not supported yet")
+        return number.exp(context=DefaultNumericType.DECIMAL128)
 
-    def even(self, number: NUMBER) -> bool:
-        raise Exception("Not supported yet")
+    def odd(self, number: NUMBER) -> BOOLEAN:
+        if not self.isIntegerValue(number):
+            return None
+
+        return int(number) % 2 != 0
+
+    def even(self, number: NUMBER) -> BOOLEAN:
+        if not self.isIntegerValue(number):
+            return None
+
+        return int(number) % 2 == 0
 
     #
     # List functions
     #
     def count(self, list_: List[Any]) -> NUMBER:
         if list_ is None:
-            return 0
+            return Decimal(0)
         else:
-            return len(list_)
+            return Decimal(len(list_))
 
     def min(self, *operands) -> NUMBER:
         if len(operands) == 0:
@@ -140,22 +190,87 @@ class DefaultNumericLib:
         return result
 
     def mean(self, *args) -> NUMBER:
-        raise Exception("Not supported yet")
+        operands = varArgToList(*args)
+        if len(operands) == 0:
+            return None
+
+        sum = self.sum(operands)
+        return DefaultNumericType.decimalNumericDivide(sum, Decimal(len(operands)))
 
     def product(self, *args) -> NUMBER:
-        raise Exception("Not supported yet")
+        operands = varArgToList(*args)
+        if len(operands) == 0:
+            return None
+
+        result = Decimal(1)
+        for opd in operands:
+            result = result * opd
+        return result
 
     def median(self, *args) -> NUMBER:
-        raise Exception("Not supported yet")
+        operands = varArgToList(*args)
+        if len(operands) == 0:
+            return None
+
+        sortedList = sorted(operands, key=float)
+        size = len(sortedList)
+        if size % 2 == 0:
+            first = sortedList[int(size / 2)]
+            second = sortedList[int(size / 2 - 1)]
+            median = (first + second) / 2
+        else:
+            median = sortedList[int(size / 2)]
+        return median
 
     def stddev(self, *args) -> NUMBER:
-        raise Exception("Not supported yet")
+        operands = varArgToList(*args)
+        if len(operands) == 0:
+            return None
 
-    def mode(self, *args) -> List[Decimal]:
-        raise Exception("Not supported yet")
+        mean = self.mean(operands)
+        length = Decimal(len(operands) - 1)
+        variance = Decimal(0)
+        for e in operands:
+            number = e
+            dm = number - mean
+            dv = dm * dm
+            variance += dv
+        variance = DefaultNumericType.decimalNumericDivide(variance, length)
+        stddev = self.sqrt(variance)
+        return stddev
 
-    def toNumber(self, number: NUMBER) -> NUMBER:
+    def mode(self, *args) -> Optional[List[Decimal]]:
+        if (args is None):
+            return None
+        operands = varArgToList(*args)
+        if len(operands) == 0:
+            return []
+
+        max = -1
+        modes = []
+        countMap = defaultdict(int)
+        for n in operands:
+            if not isinstance(n, Decimal):
+                return None
+            countMap[n] += 1
+            count = countMap[n]
+            if count > max:
+                max = count
+
+        for key, value in countMap.items():
+            if value == max:
+                modes.append(key)
+
+        sortedModes = sorted(modes)
+        return sortedModes
+
+    @staticmethod
+    def toNumber(number: NUMBER) -> NUMBER:
         if isinstance(number, Decimal):
             return number
         else:
             return None
+
+    @staticmethod
+    def isIntegerValue(number):
+        return number is not None and (number == int(number))

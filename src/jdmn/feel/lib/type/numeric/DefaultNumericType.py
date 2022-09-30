@@ -12,7 +12,7 @@
 #
 import decimal
 from decimal import Decimal
-from typing import Any, Optional
+from typing import Any, Optional, Callable
 
 from jdmn.feel.lib.Types import NUMBER
 from jdmn.feel.lib.type.BaseType import BaseType
@@ -20,22 +20,11 @@ from jdmn.feel.lib.type.numeric.NumericComparator import NumericComparator
 
 
 class DefaultNumericType(BaseType):
+    DECIMAL128 = decimal.Context(prec=34, rounding=decimal.ROUND_HALF_EVEN)
+
     def __init__(self):
         BaseType.__init__(self)
         self.numericComparator = NumericComparator()
-
-    @staticmethod
-    def decimalNumericDivide(first: NUMBER, second: NUMBER) -> NUMBER:
-        if first is None or second is None:
-            return None
-        if second.is_zero():
-            return None
-
-        # DECIMAL 128
-        with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
-            return first / second
 
     def isNumber(self, value: Any) -> bool:
         return isinstance(value, Decimal)
@@ -71,31 +60,19 @@ class DefaultNumericType(BaseType):
         if first is None or second is None:
             return None
 
-        # DECIMAL 128
-        with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
-            return first + second
+        return self.decimalOperation(first, second, lambda x, y: x + y)
 
     def numericSubtract(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
         if first is None or second is None:
             return None
 
-        # DECIMAL 128
-        with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
-            return first - second
+        return self.decimalOperation(first, second, lambda x, y: x - y)
 
     def numericMultiply(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
         if first is None or second is None:
             return None
 
-        # DECIMAL 128
-        with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
-            return first * second
+        return self.decimalOperation(first, second, lambda x, y: x * y)
 
     def numericDivide(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
         return self.decimalNumericDivide(first, second)
@@ -106,16 +83,29 @@ class DefaultNumericType(BaseType):
 
         # DECIMAL 128
         with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
+            ctx.rounding = DefaultNumericType.DECIMAL128.rounding
+            ctx.prec = DefaultNumericType.DECIMAL128.prec
             return first.copy_negate()
 
     def numericExponentiation(self, first: NUMBER, second: NUMBER) -> NUMBER:
         if first is None or second is None:
             return None
 
+        return self.decimalOperation(first, second, lambda x, y: x ** y)
+
+    @staticmethod
+    def decimalNumericDivide(first: NUMBER, second: NUMBER) -> NUMBER:
+        if first is None or second is None:
+            return None
+        if second.is_zero():
+            return None
+
+        return DefaultNumericType.decimalOperation(first, second, lambda x, y: x / y)
+
+    @staticmethod
+    def decimalOperation(first: NUMBER, second: NUMBER, funct: Callable[[NUMBER, NUMBER], NUMBER]):
         # DECIMAL 128
         with decimal.localcontext() as ctx:
-            ctx.rounding = decimal.ROUND_HALF_UP
-            ctx.prec = 34
-            return first ** second
+            ctx.rounding = DefaultNumericType.DECIMAL128.rounding
+            ctx.prec = DefaultNumericType.DECIMAL128.prec
+            return funct(first, second)

@@ -18,7 +18,7 @@ class BaseFEELLibTest(FEELOperatorsTest):
     """
     Base test class for BaseFEELLib
     """
-    __test__ = True
+    __test__ = False
 
     #
     # Conversion functions
