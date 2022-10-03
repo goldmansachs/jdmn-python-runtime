@@ -35,3 +35,5 @@ LONG = typing.Optional[int]
 INT = typing.Optional[int]
 
 POINT_RANGE_UNION = typing.Union[typing.Any, RANGE]
+
+COMPARABLE = typing.Optional[typing.Union[Decimal, str, date, time, datetime, Duration, timedelta]]
