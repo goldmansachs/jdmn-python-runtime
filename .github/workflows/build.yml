@@ -10,12 +10,6 @@ jobs:
         include:
         # linux
         - os: ubuntu-latest
-          python: '3.8'
-          toxenv: py
-        - os: ubuntu-latest
-          python: '3.8'
-          toxenv: linters
-        - os: ubuntu-latest
           python: '3.10'
           toxenv: py
         - os: ubuntu-latest
@@ -27,7 +21,7 @@ jobs:
           toxenv: py
         - os: windows-latest
           python: '3.10'
-          toxenv: py
+          toxenv: linters
     runs-on: ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v2
