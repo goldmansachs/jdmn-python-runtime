@@ -1,0 +1,68 @@
+FEELOperatorsTest
+
+Negative date time
+#        self.assertEqual(-124649967477, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03.0004")))
+#        self.assertEqual(-124649971137, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03+01:01")))
+#        self.assertEqual(-124649967477, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03@Etc/UTC")))
+
+Both are timedelta
+#        self.assertFalse(self.getLib().durationIs(self.makeDuration("P0Y"), self.makeDuration("P0D")))
+
+BaseFEELLibTest
+
+Negative dates
+        # year must be in the range [-999,999,999..999,999,999].
+#        self.assertEqualsDateTime("999999999-10-11", self.getLib().date(self.getLib().date("999999999-10-11")))
+#        self.assertEqualsDateTime("-999999999-10-11", self.getLib().date(self.getLib().date("-999999999-10-11")))
+#        self.assertIsNone(self.getLib().date(self.getLib().date("9999999991-10-11")))
+#        self.assertIsNone(self.getLib().date(self.getLib().date("-9999999991-10-11")))
+
+
+BaseStandardFEELLibTest
+
+Overflow in duration
+#        self.assertEqualsDateTime("P2129706043D", self.getLib().duration("P2129706043D"))
+
+Missing fraction
+#        self.assertEqualsDateTime("PT0S", self.getLib().duration("PT0.S"))
+
+#        self.assertEqualsNumber(self.makeNumber("-10"), self.getLib().decimal(self.makeNumber("-10"), self.makeNumber(Long.MAX_VALUE)))
+
+DefaultStandardFEELLibTest
+
+Rounding to 60 secs, failing validation
+#        self.assertEqualsDateTime("P2Y9M", self.getLib().yearsAndMonthsDuration(
+#            self.makeDateAndTime("2015-12-31T23:59:59.9999999"), self.makeDateAndTime("2018-10-01T12:32:59.111111")))
+
+Z in time -> UTC
+#        self.assertEqual("11:00:01Z", self.getLib().string(self.makeTime("11:00:01Z")))
+
+Offset in mili seconds
+#        self.assertEqual("11:59:45+02:45:55",
+#                         self.getLib().string(self.getLib().time(self.makeNumber(11), self.makeNumber(59), self.makeNumber(45), self.getLib().duration("PT2H45M55S"))))
+#        self.assertEqual("11:59:45-02:45:55",
+#                         self.getLib().string(self.getLib().time(self.makeNumber(11), self.makeNumber(59), self.makeNumber(45), self.getLib().duration("-PT2H45M55S"))))
+
+Z is not +00:00
+#        self.assertEqual("00:00:00Z", self.getLib().string(self.getLib().time(self.makeDate("2017-08-10"))))
+
+Precision is micro (6 digits) and padding
+#        self.assertEqual("2011-12-31T10:15:30.987@Europe/Paris", self.getLib().string(self.makeDateAndTime("2011-12-31T10:15:30.987@Europe/Paris")))
+#        self.assertEqual("2011-12-31T10:15:30.123456789@Europe/Paris", self.getLib().string(self.makeDateAndTime("2011-12-31T10:15:30.123456789@Europe/Paris")))
+#        self.assertEqual("999999999-12-31T23:59:59.999999999@Europe/Paris", self.getLib().string(self.makeDateAndTime("999999999-12-31T23:59:59.999999999@Europe/Paris")))
+#        self.assertEqual("-999999999-12-31T23:59:59.999999999+02:00", self.getLib().string(self.makeDateAndTime("-999999999-12-31T23:59:59.999999999+02:00")))
+#        self.assertEqual("2017-01-01T23:59:01.123456789@Europe/Paris",
+#            self.getLib().string(self.getLib().dateAndTime(self.makeDate("2017-01-01"), self.makeTime("23:59:01.123456789@Europe/Paris"))))
+#        self.assertEqual("2017-09-05T09:15:30.987654321@Europe/Paris",
+#            self.getLib().string(self.getLib().dateAndTime(self.makeDateAndTime("2017-09-05T10:20:00"), self.makeTime("09:15:30.987654321@Europe/Paris"))))
+#        self.assertEqual("2017-09-05T09:15:30.987654321@Europe/Paris", self.getLib().string(
+#            self.getLib().dateAndTime(self.makeDateAndTime("2017-09-05T10:20:00-01:00"), self.makeTime("09:15:30.987654321@Europe/Paris"))))
+#        self.assertEqual("2017-09-05T09:15:30.987654321@Europe/Paris", self.getLib().string(
+#            self.getLib().dateAndTime(self.makeDateAndTime("2017-09-05T10:20:00@Europe/Paris"), self.makeTime("09:15:30.987654321@Europe/Paris"))))
+
+Both are UTC
+#        self.assertEqual("Z", self.getLib().timezone(self.makeDateAndTime("2018-12-10T12:01:02Z")))
+#        self.assertEqual("Etc/UTC", self.getLib().timezone(self.makeDateAndTime("2018-12-10T12:01:02@Etc/UTC")))
+
+# Deviations from ISO
+https://www.w3.org/TR/xmlschema-2/#deviantformats
