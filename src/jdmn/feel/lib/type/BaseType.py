@@ -10,8 +10,12 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-import pytz
+import datetime
 
 
 class BaseType:
-    UTC = pytz.utc
+    UTC = datetime.timezone.utc
+    EP_YEAR = 1970
+    EP_MONTH = 1
+    EP_DAY = 1
+    EP = datetime.datetime(EP_YEAR, EP_MONTH, EP_DAY, 0, 0, 0, tzinfo=UTC)

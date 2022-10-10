@@ -13,6 +13,7 @@
 from datetime import date, datetime, time, timezone, timedelta
 from typing import Optional, Any
 
+import isodate
 from isodate import Duration
 
 from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INT, DATE_TIME_UNION, DURATION, LONG
@@ -38,16 +39,23 @@ class DefaultCalendarType(BaseType):
         return isinstance(obj, datetime)
 
     def isDuration(self, value: Any):
-        return isinstance(value, Duration)
+        return isinstance(value, Duration) or isinstance(value, timedelta)
 
     def isYearsAndMonthsDuration(self, value):
-        return isinstance(value, Duration) and value.tdelta.total_seconds() == 0.0
-
-    def isDaysAndTimeDuration(self, value: Any):
-        if value is None:
+        if isinstance(value, Duration):
+            return not (value.years == 0 and value.months == 0) and value.tdelta.total_seconds() == 0.0
+        elif isinstance(value, timedelta):
             return False
         else:
-            return isinstance(value, timedelta)
+            return False
+
+    def isDaysAndTimeDuration(self, value: Any):
+        if isinstance(value, Duration):
+            return value.years == 0 and value.months == 0 and value.tdelta.total_seconds() != 0.0
+        elif isinstance(value, timedelta):
+            return True
+        else:
+            return False
 
     @staticmethod
     def dateToDateTime(date_: DATE) -> datetime:
@@ -56,20 +64,20 @@ class DefaultCalendarType(BaseType):
     @staticmethod
     def timeToDateTime(time_: TIME) -> datetime:
         # EPOCH
-        return datetime(year=1970, month=1, day=1, hour=time_.hour, minute=time_.minute, second=time_.second, tzinfo=time_.tzinfo)
+        return datetime(year=BaseType.EP_YEAR, month=BaseType.EP_MONTH, day=BaseType.EP_DAY, hour=time_.hour, minute=time_.minute, second=time_.second, tzinfo=time_.tzinfo)
 
     @staticmethod
     def sameDate(first: DATE, second: DATE) -> bool:
         return first.year == second.year and first.month == second.month and first.day == second.day
 
-    @staticmethod
-    def sameTime(first: TIME, second: TIME) -> bool:
-        return first.hour == second.hour and first.minute == second.minute and first.second == second.second and first.tzinfo == second.tzinfo
+    def sameTime(self, first: TIME, second: TIME) -> bool:
+        return first.hour == second.hour and first.minute == second.minute and first.second == second.second and \
+               self.sameTzInfo(first.tzinfo, second.tzinfo)
 
     def sameDateTime(self, first: DATE_TIME, second: DATE_TIME) -> bool:
-        #        return self.sameDate(first.date(), second.date()) and self.sameTime(first.time(), second.time())
         return first.year == second.year and first.month == second.month and \
-               first.day == second.day and first.hour == second.hour and first.minute == second.minute and first.second == second.second and first.tzinfo == second.tzinfo
+               first.day == second.day and first.hour == second.hour and first.minute == second.minute and first.second == second.second and \
+               self.sameTzInfo(first.tzinfo, second.tzinfo)
 
     def value(self, calendar: DATE_TIME_UNION) -> INT:
         if self.isDate(calendar):
@@ -93,7 +101,7 @@ class DefaultCalendarType(BaseType):
 
         value = time_.hour * 3600 + time_.minute * 60 + time_.second
         if time_.tzinfo is not None:
-            value -= time_.utcoffset().seconds
+            value -= time_.tzinfo.utcoffset(self.EP).seconds
         return value
 
     def dateTimeValue(self, datetime_: DATE_TIME) -> Optional[int]:
@@ -119,7 +127,7 @@ class DefaultCalendarType(BaseType):
         elif self.isDaysAndTimeDuration(duration):
             return self.secondsValue(duration)
         else:
-            return int((datetime(1970, 1, 1) + duration).timestamp())
+            return int((self.EP + duration).timestamp())
 
     @staticmethod
     def monthsValue(duration: DURATION) -> LONG:
@@ -137,3 +145,15 @@ class DefaultCalendarType(BaseType):
             return None
 
         return int(duration.total_seconds())
+
+    def sameTzInfo(self, tz1: isodate.tzinfo, tz2: isodate.tzinfo) -> bool:
+        if tz1 is tz2 or tz1 == tz2:
+            return True
+        else:
+            if isinstance(tz1, isodate.tzinfo.Utc) and isinstance(tz2, isodate.FixedOffset):
+                return tz2.utcoffset(None).total_seconds() == 0
+            if isinstance(tz2, isodate.tzinfo.Utc) and isinstance(tz1, isodate.FixedOffset):
+                return tz1.utcoffset(None).total_seconds() == 0
+            if isinstance(tz1, isodate.FixedOffset) and isinstance(tz2, isodate.FixedOffset):
+                return tz1.utcoffset(None).total_seconds() == tz1.utcoffset(None).total_seconds()
+            return False

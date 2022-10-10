@@ -37,8 +37,15 @@ class BaseFEELLibTest(FEELOperatorsTest):
         #
         self.assertIsNone(self.getLib().date(None))
         self.assertIsNone(self.getLib().date(""))
+        self.assertIsNone(self.getLib().date(""))
         self.assertIsNone(self.getLib().date("xxx"))
+        self.assertIsNone(self.getLib().date("2012-12-25T"))
+        self.assertIsNone(self.getLib().date("2012/12/25"))
+        self.assertIsNone(self.getLib().date("0000-12-25T"))
+        self.assertIsNone(self.getLib().date("2017-13-10"))
+        self.assertIsNone(self.getLib().date("998-12-31"))
         self.assertIsNone(self.getLib().date("01211-12-31"))
+        self.assertIsNone(self.getLib().date("+2012-12-02"))
         self.assertIsNone(self.getLib().date("2017-08-25T11:00:00"))
 
         # year must be in the range [-999,999,999..999,999,999].
@@ -71,8 +78,15 @@ class BaseFEELLibTest(FEELOperatorsTest):
         self.assertIsNone(self.getLib().time(None))
         self.assertIsNone(self.getLib().time(""))
         self.assertIsNone(self.getLib().time("xxx"))
-#        self.assertIsNone(self.getLib().time("13:20:00+01:00@Europe/Paris"))
-#        self.assertIsNone(self.getLib().time("13:20:00+00:00[UTC]"))
+        self.assertIsNone(self.getLib().time("13:20:00+01:00@Europe/Paris"))
+        self.assertIsNone(self.getLib().time("13:20:00+00:00@UTC"))
+        self.assertIsNone(self.getLib().time("07:1:00"))
+        self.assertIsNone(self.getLib().time("13:20:00@xyz/abc"))
+        self.assertIsNone(self.getLib().time("13:20:00+5:00"))
+        self.assertIsNone(self.getLib().time("13:20:00+5"))
+        self.assertIsNone(self.getLib().time("07:2"))
+        self.assertIsNone(self.getLib().time("11:30:00T"))
+        self.assertIsNone(self.getLib().time("2012T-12-2511:00:00Z"))
 
         # fix input literal
         self.assertEqualsDateTime("11:00:00Z", self.getLib().time("T11:00:00Z"))
@@ -80,7 +94,6 @@ class BaseFEELLibTest(FEELOperatorsTest):
 
         self.assertEqualsDateTime("11:00:00Z", self.getLib().time("11:00:00Z"))
         self.assertEqualsDateTime("11:00:00.001Z", self.getLib().time("11:00:00.001Z"))
-
         self.assertEqualsDateTime("11:00:00.001+01:00", self.getLib().time("11:00:00.001+01:00"))
         self.assertEqualsDateTime("11:00:00+01:00", self.getLib().time("11:00:00+01:00"))
 
@@ -104,8 +117,19 @@ class BaseFEELLibTest(FEELOperatorsTest):
         self.assertIsNone(self.getLib().dateAndTime(""))
         self.assertIsNone(self.getLib().dateAndTime("xxx"))
         self.assertIsNone(self.getLib().dateAndTime("11:00:00"))
-#        self.assertIsNone(self.getLib().dateAndTime("2011-12-03T10:15:30+01:00@Europe/Paris"))
-#        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T12:20:00+19:00"))
+        self.assertIsNone(self.getLib().dateAndTime("2011-12-03T10:15:30+01:00@Europe/Paris"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T12:20:00+19:00"))
+        self.assertIsNone(self.getLib().dateAndTime("2011-12-0310:15:30"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-00-10T11:22:33"))
+        self.assertIsNone(self.getLib().dateAndTime("998-12-31T11:22:33"))
+        self.assertIsNone(self.getLib().dateAndTime("01211-12-31T11:22:33"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T07:1:00"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T07:01:2"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T13:20:00@xyz/abc"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T13:20:00+05:0"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T13:20:00+5:00"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T13:20:00+5"))
+        self.assertIsNone(self.getLib().dateAndTime("2017-12-31T07:2"))
 
         # fix input literal
         self.assertEqualsDateTime("2016-08-01T11:00:00+01:00", self.getLib().dateAndTime("2016-08-01T11:00:00+0100"))

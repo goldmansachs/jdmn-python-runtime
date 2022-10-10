@@ -63,7 +63,7 @@ class DefaultTimeType(DefaultCalendarType):
         if time_ is None or duration_ is None:
             return None
 
-        return (self.timeToDateTime(time_) + duration_).time()
+        return (self.timeToDateTime(time_) + duration_).timetz()
 
     def timeSubtractDuration(self, time_: Optional[time], duration_: Optional[Duration]) -> Optional[time]:
         if time_ is None or duration_ is None:

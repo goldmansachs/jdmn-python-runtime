@@ -19,7 +19,6 @@ from isodate import Duration
 
 from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
 from jdmn.feel.lib.DefaultStandardFEELLib import DefaultStandardFEELLib
-from jdmn.feel.lib.type.string.DefaultStringLib import DefaultStringLib
 from jdmn.runtime.Assert import Assert
 from jdmn.runtime.Context import Context
 from jdmn.runtime.Range import Range
@@ -49,6 +48,7 @@ class FEELOperatorsTest(TestCase):
 
     def testNumericValue(self):
         self.assertIsNone(self.getLib().numericValue(None))
+
         self.assertEqual(self.makeNumber("1"), self.getLib().numericValue(self.makeNumber("1")))
 
     def testNumericIs(self):
@@ -487,8 +487,8 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(63, self.getLib().timeValue(self.makeTime("01:02:03+01:01")))
 
         # zoneid time
-#        self.assertEqual(123, self.getLib().timeValue(self.makeTime("01:02:03@Europe/Paris")))
-#        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03@Etc/UTC")))
+        self.assertEqual(123, self.getLib().timeValue(self.makeTime("01:02:03@Europe/Paris")))
+        self.assertEqual(3723, self.getLib().timeValue(self.makeTime("01:02:03@Etc/UTC")))
 
     def testTimeIs(self):
         self.assertTrue(self.getLib().timeIs(None, None))
@@ -506,15 +506,15 @@ class FEELOperatorsTest(TestCase):
         # different times with different milliseconds are is()
         self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0002")))
         # same times in same zone are is()
-#        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
         # same times - one with zone one without are not is()
-#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
+        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
         # same times with different zones are not is()
-#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
         # same times = one with offset, the other with zone are not equal
-#        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
+        self.assertFalse(self.getLib().timeIs(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
         # same times = one with Z zone, the other with UTC are is()
-#        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00Z"), self.makeTime("10:30:00+00:00")))
+        self.assertTrue(self.getLib().timeIs(self.makeTime("10:30:00Z"), self.makeTime("10:30:00+00:00")))
 
     def testTimeEqual(self):
         self.assertTrue(self.getLib().timeEqual(None, None))
@@ -532,21 +532,21 @@ class FEELOperatorsTest(TestCase):
         # same times with different milliseconds are equal
         self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00.0001"), self.makeTime("10:30:00.0002")))
         # same times in same zone are equal
-#        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Europe/Paris")))
         # same times - one with zone one without are not equal
-#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
+        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00")))
         # same times with different zones are not equal
-#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00@Europe/Paris"), self.makeTime("10:30:00@Asia/Dhaka")))
         # same times = one with offset, the other with zone are not equal
-#        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
+        self.assertFalse(self.getLib().timeEqual(self.makeTime("10:30:00+02:00"), self.makeTime("10:30:00@Europe/Paris")))
         # same times = one with Z zone, the other with UTC are equal
         self.assertTrue(self.getLib().timeEqual(self.makeTime("10:30:00Z"), self.makeTime("10:30:00+00:00")))
 
         # times with equivalent offset and zone id are equal
         self.assertTrue(self.getLib().timeEqual(self.makeTime("12:00:00"), self.makeTime("12:00:00+00:00")))
-#        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00+00:00"), self.makeTime("00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00+00:00"), self.makeTime("00:00:00@Etc/UTC")))
         self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00Z"), self.makeTime("00:00:00+00:00")))
-#        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00Z"), self.makeTime("00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().timeEqual(self.makeTime("00:00:00Z"), self.makeTime("00:00:00@Etc/UTC")))
 
     def testTimeNotEqual(self):
         self.assertFalse(self.getLib().timeNotEqual(None, None))
@@ -647,9 +647,9 @@ class FEELOperatorsTest(TestCase):
 #        self.assertEqual(-124649971137, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03+01:01")))
 
         # zoneid date time
-#        self.assertEqual(123, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Europe/Paris")))
-#        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Etc/UTC")))
-#        self.assertEqual(315536523, self.getLib().dateTimeValue(self.makeDateAndTime("1980-01-01T01:02:03@Etc/UTC")))
+        self.assertEqual(123, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Europe/Paris")))
+        self.assertEqual(3723, self.getLib().dateTimeValue(self.makeDateAndTime("1970-01-01T01:02:03@Etc/UTC")))
+        self.assertEqual(315536523, self.getLib().dateTimeValue(self.makeDateAndTime("1980-01-01T01:02:03@Etc/UTC")))
 #        self.assertEqual(-124649967477, self.getLib().dateTimeValue(self.makeDateAndTime("-1980-01-01T01:02:03@Etc/UTC")))
 
     def testDateTimeIs(self):
@@ -672,13 +672,13 @@ class FEELOperatorsTest(TestCase):
         # different datetimes are not is ()
         self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-07T00:00:00")))
         # same datetimes in same zone are is ()
-#        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        self.assertTrue(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
         # same datetimes in different zones are not is ()
-#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
         # same datetimes, one with zone one without are not is ()
-#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
         # same datetimes, one with offset and the other with zone are not is ()
-#        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        self.assertFalse(self.getLib().dateTimeIs(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
 
     def testDateTimeEqual(self):
         # datetime equals None
@@ -700,18 +700,18 @@ class FEELOperatorsTest(TestCase):
         # different datetimes are not equal
         self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-07T00:00:00")))
         # same datetimes in same zone are equal
-#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
         # same datetimes in different zones are not equal
-#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
         # same datetimes, one with zone one without are not equal
-#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Asia/Dhaka")))
         # same datetimes, one with offset and the other with zone are not equal
-#        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
+        self.assertFalse(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+02:00"), self.makeDateAndTime("2018-12-08T00:00:00@Europe/Paris")))
 
         # datetime with equivalent offset and zone id are equal
-#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00+00:00"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
         self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T12:00:00Z"), self.makeDateAndTime("2018-12-08T12:00:00+00:00")))
-#        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00Z"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
+        self.assertTrue(self.getLib().dateTimeEqual(self.makeDateAndTime("2018-12-08T00:00:00Z"), self.makeDateAndTime("2018-12-08T00:00:00@Etc/UTC")))
 
     def testDateTimeNotEqual(self):
         self.assertFalse(self.getLib().dateTimeNotEqual(None, None))
@@ -762,6 +762,9 @@ class FEELOperatorsTest(TestCase):
         self.assertEqual(self.makeDuration("PT0S"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-01T12:00:00Z")))
         self.assertEqual(self.makeDuration("-P2DT1H"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-08-01T12:00:00Z"), self.makeDateAndTime("2016-08-03T13:00:00Z")))
 
+        self.assertEqual(self.makeDuration("P367DT6H58M59S"), self.getLib().dateTimeSubtract(
+            self.makeDateAndTime("2016-12-24T23:59:00-08:00"), self.makeDateAndTime("2015-12-24T00:00:01-01:00")))
+
     def testDateTimeAddDuration(self):
         self.assertIsNone(self.getLib().dateTimeAddDuration(None, None))
         self.assertIsNone(self.getLib().dateTimeAddDuration(None, self.makeDuration("P1Y1M")))
@@ -793,12 +796,24 @@ class FEELOperatorsTest(TestCase):
         # years and months
         self.assertTrue(self.getLib().isYearsAndMonthsDuration(self.makeDuration("P1Y2M")))
         self.assertTrue(self.getLib().isYearsAndMonthsDuration(self.makeDuration("-P1Y2M")))
+        self.assertFalse(self.getLib().isYearsAndMonthsDuration(self.makeDuration("P1DT2H3M4S")))
+        self.assertFalse(self.getLib().isYearsAndMonthsDuration(self.makeDuration("-P1DT2H3M4S")))
+        self.assertFalse(self.getLib().isYearsAndMonthsDuration(self.makeDuration("P1Y2M1DT2H3M4S")))
+        self.assertFalse(self.getLib().isYearsAndMonthsDuration(self.makeDuration("-P1Y2M1DT2H3M4S")))
 
         # days and time
+        self.assertFalse(self.getLib().isDaysAndTimeDuration(self.makeDuration("P1Y2M")))
+        self.assertFalse(self.getLib().isDaysAndTimeDuration(self.makeDuration("-P1Y2M")))
         self.assertTrue(self.getLib().isDaysAndTimeDuration(self.makeDuration("P1DT2H3M4S")))
         self.assertTrue(self.getLib().isDaysAndTimeDuration(self.makeDuration("-P1DT2H3M4S")))
+        self.assertFalse(self.getLib().isDaysAndTimeDuration(self.makeDuration("P1Y2M1DT2H3M4S")))
+        self.assertFalse(self.getLib().isDaysAndTimeDuration(self.makeDuration("-P1Y2M1DT2H3M4S")))
 
         # mixture
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("P1Y2M")))
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("-P1Y2M")))
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("P1DT2H3M4S")))
+        self.assertTrue(self.getLib().isDuration(self.makeDuration("-P1DT2H3M4S")))
         self.assertTrue(self.getLib().isDuration(self.makeDuration("P1Y2M1DT2H3M4S")))
         self.assertTrue(self.getLib().isDuration(self.makeDuration("-P1Y2M1DT2H3M4S")))
 
@@ -922,6 +937,9 @@ class FEELOperatorsTest(TestCase):
 
         self.assertEqual(self.makeDuration("P2DT2H"), self.getLib().durationAdd(self.makeDuration("P1DT1H"), self.makeDuration("P1DT1H")))
         self.assertEqual(self.makeDuration("P2DT3H"), self.getLib().durationAdd(self.makeDuration("P1DT1H"), self.makeDuration("P1DT2H")))
+
+        self.assertEqual(self.makeDuration("P380DT8H59M13S"), self.getLib().durationAdd(
+            self.makeDuration("P13DT2H14S"), self.getLib().dateTimeSubtract(self.makeDateAndTime("2016-12-24T23:59:00-08:00"), self.makeDateAndTime("2015-12-24T00:00:01-01:00"))))
 
     def testDurationSubtract(self):
         self.assertIsNone(self.getLib().durationSubtract(None, None))
@@ -1192,34 +1210,36 @@ class FEELOperatorsTest(TestCase):
         if isinstance(expected, str):
             expected = self.makeNumber(expected)
 
-        return self.assertAlmostEqual(expected, actual, delta=delta)
+        self.assertAlmostEqual(expected, actual, delta=delta)
 
     def assertEqualsDate(self, expected: Any, actual: Optional[date]):
         if isinstance(expected, str):
             expected = self.makeDate(expected)
 
-        return expected == actual
+        self.assertEqual(expected, actual)
 
     def assertEqualsTime(self, expected: Any, actual: Optional[time]):
         if isinstance(expected, str):
             expected = self.makeTime(expected)
 
-        return expected == actual
+        self.assertEqual(expected, actual)
 
     def assertEqualsDateTime(self, expected: Any, actual: Optional[datetime]):
-        if isinstance(actual, date):
+        if isinstance(actual, datetime):
             expected = self.makeDateAndTime(expected)
+        elif isinstance(actual, date):
+            expected = self.makeDate(expected)
+        elif isinstance(actual, time):
+            expected = self.makeTime(expected)
         elif isinstance(actual, Duration):
             expected = self.makeDuration(expected)
         elif isinstance(actual, timedelta):
             expected = self.makeDuration(expected)
 
-        return expected == actual
+        self.assertEqual(expected, actual)
 
     def assertEqualsList(self, expected: Any, actual: Any):
         Assert().assertEquals(expected, str(actual))
 
     def assertEqualsUnicodeString(self, expected: Any, actual: Any):
-        uexpected = DefaultStringLib.normalizeSurrogatePairs(expected)
-        uactual = DefaultStringLib.normalizeSurrogatePairs(actual)
-        Assert().assertEquals(uexpected, uactual)
+        Assert().assertEquals(expected, actual)

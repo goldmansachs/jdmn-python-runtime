@@ -13,7 +13,7 @@
 from typing import Any, Optional
 
 from jdmn.feel.lib.BaseFEELLib import BaseFEELLib
-from jdmn.feel.lib.Types import NUMBER, STRING, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST
+from jdmn.feel.lib.Types import NUMBER, STRING, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, DATE_OR_DATE_TIME, TIME_OR_DATE_TIME
 from jdmn.feel.lib.type.ComparableComparator import comparable
 from jdmn.feel.lib.type.bool.DefaultBooleanLib import DefaultBooleanLib
 from jdmn.feel.lib.type.list.DefaultListLib import DefaultListLib
@@ -68,7 +68,6 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    # TODO ZoneIDs not supported in ISO 8601
     def time(self, *args) -> TIME:
         try:
             return self.dateTimeLib.time(*args)
@@ -93,7 +92,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def yearsAndMonthsDuration(self, from_: DATE, to: DATE) -> DURATION:
+    def yearsAndMonthsDuration(self, from_: DATE_OR_DATE_TIME, to: DATE_OR_DATE_TIME) -> DURATION:
         try:
             return self.durationLib.yearsAndMonthsDuration(from_, to)
         except Exception as e:
@@ -420,7 +419,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Date properties
     #
-    def year(self, date: DATE) -> NUMBER:
+    def year(self, date: DATE_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.year(date))
         except Exception as e:
@@ -428,7 +427,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def month(self, date: DATE) -> NUMBER:
+    def month(self, date: DATE_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.month(date))
         except Exception as e:
@@ -436,7 +435,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def day(self, date: DATE) -> NUMBER:
+    def day(self, date: DATE_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.day(date))
         except Exception as e:
@@ -444,7 +443,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def weekday(self, date: DATE) -> NUMBER:
+    def weekday(self, date: DATE_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.weekday(date))
         except Exception as e:
@@ -455,7 +454,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Time properties
     #
-    def hour(self, time: TIME) -> NUMBER:
+    def hour(self, time: TIME_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.hour(time))
         except Exception as e:
@@ -463,7 +462,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def minute(self, time: TIME) -> NUMBER:
+    def minute(self, time: TIME_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.minute(time))
         except Exception as e:
@@ -471,7 +470,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def second(self, time: TIME) -> NUMBER:
+    def second(self, time: TIME_OR_DATE_TIME) -> NUMBER:
         try:
             return self.valueOf(self.dateTimeLib.second(time))
         except Exception as e:
@@ -479,7 +478,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def timeOffset(self, time: TIME) -> DURATION:
+    def timeOffset(self, time: TIME_OR_DATE_TIME) -> DURATION:
         try:
             return self.dateTimeLib.timeOffset(time)
         except Exception as e:
@@ -487,7 +486,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def timezone(self, time: TIME) -> STRING:
+    def timezone(self, time: TIME_OR_DATE_TIME) -> STRING:
         try:
             return self.dateTimeLib.timezone(time)
         except Exception as e:

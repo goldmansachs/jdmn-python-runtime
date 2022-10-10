@@ -11,21 +11,37 @@
 # specific language governing permissions and limitations under the License.
 #
 import re
-from datetime import datetime
+from zoneinfo import ZoneInfo
+
+from datetime import datetime, date, time
 from typing import Optional, Any
 
 from lxml import etree
 import elementpath
 
-from jdmn.feel.lib.Types import STRING, BOOLEAN, INT, LIST, NUMBER
+from jdmn.feel.lib.Types import STRING, BOOLEAN, INT, LIST, NUMBER, TIME_OR_DATE_TIME
 
 
 class DefaultStringLib:
     def string(self, from_: Any) -> STRING:
         if isinstance(from_, datetime):
-            return str(from_.isoformat())
+            return self.print(from_)
+        elif isinstance(from_, date):
+            return from_.isoformat()
+        elif isinstance(from_, time):
+            return self.print(from_)
 
         return str(from_)
+
+    def print(self, from_: TIME_OR_DATE_TIME) -> str:
+        tz = from_.tzinfo
+        if isinstance(tz, ZoneInfo):
+            copy = from_
+            copy = copy.replace(tzinfo=None)
+            isoformat = copy.isoformat()
+            return "{}@{}".format(isoformat, str(tz))
+        else:
+            return from_.isoformat()
 
     def contains(self, string: STRING, match: STRING) -> BOOLEAN:
         if string is None or match is None:

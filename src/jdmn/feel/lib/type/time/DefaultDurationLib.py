@@ -10,9 +10,13 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-import isodate
+import datetime
 
-from jdmn.feel.lib.Types import STRING, DURATION, DATE, LONG
+import isodate
+from dateutil.relativedelta import relativedelta
+from isodate import Duration
+
+from jdmn.feel.lib.Types import STRING, DURATION, LONG, DATE_OR_DATE_TIME
 
 
 class DefaultDurationLib:
@@ -22,12 +26,15 @@ class DefaultDurationLib:
 
         return isodate.parse_duration(from_)
 
-    def yearsAndMonthsDuration(self, from_: DATE, to: DATE) -> DURATION:
+    def yearsAndMonthsDuration(self, from_: DATE_OR_DATE_TIME, to: DATE_OR_DATE_TIME) -> DURATION:
         if from_ is None or to is None:
             return None
 
-        delta = to - from_
-        return delta
+        from_ = from_.date() if isinstance(from_, datetime.datetime) else from_
+        to = to.date() if isinstance(to, datetime.datetime) else to
+
+        delta = relativedelta(to, from_)
+        return Duration(years=delta.years, months=delta.months)
 
     def years(self, duration: DURATION) -> LONG:
         if duration is None:

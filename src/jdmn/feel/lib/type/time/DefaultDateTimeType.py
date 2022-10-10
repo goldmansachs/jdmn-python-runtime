@@ -59,6 +59,7 @@ class DefaultDateTimeType(DefaultCalendarType):
         if self.canNotSubtract(first, second):
             return None
 
+        # value is seconds from EPOCH
         durationInSeconds = self.dateTimeValue(first) - self.dateTimeValue(second)
         return Duration(seconds=durationInSeconds)
 
