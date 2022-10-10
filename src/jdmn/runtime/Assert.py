@@ -15,8 +15,11 @@ from decimal import Decimal
 from typing import Any
 from unittest import TestCase
 
+import isodate
+
 from jdmn.runtime import DMNType
 from jdmn.runtime.Context import Context
+from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
 
 
 class Assert(TestCase):
@@ -36,7 +39,7 @@ class Assert(TestCase):
         elif self.isBoolean(expected):
             self.assertEqual(expected, actual, message)
         elif self.isString(expected):
-            self.assertEqual(expected, actual, message)
+            self.assertEqual(self.normalizeString(expected), self.normalizeString(actual), message)
         elif self.isDateTimeValue(expected):
             self.assertEqual(self.normalizeDateTime(expected), self.normalizeDateTime(actual), message)
         elif self.isList(expected):
@@ -57,7 +60,12 @@ class Assert(TestCase):
                 actualMember = actual.get(key)
                 self.assertEquals(expectedMember, actualMember, message + " for member '{0}'".format(key))
         elif self.isComplex(expected):
-            self.assertEqual(expected, actual, message)
+            for propertyName, expectedProperty in expected.__dict__.items():
+                try:
+                    actualProperty = getattr(actual, propertyName)
+                    self.assertEquals(expectedProperty, actualProperty, message)
+                except Exception as e:
+                    raise DMNRuntimeException("Error in '{}.{}'".format(type(expected), str(propertyName)), e)
         else:
             self.assertEqual(expected, actual, message)
 
@@ -79,10 +87,14 @@ class Assert(TestCase):
     def isDateTime(self, obj: Any) -> bool:
         return isinstance(obj, datetime.datetime)
 
+    def isDuration(self, obj: Any) -> bool:
+        return isinstance(obj, isodate.Duration) or isinstance(obj, datetime.timedelta)
+
     def isDateTimeValue(self, obj: Any) -> bool:
         return self.isDate(obj) \
                or self.isTime(obj) \
-               or self.isDateTime(obj)
+               or self.isDateTime(obj) \
+               or self.isDuration(obj)
 
     def isList(self, obj: Any) -> bool:
         return isinstance(obj, list)
@@ -105,3 +117,15 @@ class Assert(TestCase):
             return float(obj)
         else:
             return obj
+
+    @staticmethod
+    def normalizeString(string):
+        # Replace surrogate pairs with equivalent
+        if string is None:
+            return None
+
+        # Roundtrip to utf-16 to replace surrogate pairs
+        utf16bytes = string.encode('utf-16', 'surrogatepass')
+        utf16chars = utf16bytes.decode('utf-16')
+        utf8 = utf16chars.encode('utf-8').decode('utf-8')
+        return utf8
