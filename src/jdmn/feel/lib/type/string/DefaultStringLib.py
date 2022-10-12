@@ -149,11 +149,11 @@ class DefaultStringLib:
             result.append(token)
         return result
 
-    def evaluateReplace(self, input, pattern, replacement, flags) -> str:
+    def evaluateReplace(self, input: str, pattern: str, replacement: str, flags: str) -> str:
         expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
         return self.evaluateXPath(input, expression)
 
-    def evaluateMatches(self, input, pattern, flags) -> bool:
+    def evaluateMatches(self, input: str, pattern: str, flags: str) -> bool:
         expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
         value = self.evaluateXPath(input, expression)
         return len(value) != 0
