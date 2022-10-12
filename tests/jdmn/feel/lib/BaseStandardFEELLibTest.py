@@ -598,6 +598,7 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertIsNone(self.getLib().replace(None, "(ab)|(a)", "[1=$1][2=$2]"))
         self.assertIsNone(self.getLib().replace("abcd", None, "[1=$1][2=$2]"))
         self.assertIsNone(self.getLib().replace("abcd", "(ab)|(a)", None))
+        self.assertIsNone(self.getLib().replace("abcd", "(ab)|(a)", "$"))
 
         self.assertEqual("[1=ab][2=]cd", self.getLib().replace("abcd", "(ab)|(a)", "[1=$1][2=$2]"))
 

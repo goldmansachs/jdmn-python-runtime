@@ -119,8 +119,7 @@ class DefaultStringLib:
         if flags is None:
             flags = ""
 
-        expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
-        return self.evaluateXPath(input, expression)
+        return self.evaluateReplace(input, pattern, replacement, flags)
 
     def matches(self, input: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
         if input is None or pattern is None:
@@ -128,9 +127,7 @@ class DefaultStringLib:
         if flags is None:
             flags = ""
 
-        expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
-        value = self.evaluateXPath(input, expression)
-        return len(value) != 0
+        return self.evaluateMatches(input, pattern, flags)
 
     def split(self, string: STRING, delimiter: STRING) -> LIST:
         if string is None or delimiter is None:
@@ -152,8 +149,17 @@ class DefaultStringLib:
             result.append(token)
         return result
 
+    def evaluateReplace(self, input, pattern, replacement, flags) -> str:
+        expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
+        return self.evaluateXPath(input, expression)
+
+    def evaluateMatches(self, input, pattern, flags) -> bool:
+        expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
+        value = self.evaluateXPath(input, expression)
+        return len(value) != 0
+
     @staticmethod
-    def evaluateXPath(input, expression):
+    def evaluateXPath(input: str, expression: str):
         # Read document
         xmlStr = "<root>" + input + "</root>"
         root = etree.fromstring(xmlStr)
