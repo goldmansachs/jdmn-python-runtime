@@ -13,7 +13,7 @@
 from typing import Any
 
 from jdmn.feel.lib.FEELLib import FEELLib
-from jdmn.feel.lib.Types import NUMBER, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, LONG, STRING, CONTEXT, RANGE
+from jdmn.feel.lib.Types import DECIMAL, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, INTEGER, STRING, CONTEXT, RANGE
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 from jdmn.feel.lib.type.context.DefaultContextType import DefaultContextType
 from jdmn.feel.lib.type.function.DefaultFunctionType import DefaultFunctionType
@@ -58,7 +58,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def numericValue(self, value: NUMBER) -> NUMBER:
+    def numericValue(self, value: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericValue(value)
         except Exception as e:
@@ -66,7 +66,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericIs(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericIs(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericIs(first, second)
         except Exception as e:
@@ -74,7 +74,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericEqual(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericEqual(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericEqual(first, second)
         except Exception as e:
@@ -82,7 +82,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericNotEqual(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericNotEqual(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericNotEqual(first, second)
         except Exception as e:
@@ -90,7 +90,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericLessThan(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericLessThan(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericLessThan(first, second)
         except Exception as e:
@@ -98,7 +98,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericGreaterThan(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericGreaterThan(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericGreaterThan(first, second)
         except Exception as e:
@@ -106,7 +106,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericLessEqualThan(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericLessEqualThan(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericLessEqualThan(first, second)
         except Exception as e:
@@ -114,7 +114,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericGreaterEqualThan(self, first: NUMBER, second: NUMBER) -> BOOLEAN:
+    def numericGreaterEqualThan(self, first: DECIMAL, second: DECIMAL) -> BOOLEAN:
         try:
             return self.numericType.numericGreaterEqualThan(first, second)
         except Exception as e:
@@ -122,7 +122,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericAdd(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericAdd(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericAdd(first, second)
         except Exception as e:
@@ -130,7 +130,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericSubtract(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericSubtract(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericSubtract(first, second)
         except Exception as e:
@@ -138,7 +138,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericMultiply(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericMultiply(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericMultiply(first, second)
         except Exception as e:
@@ -146,7 +146,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericDivide(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericDivide(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericDivide(first, second)
         except Exception as e:
@@ -154,7 +154,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericUnaryMinus(self, first: NUMBER) -> NUMBER:
+    def numericUnaryMinus(self, first: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericUnaryMinus(first)
         except Exception as e:
@@ -162,7 +162,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def numericExponentiation(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericExponentiation(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         try:
             return self.numericType.numericExponentiation(first, second)
         except Exception as e:
@@ -347,7 +347,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def dateValue(self, date: DATE) -> LONG:
+    def dateValue(self, date: DATE) -> INTEGER:
         try:
             return self.dateType.dateValue(date)
         except Exception as e:
@@ -448,7 +448,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def timeValue(self, time: TIME) -> LONG:
+    def timeValue(self, time: TIME) -> INTEGER:
         try:
             return self.timeType.timeValue(time)
         except Exception as e:
@@ -547,7 +547,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return False
 
-    def dateTimeValue(self, dateTime: DATE_TIME) -> LONG:
+    def dateTimeValue(self, dateTime: DATE_TIME) -> INTEGER:
         try:
             return self.dateTimeType.dateTimeValue(dateTime)
         except Exception as e:
@@ -675,7 +675,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def durationValue(self, duration: DURATION) -> LONG:
+    def durationValue(self, duration: DURATION) -> INTEGER:
         try:
             return self.durationType.durationValue(duration)
         except Exception as e:
@@ -747,7 +747,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def durationDivide(self, first: DURATION, second: DURATION) -> NUMBER:
+    def durationDivide(self, first: DURATION, second: DURATION) -> DECIMAL:
         try:
             return self.durationType.durationDivide(first, second)
         except Exception as e:
@@ -755,7 +755,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def durationMultiplyNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+    def durationMultiplyNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         try:
             return self.durationType.durationMultiplyNumber(first, second)
         except Exception as e:
@@ -763,7 +763,7 @@ class BaseFEELLib(FEELLib):
             self.logError(message, e)
             return None
 
-    def durationDivideNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+    def durationDivideNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         try:
             return self.durationType.durationDivideNumber(first, second)
         except Exception as e:
@@ -993,14 +993,14 @@ class BaseFEELLib(FEELLib):
         else:
             return None
 
-    def rangeToListWithArgs(self, isOpenStart: bool, start: NUMBER, isOpenEnd: bool, end: NUMBER) -> LIST:
+    def rangeToListWithArgs(self, isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL) -> LIST:
         if start is None or end is None:
             return []
         else:
             range_ = self.intRange(isOpenStart, start, isOpenEnd, end)
             return [x for x in range_]
 
-    def intRange(self, isOpenStart: bool, start: NUMBER, isOpenEnd: bool, end: NUMBER):
+    def intRange(self, isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
         if start is None or end is None:
             return None
 
@@ -1024,7 +1024,7 @@ class BaseFEELLib(FEELLib):
 
         return result
 
-    def elementAt(self, list: LIST, number: NUMBER) -> Any:
+    def elementAt(self, list: LIST, number: DECIMAL) -> Any:
         if list is None:
             return None
 
@@ -1053,8 +1053,8 @@ class BaseFEELLib(FEELLib):
                     return False
             return True
 
-    def valueOf(self, number: int) -> NUMBER:
+    def valueOf(self, number: int) -> DECIMAL:
         pass
 
-    def intValue(self, number: NUMBER) -> int:
+    def intValue(self, number: DECIMAL) -> int:
         pass

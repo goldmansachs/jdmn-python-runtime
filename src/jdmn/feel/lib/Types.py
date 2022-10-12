@@ -19,7 +19,8 @@ from isodate import Duration
 from jdmn.runtime.Context import Context
 from jdmn.runtime.Range import Range
 
-NUMBER = typing.Optional[Decimal]
+DECIMAL = typing.Optional[Decimal]
+INTEGER = typing.Optional[int]
 STRING = typing.Optional[str]
 BOOLEAN = typing.Optional[bool]
 DATE = typing.Optional[date]
@@ -32,9 +33,6 @@ DURATION = typing.Optional[typing.Union[Duration, timedelta]]
 LIST = typing.Optional[typing.List[typing.Any]]
 CONTEXT = typing.Optional[Context]
 RANGE = typing.Optional[Range]
-
-LONG = typing.Optional[int]
-INT = typing.Optional[int]
 
 POINT_RANGE_UNION = typing.Union[typing.Any, RANGE]
 

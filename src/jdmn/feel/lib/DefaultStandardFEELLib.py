@@ -13,7 +13,7 @@
 from decimal import Decimal
 
 from jdmn.feel.lib.BaseStandardFEELLib import BaseStandardFEELLib
-from jdmn.feel.lib.Types import LONG, NUMBER
+from jdmn.feel.lib.Types import INTEGER, DECIMAL
 
 
 class DefaultStandardFEELLib(BaseStandardFEELLib):
@@ -23,13 +23,13 @@ class DefaultStandardFEELLib(BaseStandardFEELLib):
     #
     # Extra conversion functions
     #
-    def valueOf(self, number: LONG) -> NUMBER:
+    def valueOf(self, number: INTEGER) -> DECIMAL:
         if number is None:
             return None
         else:
             return Decimal(number)
 
-    def intValue(self, number: NUMBER) -> LONG:
+    def intValue(self, number: DECIMAL) -> INTEGER:
         if number is None:
             return None
         else:

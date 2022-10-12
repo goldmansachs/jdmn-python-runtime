@@ -16,7 +16,7 @@ import isodate
 from dateutil.relativedelta import relativedelta
 from isodate import Duration
 
-from jdmn.feel.lib.Types import STRING, DURATION, LONG, DATE_OR_DATE_TIME
+from jdmn.feel.lib.Types import STRING, DURATION, INTEGER, DATE_OR_DATE_TIME
 
 
 class DefaultDurationLib:
@@ -36,25 +36,25 @@ class DefaultDurationLib:
         delta = relativedelta(to, from_)
         return Duration(years=delta.years, months=delta.months)
 
-    def years(self, duration: DURATION) -> LONG:
+    def years(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.years
 
-    def months(self, duration: DURATION) -> LONG:
+    def months(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.months
 
-    def days(self, duration: DURATION) -> LONG:
+    def days(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.days
 
-    def hours(self, duration: DURATION) -> LONG:
+    def hours(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
@@ -63,7 +63,7 @@ class DefaultDurationLib:
         hh, mm = divmod(mm, 60)
         return hh
 
-    def minutes(self, duration: DURATION) -> LONG:
+    def minutes(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
@@ -72,7 +72,7 @@ class DefaultDurationLib:
         hh, mm = divmod(mm, 60)
         return mm
 
-    def seconds(self, duration: DURATION) -> LONG:
+    def seconds(self, duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 

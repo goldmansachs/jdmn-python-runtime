@@ -19,7 +19,7 @@ from typing import Optional, Any
 from lxml import etree
 import elementpath
 
-from jdmn.feel.lib.Types import STRING, BOOLEAN, INT, LIST, NUMBER, TIME_OR_DATE_TIME
+from jdmn.feel.lib.Types import STRING, BOOLEAN, INTEGER, LIST, DECIMAL, TIME_OR_DATE_TIME
 
 
 class DefaultStringLib:
@@ -61,7 +61,7 @@ class DefaultStringLib:
 
         return string.endswith(match)
 
-    def stringLength(self, string: STRING) -> INT:
+    def stringLength(self, string: STRING) -> INTEGER:
         if string is None:
             return None
 
@@ -72,7 +72,7 @@ class DefaultStringLib:
         result = len(transformed)
         return result
 
-    def substring(self, string: STRING, startPosition: NUMBER, length: NUMBER) -> STRING:
+    def substring(self, string: STRING, startPosition: DECIMAL, length: DECIMAL) -> STRING:
         if string is None or startPosition is None:
             return None
 

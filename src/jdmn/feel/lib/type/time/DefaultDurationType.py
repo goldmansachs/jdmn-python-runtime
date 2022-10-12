@@ -15,7 +15,7 @@ from decimal import Decimal
 
 from isodate import Duration
 
-from jdmn.feel.lib.Types import DURATION, BOOLEAN, NUMBER
+from jdmn.feel.lib.Types import DURATION, BOOLEAN, DECIMAL
 from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 from jdmn.feel.lib.type.time.DefaultDurationComparator import DefaultDurationComparator
 from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
@@ -74,7 +74,7 @@ class DefaultDurationType(DefaultCalendarType):
 
         return self.durationAdd(first, second.__neg__())
 
-    def durationDivide(self, first: DURATION, second: DURATION) -> NUMBER:
+    def durationDivide(self, first: DURATION, second: DURATION) -> DECIMAL:
         if first is None or second is None:
             return None
 
@@ -89,7 +89,7 @@ class DefaultDurationType(DefaultCalendarType):
         else:
             raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
 
-    def durationMultiplyNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+    def durationMultiplyNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         if first is None or second is None:
             return None
 
@@ -104,7 +104,7 @@ class DefaultDurationType(DefaultCalendarType):
         else:
             raise DMNRuntimeException("Cannot multiply '{}' and '{}'".format(first, second))
 
-    def durationDivideNumber(self, first: DURATION, second: NUMBER) -> DURATION:
+    def durationDivideNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         if first is None or second is None:
             return None
 
@@ -120,14 +120,14 @@ class DefaultDurationType(DefaultCalendarType):
             raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
 
     @staticmethod
-    def multiplyNumber(firstValue: NUMBER, secondValue: NUMBER) -> NUMBER:
+    def multiplyNumber(firstValue: DECIMAL, secondValue: DECIMAL) -> DECIMAL:
         # DECIMAL 128
         with decimal.localcontext() as ctx:
             ctx.prec = 34
             return firstValue * secondValue
 
     @staticmethod
-    def divideNumber(firstValue: NUMBER, secondValue: NUMBER) -> NUMBER:
+    def divideNumber(firstValue: DECIMAL, secondValue: DECIMAL) -> DECIMAL:
         if secondValue == 0:
             return None
 

@@ -14,7 +14,7 @@ import decimal
 from decimal import Decimal
 from typing import Any, Optional, Callable
 
-from jdmn.feel.lib.Types import NUMBER
+from jdmn.feel.lib.Types import DECIMAL
 from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.numeric.NumericComparator import NumericComparator
 
@@ -29,55 +29,55 @@ class DefaultNumericType(BaseType):
     def isNumber(self, value: Any) -> bool:
         return isinstance(value, Decimal)
 
-    def numericValue(self, value: NUMBER) -> NUMBER:
+    def numericValue(self, value: DECIMAL) -> DECIMAL:
         return value
 
-    def numericIs(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericIs(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         if first is None or second is None:
             return first == second
 
         return first == second
 
-    def numericEqual(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericEqual(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.equalTo(first, second)
 
-    def numericNotEqual(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericNotEqual(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.notEqualTo(first, second)
 
-    def numericLessThan(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericLessThan(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.lessThan(first, second)
 
-    def numericGreaterThan(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericGreaterThan(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.greaterThan(first, second)
 
-    def numericLessEqualThan(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericLessEqualThan(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.lessEqualThan(first, second)
 
-    def numericGreaterEqualThan(self, first: NUMBER, second: NUMBER) -> Optional[bool]:
+    def numericGreaterEqualThan(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         return self.numericComparator.greaterEqualThan(first, second)
 
-    def numericAdd(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
+    def numericAdd(self, first: DECIMAL, second: DECIMAL) -> Optional[Optional[Decimal]]:
         if first is None or second is None:
             return None
 
         return self.decimalOperation(first, second, lambda x, y: x + y)
 
-    def numericSubtract(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
+    def numericSubtract(self, first: DECIMAL, second: DECIMAL) -> Optional[Optional[Decimal]]:
         if first is None or second is None:
             return None
 
         return self.decimalOperation(first, second, lambda x, y: x - y)
 
-    def numericMultiply(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
+    def numericMultiply(self, first: DECIMAL, second: DECIMAL) -> Optional[Optional[Decimal]]:
         if first is None or second is None:
             return None
 
         return self.decimalOperation(first, second, lambda x, y: x * y)
 
-    def numericDivide(self, first: NUMBER, second: NUMBER) -> Optional[Optional[Decimal]]:
+    def numericDivide(self, first: DECIMAL, second: DECIMAL) -> Optional[Optional[Decimal]]:
         return self.decimalNumericDivide(first, second)
 
-    def numericUnaryMinus(self, first: NUMBER) -> Optional[Optional[Decimal]]:
+    def numericUnaryMinus(self, first: DECIMAL) -> Optional[Optional[Decimal]]:
         if first is None:
             return None
 
@@ -87,14 +87,14 @@ class DefaultNumericType(BaseType):
             ctx.prec = DefaultNumericType.DECIMAL128.prec
             return first.copy_negate()
 
-    def numericExponentiation(self, first: NUMBER, second: NUMBER) -> NUMBER:
+    def numericExponentiation(self, first: DECIMAL, second: DECIMAL) -> DECIMAL:
         if first is None or second is None:
             return None
 
         return self.decimalOperation(first, second, lambda x, y: x ** y)
 
     @staticmethod
-    def decimalNumericDivide(first: NUMBER, second: NUMBER) -> NUMBER:
+    def decimalNumericDivide(first: DECIMAL, second: DECIMAL) -> DECIMAL:
         if first is None or second is None:
             return None
         if second.is_zero():
@@ -103,7 +103,7 @@ class DefaultNumericType(BaseType):
         return DefaultNumericType.decimalOperation(first, second, lambda x, y: x / y)
 
     @staticmethod
-    def decimalOperation(first: NUMBER, second: NUMBER, funct: Callable[[NUMBER, NUMBER], NUMBER]):
+    def decimalOperation(first: DECIMAL, second: DECIMAL, funct: Callable[[DECIMAL, DECIMAL], DECIMAL]):
         # DECIMAL 128
         with decimal.localcontext() as ctx:
             ctx.rounding = DefaultNumericType.DECIMAL128.rounding

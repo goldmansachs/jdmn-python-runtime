@@ -19,7 +19,7 @@ from zoneinfo import ZoneInfo
 import isodate
 from isodate import Duration, tzinfo, FixedOffset
 
-from jdmn.feel.lib.Types import STRING, DATE, TIME, DATE_TIME, DURATION, INT, TIME_OR_DATE_TIME
+from jdmn.feel.lib.Types import STRING, DATE, TIME, DATE_TIME, DURATION, INTEGER, TIME_OR_DATE_TIME
 from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.runtime.DMNRuntimeException import DMNRuntimeException
 
@@ -188,58 +188,58 @@ class DefaultDateTimeLib:
     #
     # Date properties
     #
-    def year(self, date: DATE) -> INT:
+    def year(self, date: DATE) -> INTEGER:
         if date is None:
             return None
 
         return date.year
 
-    def yearDateTime(self, dateTime: DATE_TIME) -> INT:
+    def yearDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.year(dateTime)
 
-    def month(self, date: DATE) -> INT:
+    def month(self, date: DATE) -> INTEGER:
         if date is None:
             return None
 
         return date.month
 
-    def monthDateTime(self, dateTime: DATE_TIME) -> INT:
+    def monthDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.month(dateTime)
 
-    def day(self, date: DATE) -> INT:
+    def day(self, date: DATE) -> INTEGER:
         if date is None:
             return None
 
         return date.day
 
-    def dayDateTime(self, dateTime: DATE_TIME) -> INT:
+    def dayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.day(dateTime)
 
-    def weekday(self, date: DATE) -> INT:
+    def weekday(self, date: DATE) -> INTEGER:
         if date is None:
             return None
 
         return date.weekday() + 1
 
-    def weekdayDateTime(self, dateTime: DATE_TIME) -> INT:
+    def weekdayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.weekday(dateTime)
 
     #
     # Time properties
     #
-    def hour(self, time: TIME_OR_DATE_TIME) -> INT:
+    def hour(self, time: TIME_OR_DATE_TIME) -> INTEGER:
         if time is None:
             return None
 
         return time.hour
 
-    def minute(self, time: TIME_OR_DATE_TIME) -> INT:
+    def minute(self, time: TIME_OR_DATE_TIME) -> INTEGER:
         if time is None:
             return None
 
         return time.minute
 
-    def second(self, time: TIME_OR_DATE_TIME) -> INT:
+    def second(self, time: TIME_OR_DATE_TIME) -> INTEGER:
         if time is None:
             return None
 
@@ -260,7 +260,7 @@ class DefaultDateTimeLib:
     #
     # Temporal functions
     #
-    def dayOfYear(self, date: DATE) -> INT:
+    def dayOfYear(self, date: DATE) -> INTEGER:
         if date is None:
             return None
 
@@ -273,7 +273,7 @@ class DefaultDateTimeLib:
         dow: int = date.isocalendar()[2]
         return DAY_NAMES[dow]
 
-    def weekOfYear(self, date: DATE) -> INT:
+    def weekOfYear(self, date: DATE) -> INTEGER:
         if (date is None):
             return None
 
@@ -350,10 +350,10 @@ class DefaultDateTimeLib:
     def isValidDate(self, year: int, month: int, day: int) -> bool:
         return self.isValidYear(year) and self.isValidMonth(month) and self.isValidDay(day)
 
-    def isValidTime(self, hour: int, minute: int, second: int, secondsOffset: INT) -> bool:
+    def isValidTime(self, hour: int, minute: int, second: int, secondsOffset: INTEGER) -> bool:
         return self.isValidHour(hour) and self.isValidMinute(minute) and self.isValidSecond(second) and self.isValidOffset(secondsOffset)
 
-    def isValidDateTime(self, year: int, month: int, day: int, hour: int, minute: int, second: int, secondsOffset: INT) -> bool:
+    def isValidDateTime(self, year: int, month: int, day: int, hour: int, minute: int, second: int, secondsOffset: INTEGER) -> bool:
         return self.isValidDate(year, month, day) and self.isValidTime(hour, minute, second, secondsOffset)
 
     @staticmethod
@@ -381,7 +381,7 @@ class DefaultDateTimeLib:
         return 0 <= second <= 59
 
     @staticmethod
-    def isValidOffset(secondsOffset: INT) -> bool:
+    def isValidOffset(secondsOffset: INTEGER) -> bool:
         if secondsOffset is None:
             return True
         return -18 * 3600 <= secondsOffset < 18 * 3600

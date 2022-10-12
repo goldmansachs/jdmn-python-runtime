@@ -14,14 +14,14 @@ from collections import defaultdict
 from decimal import Decimal
 from typing import List, Any, Optional
 
-from jdmn.feel.lib.Types import STRING, NUMBER, BOOLEAN
+from jdmn.feel.lib.Types import STRING, DECIMAL, BOOLEAN
 from jdmn.feel.lib.Utils import varArgToList
 from jdmn.feel.lib.type.numeric.DefaultNumericType import DefaultNumericType
 from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 
 
 class DefaultNumericLib:
-    def number(self, literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> NUMBER:
+    def number(self, literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> DECIMAL:
         if not literal:
             return None
         if not (" " == groupingSeparator or "." == groupingSeparator or "," == groupingSeparator or groupingSeparator is None):
@@ -37,14 +37,14 @@ class DefaultNumericLib:
             literal = literal.replace(decimalSeparator, ".")
         return Decimal(literal, DefaultNumericType.DECIMAL128)
 
-    def decimal(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def decimal(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         if n is None or scale is None:
             return None
 
         return self.round(n, scale, NumericRoundingMode.HALF_EVEN)
 
     # Extension to DMN 1.3
-    def round(self, n: NUMBER, scale: NUMBER, mode: NumericRoundingMode) -> NUMBER:
+    def round(self, n: DECIMAL, scale: DECIMAL, mode: NumericRoundingMode) -> DECIMAL:
         if n is None or scale is None or mode is None or mode == NumericRoundingMode.UNKNOWN:
             return None
 
@@ -57,7 +57,7 @@ class DefaultNumericLib:
             fmt = "1E-{}".format(prec)
         return n.quantize(Decimal(fmt), rounding=mode.pMode)
 
-    def floor(self, *args) -> NUMBER:
+    def floor(self, *args) -> DECIMAL:
         # Extract n ans scale
         operands = varArgToList(*args)
         size = len(operands)
@@ -74,7 +74,7 @@ class DefaultNumericLib:
             return None
         return self.round(n, scale, NumericRoundingMode.ROUND_FLOOR)
 
-    def ceiling(self, *args) -> NUMBER:
+    def ceiling(self, *args) -> DECIMAL:
         # Extract n ans scale
         operands = varArgToList(*args)
         size = len(operands)
@@ -91,50 +91,50 @@ class DefaultNumericLib:
             return None
         return self.round(n, scale, NumericRoundingMode.ROUND_CEILING)
 
-    def abs(self, n: NUMBER) -> NUMBER:
+    def abs(self, n: DECIMAL) -> DECIMAL:
         if n is None:
             return None
 
         return n.copy_abs()
 
-    def intModulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
+    def intModulo(self, dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
         if dividend is None or divisor is None:
             return None
 
         return Decimal(dividend % int(divisor))
 
-    def modulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
+    def modulo(self, dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
         if dividend is None or divisor is None:
             return None
 
         # dividend - divisor*floor(dividend/divisor)
         return dividend - (divisor * self.floor(dividend / divisor, Decimal(0)))
 
-    def sqrt(self, number: NUMBER) -> NUMBER:
+    def sqrt(self, number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
         return number.sqrt(context=DefaultNumericType.DECIMAL128)
 
-    def log(self, number: NUMBER) -> NUMBER:
+    def log(self, number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
         return number.ln(context=DefaultNumericType.DECIMAL128)
 
-    def exp(self, number: NUMBER) -> NUMBER:
+    def exp(self, number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
         return number.exp(context=DefaultNumericType.DECIMAL128)
 
-    def odd(self, number: NUMBER) -> BOOLEAN:
+    def odd(self, number: DECIMAL) -> BOOLEAN:
         if not self.isIntegerValue(number):
             return None
 
         return int(number) % 2 != 0
 
-    def even(self, number: NUMBER) -> BOOLEAN:
+    def even(self, number: DECIMAL) -> BOOLEAN:
         if not self.isIntegerValue(number):
             return None
 
@@ -143,13 +143,13 @@ class DefaultNumericLib:
     #
     # List functions
     #
-    def count(self, list_: List[Any]) -> NUMBER:
+    def count(self, list_: List[Any]) -> DECIMAL:
         if list_ is None:
             return Decimal(0)
         else:
             return Decimal(len(list_))
 
-    def min(self, *operands) -> NUMBER:
+    def min(self, *operands) -> DECIMAL:
         if len(operands) == 0:
             return None
         if len(operands) == 1:
@@ -164,7 +164,7 @@ class DefaultNumericLib:
                 result = opd
         return result
 
-    def max(self, *operands) -> NUMBER:
+    def max(self, *operands) -> DECIMAL:
         if len(operands) == 0:
             return None
         if len(operands) == 1:
@@ -179,7 +179,7 @@ class DefaultNumericLib:
                 result = opd
         return result
 
-    def sum(self, *args) -> NUMBER:
+    def sum(self, *args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -189,7 +189,7 @@ class DefaultNumericLib:
             result += opd
         return result
 
-    def mean(self, *args) -> NUMBER:
+    def mean(self, *args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -197,7 +197,7 @@ class DefaultNumericLib:
         sum = self.sum(operands)
         return DefaultNumericType.decimalNumericDivide(sum, Decimal(len(operands)))
 
-    def product(self, *args) -> NUMBER:
+    def product(self, *args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -207,7 +207,7 @@ class DefaultNumericLib:
             result = result * opd
         return result
 
-    def median(self, *args) -> NUMBER:
+    def median(self, *args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -222,7 +222,7 @@ class DefaultNumericLib:
             median = sortedList[int(size / 2)]
         return median
 
-    def stddev(self, *args) -> NUMBER:
+    def stddev(self, *args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -265,7 +265,7 @@ class DefaultNumericLib:
         return sortedModes
 
     @staticmethod
-    def toNumber(number: NUMBER) -> NUMBER:
+    def toNumber(number: DECIMAL) -> DECIMAL:
         if isinstance(number, Decimal):
             return number
         else:

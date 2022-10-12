@@ -13,7 +13,7 @@
 from typing import Any, Optional
 
 from jdmn.feel.lib.BaseFEELLib import BaseFEELLib
-from jdmn.feel.lib.Types import NUMBER, STRING, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, DATE_OR_DATE_TIME, TIME_OR_DATE_TIME
+from jdmn.feel.lib.Types import DECIMAL, STRING, BOOLEAN, DATE, TIME, DATE_TIME, DURATION, LIST, DATE_OR_DATE_TIME, TIME_OR_DATE_TIME
 from jdmn.feel.lib.type.ComparableComparator import comparable
 from jdmn.feel.lib.type.bool.DefaultBooleanLib import DefaultBooleanLib
 from jdmn.feel.lib.type.list.DefaultListLib import DefaultListLib
@@ -44,7 +44,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Conversion functions
     #
-    def number(self, literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> NUMBER:
+    def number(self, literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> DECIMAL:
         try:
             return self.numberLib.number(literal, groupingSeparator, decimalSeparator)
         except Exception as e:
@@ -130,7 +130,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Numeric functions
     #
-    def decimal(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def decimal(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.decimal(n, scale)
         except Exception as e:
@@ -138,7 +138,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def round(self, n: NUMBER, scale: NUMBER, mode: STRING) -> NUMBER:
+    def round(self, n: DECIMAL, scale: DECIMAL, mode: STRING) -> DECIMAL:
         try:
             roundingMode = NumericRoundingMode.fromName(mode)
             if roundingMode is None:
@@ -151,7 +151,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def roundUp(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def roundUp(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.UP)
         except Exception as e:
@@ -159,7 +159,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def roundDown(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def roundDown(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.DOWN)
         except Exception as e:
@@ -167,7 +167,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def roundHalfUp(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def roundHalfUp(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.HALF_UP)
         except Exception as e:
@@ -175,7 +175,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def roundHalfDown(self, n: NUMBER, scale: NUMBER) -> NUMBER:
+    def roundHalfDown(self, n: DECIMAL, scale: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.HALF_DOWN)
         except Exception as e:
@@ -183,7 +183,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def floor(self, *args) -> NUMBER:
+    def floor(self, *args) -> DECIMAL:
         try:
             return self.numberLib.floor(*args)
         except Exception as e:
@@ -191,7 +191,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def ceiling(self, *args) -> NUMBER:
+    def ceiling(self, *args) -> DECIMAL:
         try:
             return self.numberLib.ceiling(*args)
         except Exception as e:
@@ -210,7 +210,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def intModulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
+    def intModulo(self, dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.intModulo(dividend, divisor)
         except Exception as e:
@@ -218,7 +218,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def modulo(self, dividend: NUMBER, divisor: NUMBER) -> NUMBER:
+    def modulo(self, dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.modulo(dividend, divisor)
         except Exception as e:
@@ -226,7 +226,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def sqrt(self, number: NUMBER) -> NUMBER:
+    def sqrt(self, number: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.sqrt(number)
         except Exception as e:
@@ -234,7 +234,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def log(self, number: NUMBER) -> NUMBER:
+    def log(self, number: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.log(number)
         except Exception as e:
@@ -242,7 +242,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def exp(self, number: NUMBER) -> NUMBER:
+    def exp(self, number: DECIMAL) -> DECIMAL:
         try:
             return self.numberLib.exp(number)
         except Exception as e:
@@ -250,7 +250,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def odd(self, number: NUMBER) -> BOOLEAN:
+    def odd(self, number: DECIMAL) -> BOOLEAN:
         try:
             return self.numberLib.odd(number)
         except Exception as e:
@@ -258,7 +258,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def even(self, number: NUMBER) -> BOOLEAN:
+    def even(self, number: DECIMAL) -> BOOLEAN:
         try:
             return self.numberLib.even(number)
         except Exception as e:
@@ -266,7 +266,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def mean(self, *args) -> NUMBER:
+    def mean(self, *args) -> DECIMAL:
         try:
             return self.numberLib.mean(*args)
         except Exception as e:
@@ -301,7 +301,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def stringLength(self, string: STRING) -> NUMBER:
+    def stringLength(self, string: STRING) -> DECIMAL:
         try:
             return None if string is None else self.valueOf(self.stringLib.stringLength(string))
         except Exception as e:
@@ -309,7 +309,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def substring(self, string: STRING, startPosition: NUMBER, length: NUMBER = None) -> STRING:
+    def substring(self, string: STRING, startPosition: DECIMAL, length: DECIMAL = None) -> STRING:
         try:
             return self.stringLib.substring(string, self.numberLib.toNumber(startPosition), self.numberLib.toNumber(length))
         except Exception as e:
@@ -419,7 +419,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Date properties
     #
-    def year(self, date: DATE_OR_DATE_TIME) -> NUMBER:
+    def year(self, date: DATE_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.year(date))
         except Exception as e:
@@ -427,7 +427,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def month(self, date: DATE_OR_DATE_TIME) -> NUMBER:
+    def month(self, date: DATE_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.month(date))
         except Exception as e:
@@ -435,7 +435,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def day(self, date: DATE_OR_DATE_TIME) -> NUMBER:
+    def day(self, date: DATE_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.day(date))
         except Exception as e:
@@ -443,7 +443,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def weekday(self, date: DATE_OR_DATE_TIME) -> NUMBER:
+    def weekday(self, date: DATE_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.weekday(date))
         except Exception as e:
@@ -454,7 +454,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     #
     # Time properties
     #
-    def hour(self, time: TIME_OR_DATE_TIME) -> NUMBER:
+    def hour(self, time: TIME_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.hour(time))
         except Exception as e:
@@ -462,7 +462,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def minute(self, time: TIME_OR_DATE_TIME) -> NUMBER:
+    def minute(self, time: TIME_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.minute(time))
         except Exception as e:
@@ -470,7 +470,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def second(self, time: TIME_OR_DATE_TIME) -> NUMBER:
+    def second(self, time: TIME_OR_DATE_TIME) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.second(time))
         except Exception as e:
@@ -498,7 +498,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     # Duration properties
     #
 
-    def years(self, duration: DURATION) -> NUMBER:
+    def years(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.years(duration))
         except Exception as e:
@@ -506,7 +506,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def months(self, duration: DURATION) -> NUMBER:
+    def months(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.months(duration))
         except Exception as e:
@@ -514,7 +514,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def days(self, duration: DURATION) -> NUMBER:
+    def days(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.days(duration))
         except Exception as e:
@@ -522,7 +522,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def hours(self, duration: DURATION) -> NUMBER:
+    def hours(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.hours(duration))
         except Exception as e:
@@ -530,7 +530,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def minutes(self, duration: DURATION) -> NUMBER:
+    def minutes(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.minutes(duration))
         except Exception as e:
@@ -538,7 +538,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def seconds(self, duration: DURATION) -> NUMBER:
+    def seconds(self, duration: DURATION) -> DECIMAL:
         try:
             return self.valueOf(self.durationLib.seconds(duration))
         except Exception as e:
@@ -590,7 +590,7 @@ class BaseStandardFEELLib(BaseFEELLib):
     # Temporal functions
     #
 
-    def dayOfYear(self, date: DATE) -> NUMBER:
+    def dayOfYear(self, date: DATE) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.dayOfYear(date))
         except Exception as e:
@@ -606,7 +606,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def weekOfYear(self, date: DATE) -> NUMBER:
+    def weekOfYear(self, date: DATE) -> DECIMAL:
         try:
             return self.valueOf(self.dateTimeLib.weekOfYear(date))
         except Exception as e:
@@ -642,7 +642,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def count(self, list: LIST) -> NUMBER:
+    def count(self, list: LIST) -> DECIMAL:
         try:
             return self.numberLib.count(list)
         except Exception as e:
@@ -674,7 +674,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def sublist(self, list: LIST, startPosition: NUMBER, length: NUMBER = None) -> LIST:
+    def sublist(self, list: LIST, startPosition: DECIMAL, length: DECIMAL = None) -> LIST:
         try:
             return self.listLib.sublist(list, self.intValue(startPosition), self.intValue(length))
         except Exception as e:
@@ -690,7 +690,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def insertBefore(self, list: LIST, position: NUMBER, newItem: Any) -> LIST:
+    def insertBefore(self, list: LIST, position: DECIMAL, newItem: Any) -> LIST:
         try:
             return self.listLib.insertBefore(list, self.intValue(position), newItem)
         except Exception as e:
@@ -746,7 +746,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def product(self, *args) -> NUMBER:
+    def product(self, *args) -> DECIMAL:
         try:
             return self.numberLib.product(*args)
         except Exception as e:
@@ -754,7 +754,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def median(self, *args) -> NUMBER:
+    def median(self, *args) -> DECIMAL:
         try:
             return self.numberLib.median(*args)
         except Exception as e:
@@ -762,7 +762,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def stddev(self, *args) -> NUMBER:
+    def stddev(self, *args) -> DECIMAL:
         try:
             return self.numberLib.stddev(*args)
         except Exception as e:

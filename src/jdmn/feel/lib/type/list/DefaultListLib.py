@@ -13,7 +13,7 @@
 from functools import cmp_to_key
 from typing import Any
 
-from jdmn.feel.lib.Types import BOOLEAN, LIST, INT
+from jdmn.feel.lib.Types import BOOLEAN, LIST, INTEGER
 from jdmn.runtime.LambdaExpression import LambdaExpression
 
 
@@ -35,7 +35,7 @@ class DefaultListLib:
             result.append(None)
         return result
 
-    def sublist(self, list_: LIST, position: INT, length: INT = None) -> LIST:
+    def sublist(self, list_: LIST, position: INTEGER, length: INTEGER = None) -> LIST:
         if position is None:
             return None
 
@@ -56,7 +56,7 @@ class DefaultListLib:
                 result.extend(list_)
         return result
 
-    def insertBefore(self, list_: LIST, position: INT, newItem: Any) -> LIST:
+    def insertBefore(self, list_: LIST, position: INTEGER, newItem: Any) -> LIST:
         result = []
         if list_ is not None:
             result.extend(list_)
@@ -69,7 +69,7 @@ class DefaultListLib:
         result.insert(position, newItem)
         return result
 
-    def remove(self, list_: LIST, position: INT) -> LIST:
+    def remove(self, list_: LIST, position: INTEGER) -> LIST:
         result = []
         if list_ is not None:
             result.extend(list_)
@@ -120,7 +120,7 @@ class DefaultListLib:
         return clone
 
     @staticmethod
-    def isOutOfBounds(list_: LIST, position: INT) -> bool:
+    def isOutOfBounds(list_: LIST, position: INTEGER) -> bool:
         if position is None:
             return False
 

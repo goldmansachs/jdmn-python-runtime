@@ -16,7 +16,7 @@ from typing import Optional, Any
 import isodate
 from isodate import Duration
 
-from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INT, DATE_TIME_UNION, DURATION, LONG
+from jdmn.feel.lib.Types import DATE, TIME, DATE_TIME, INTEGER, DATE_TIME_UNION, DURATION
 from jdmn.feel.lib.type.BaseType import BaseType
 from jdmn.feel.lib.type.bool.DefaultBooleanType import DefaultBooleanType
 
@@ -79,7 +79,7 @@ class DefaultCalendarType(BaseType):
                first.day == second.day and first.hour == second.hour and first.minute == second.minute and first.second == second.second and \
                self.sameTzInfo(first.tzinfo, second.tzinfo)
 
-    def value(self, calendar: DATE_TIME_UNION) -> INT:
+    def value(self, calendar: DATE_TIME_UNION) -> INTEGER:
         if self.isDate(calendar):
             return self.dateValue(calendar)
         elif self.isTime(calendar):
@@ -89,13 +89,13 @@ class DefaultCalendarType(BaseType):
         else:
             return None
 
-    def dateValue(self, date_: DATE) -> INT:
+    def dateValue(self, date_: DATE) -> INTEGER:
         if date_ is None:
             return None
 
         return self.dateTimeValue(self.dateToDateTime(date_))
 
-    def timeValue(self, time_: TIME) -> INT:
+    def timeValue(self, time_: TIME) -> INTEGER:
         if time_ is None:
             return None
 
@@ -118,7 +118,7 @@ class DefaultCalendarType(BaseType):
     def canNotSubtract(self, first: DATE_TIME, second: DATE_TIME) -> bool:
         return first.tzinfo is None and second.tzinfo is not None or first.tzinfo is not None and second.tzinfo is None
 
-    def durationValue(self, duration: Duration) -> LONG:
+    def durationValue(self, duration: Duration) -> INTEGER:
         if duration is None:
             return None
 
@@ -130,7 +130,7 @@ class DefaultCalendarType(BaseType):
             return int((self.EP + duration).timestamp())
 
     @staticmethod
-    def monthsValue(duration: DURATION) -> LONG:
+    def monthsValue(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
@@ -140,7 +140,7 @@ class DefaultCalendarType(BaseType):
         return totalMonths
 
     @staticmethod
-    def secondsValue(duration: DURATION) -> LONG:
+    def secondsValue(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
