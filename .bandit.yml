@@ -3,3 +3,5 @@ skips:
 - B404  # Ignore warnings about importing subprocess
 - B603  # Ignore warnings about calling subprocess.Popen without shell=True
 - B607  # Ignore warnings about calling subprocess.Popen without a full path to executable
+- B410  # Ignore parsing DOM from strings
+- B320  # Ignore parsing DOM from strings

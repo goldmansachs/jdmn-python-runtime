@@ -1,0 +1,9 @@
+-r ../requirements.txt
+-r ../requirements.testing.txt
+
+tox>=3.25.1 # Command line driven CI frontend and development task automation tool
+setuptools >= 40.0.4 # build dist
+setuptools_scm >= 2.0.0 # build dist
+wheel >= 0.37.1 # build dist
+
+twine >= 4.0.1

@@ -9,12 +9,14 @@ __pychache__
 **/.ipynb_checkpoints
 
 # CI files
-.eggs
-*egg-info
-dist/
-.coverage
 .venv
+.tox
+.coverage
+target/
+dist/
 build/
 sphink-doc/
 test-reports/
-.tox
+.eggs
+*egg-info
+*.log
