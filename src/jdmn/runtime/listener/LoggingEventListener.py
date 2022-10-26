@@ -23,10 +23,10 @@ class LoggingEventListener(EventListener):
         self.logger = logger
 
     def startDRGElement(self, element: DRGElement, arguments: Arguments) -> None:
-        self.logger.info("Start {} '{}' with inputs '{}'", element.elementKind.displayName, element.name, arguments)
+        self.logger.info("Start %s '%s' with inputs '%s'", element.elementKind.displayName, element.name, arguments)
 
     def endDRGElement(self, element: DRGElement, arguments: Arguments, output: Any, duration: int) -> None:
-        self.logger.info("End {} '{}' with output '{}' in {}ms", element.elementKind.displayName, element.name, output, duration)
+        self.logger.info("End %s '%s' with output '%s' in %sms", element.elementKind.displayName, element.name, output, duration)
 
     def startRule(self, element: DRGElement, rule: Rule) -> None:
         pass
@@ -35,7 +35,7 @@ class LoggingEventListener(EventListener):
         pass
 
     def endRule(self, element: DRGElement, rule: Rule, output: Any) -> None:
-        self.logger.debug("Rule {} fired with output '{}'", rule.index, output)
+        self.logger.debug("Rule %s fired with output '%s'", rule.index, output)
 
     def matchColumn(self, rule: Rule, columnIndex: int, result: Any) -> None:
-        self.logger.debug("Test {} checked with output '{}'", columnIndex, result)
+        self.logger.debug("Test %s checked with output '%s'", columnIndex, result)
