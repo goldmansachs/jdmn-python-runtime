@@ -15,4 +15,4 @@ from typing import List, Any
 
 class ExternalFunctionExecutor:
     def execute(self, className: str, methodName: str, args: List[Any]) -> Any:
-        pass
+        raise NotImplementedError()

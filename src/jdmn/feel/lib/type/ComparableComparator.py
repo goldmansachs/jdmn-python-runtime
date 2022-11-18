@@ -40,4 +40,4 @@ class ComparableComparator(RelationalComparator):
         ])
 
     def compareTo(self, first: comparable, second: comparable) -> int:
-        pass
+        raise NotImplementedError()

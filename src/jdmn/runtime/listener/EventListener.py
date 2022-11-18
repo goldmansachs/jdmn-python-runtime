@@ -19,19 +19,19 @@ from jdmn.runtime.listener.Rule import Rule
 
 class EventListener:
     def startDRGElement(self, element: DRGElement, arguments: Arguments) -> None:
-        pass
+        raise NotImplementedError()
 
     def endDRGElement(self, element: DRGElement, arguments: Arguments, output: Any, duration: int) -> None:
-        pass
+        raise NotImplementedError()
 
     def startRule(self, element: DRGElement, rule: Rule) -> None:
-        pass
+        raise NotImplementedError()
 
     def matchRule(self, element: DRGElement, rule: Rule) -> None:
-        pass
+        raise NotImplementedError()
 
     def endRule(self, element: DRGElement, rule: Rule, result: Any) -> None:
-        pass
+        raise NotImplementedError()
 
     def matchColumn(self, rule: Rule, columnIndex: int, result: Any) -> None:
-        pass
+        raise NotImplementedError()

@@ -1060,7 +1060,7 @@ class BaseFEELLib(FEELLib):
             return True
 
     def valueOf(self, number: int) -> DECIMAL:
-        pass
+        raise NotImplementedError()
 
     def intValue(self, number: DECIMAL) -> int:
-        pass
+        raise NotImplementedError()
