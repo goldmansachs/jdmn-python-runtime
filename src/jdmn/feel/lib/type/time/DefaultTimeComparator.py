@@ -15,5 +15,4 @@ from jdmn.feel.lib.type.time.DefaultBaseDateTimeComparator import DefaultBaseDat
 
 
 class DefaultTimeComparator(DefaultBaseDateTimeComparator):
-    def __init__(self):
-        super().__init__()
+    pass
