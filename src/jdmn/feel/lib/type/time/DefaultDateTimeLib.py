@@ -46,7 +46,7 @@ class DefaultDateTimeLib:
             if isinstance(arg, str):
                 # From literal
                 result = self.parseDate(arg)
-            elif isinstance(arg, datetime) or isinstance(arg, date):
+            elif isinstance(arg, (datetime, date)):
                 # From date or datetime
                 result = self.toDate(arg)
             else:
@@ -73,7 +73,7 @@ class DefaultDateTimeLib:
                     result = self.mergeTzInfo(arg, time_, parts[1])
                 else:
                     result = self.parseTime(arg)
-            elif isinstance(arg, time) or isinstance(arg, datetime) or isinstance(arg, date):
+            elif isinstance(arg, (time, datetime, date)):
                 # From date, time or datetime
                 result = self.toTime(arg)
             else:

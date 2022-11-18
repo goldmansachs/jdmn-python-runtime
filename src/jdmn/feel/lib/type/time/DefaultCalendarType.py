@@ -40,7 +40,7 @@ class DefaultCalendarType(BaseType):
 
     @staticmethod
     def isDuration(value: Any):
-        return isinstance(value, Duration) or isinstance(value, timedelta)
+        return isinstance(value, (Duration, timedelta))
 
     @staticmethod
     def isYearsAndMonthsDuration(value):

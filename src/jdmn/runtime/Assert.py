@@ -95,7 +95,7 @@ class Assert(TestCase):
 
     @staticmethod
     def isDuration(obj: Any) -> bool:
-        return isinstance(obj, isodate.Duration) or isinstance(obj, datetime.timedelta)
+        return isinstance(obj, (isodate.Duration, datetime.timedelta))
 
     def isDateTimeValue(self, obj: Any) -> bool:
         return self.isDate(obj) \
