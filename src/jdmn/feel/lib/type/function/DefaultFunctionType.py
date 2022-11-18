@@ -22,7 +22,8 @@ class DefaultFunctionType(BaseType):
         BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
-    def isFunction(self, value: Any) -> bool:
+    @staticmethod
+    def isFunction(value: Any) -> bool:
         if value is None:
             return True
 

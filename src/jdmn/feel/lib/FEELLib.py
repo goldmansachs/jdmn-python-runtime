@@ -25,17 +25,21 @@ class FEELLib:
         else:
             self.LOGGER.exception(message)
 
-    def toDate(self, from_: Any) -> DATE:
+    @staticmethod
+    def toDate(from_: Any) -> DATE:
         raise Exception("Not supported yet")
 
-    def toTime(self, from_: Any) -> TIME:
+    @staticmethod
+    def toTime(from_: Any) -> TIME:
         raise Exception("Not supported yet")
 
-    def toDateTime(self, from_: Any) -> DATE_TIME:
+    @staticmethod
+    def toDateTime(from_: Any) -> DATE_TIME:
         raise Exception("Not supported yet")
 
     #
     # Error conversions
     #
-    def toNull(self, obj: Any) -> Any:
+    @staticmethod
+    def toNull(obj: Any) -> Any:
         return None

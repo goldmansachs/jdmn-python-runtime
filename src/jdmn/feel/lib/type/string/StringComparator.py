@@ -18,7 +18,8 @@ class StringComparator(ComparableComparator):
     def __init__(self):
         super().__init__()
 
-    def compareTo(self, first: str, second: str) -> int:
+    @staticmethod
+    def compareTo(first: str, second: str) -> int:
         if first == second:
             return 0
         elif first < second:

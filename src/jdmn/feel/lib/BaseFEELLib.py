@@ -965,13 +965,15 @@ class BaseFEELLib(FEELLib):
     #
     # Conversion functions
     #
-    def asList(self, *args) -> LIST:
+    @staticmethod
+    def asList(*args) -> LIST:
         if len(args) == 0:
             return []
         else:
             return list(args)
 
-    def asElement(self, list_: LIST) -> Any:
+    @staticmethod
+    def asElement(list_: LIST) -> Any:
         if list_ is None:
             return None
         elif len(list_) == 1:
@@ -1000,7 +1002,8 @@ class BaseFEELLib(FEELLib):
             range_ = self.intRange(isOpenStart, start, isOpenEnd, end)
             return list(range_)
 
-    def intRange(self, isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
+    @staticmethod
+    def intRange(isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
         if start is None or end is None:
             return None
 
@@ -1011,7 +1014,8 @@ class BaseFEELLib(FEELLib):
         else:
             return range(startValue, endValue - 1, -1)
 
-    def flattenFirstLevel(self, list_: LIST) -> LIST:
+    @staticmethod
+    def flattenFirstLevel(list_: LIST) -> LIST:
         if list_ is None:
             return None
 
@@ -1024,7 +1028,8 @@ class BaseFEELLib(FEELLib):
 
         return result
 
-    def elementAt(self, list: LIST, number: DECIMAL) -> Any:
+    @staticmethod
+    def elementAt(list: LIST, number: DECIMAL) -> Any:
         if list is None:
             return None
 
@@ -1038,7 +1043,8 @@ class BaseFEELLib(FEELLib):
         else:
             return None
 
-    def ruleMatches(self, eventListener: EventListener, rule: Rule, *operands) -> bool:
+    @staticmethod
+    def ruleMatches(eventListener: EventListener, rule: Rule, *operands) -> bool:
         if (operands is None or len(operands) == 0):
             return False
         else:

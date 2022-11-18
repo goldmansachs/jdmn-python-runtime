@@ -14,7 +14,8 @@ from typing import Any, Optional
 
 
 class TernaryBooleanLogicUtil:
-    def not_(self, operand: Any) -> Optional[bool]:
+    @staticmethod
+    def not_(operand: Any) -> Optional[bool]:
         if isinstance(operand, bool):
             return not operand
         else:

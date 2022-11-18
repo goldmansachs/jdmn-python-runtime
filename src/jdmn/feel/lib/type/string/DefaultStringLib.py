@@ -33,7 +33,8 @@ class DefaultStringLib:
 
         return str(from_)
 
-    def print(self, from_: TIME_OR_DATE_TIME) -> str:
+    @staticmethod
+    def print(from_: TIME_OR_DATE_TIME) -> str:
         tz = from_.tzinfo
         if isinstance(tz, ZoneInfo):
             copy = from_
@@ -43,25 +44,29 @@ class DefaultStringLib:
         else:
             return from_.isoformat()
 
-    def contains(self, string: STRING, match: STRING) -> BOOLEAN:
+    @staticmethod
+    def contains(string: STRING, match: STRING) -> BOOLEAN:
         if string is None or match is None:
             return None
 
         return match in string
 
-    def startsWith(self, string: Optional[str], match: Optional[str]) -> Optional[bool]:
+    @staticmethod
+    def startsWith(string: Optional[str], match: Optional[str]) -> Optional[bool]:
         if string is None or match is None:
             return None
 
         return string.startswith(match)
 
-    def endsWith(self, string: STRING, match: STRING) -> BOOLEAN:
+    @staticmethod
+    def endsWith(string: STRING, match: STRING) -> BOOLEAN:
         if string is None or match is None:
             return None
 
         return string.endswith(match)
 
-    def stringLength(self, string: STRING) -> INTEGER:
+    @staticmethod
+    def stringLength(string: STRING) -> INTEGER:
         if string is None:
             return None
 
@@ -87,26 +92,30 @@ class DefaultStringLib:
         result = self.substringCodePoints(normal, start, end)
         return result
 
-    def upperCase(self, string: STRING) -> STRING:
+    @staticmethod
+    def upperCase(string: STRING) -> STRING:
         if string is None:
             return None
 
         return string.upper()
 
-    def lowerCase(self, string: STRING) -> STRING:
+    @staticmethod
+    def lowerCase(string: STRING) -> STRING:
         if string is None:
             return None
 
         return string.lower()
 
-    def substringBefore(self, string: STRING, match: STRING) -> STRING:
+    @staticmethod
+    def substringBefore(string: STRING, match: STRING) -> STRING:
         if string is None or match is None:
             return None
 
         i = string.find(match)
         return "" if i == -1 else string[0:i]
 
-    def substringAfter(self, string: STRING, match: STRING) -> STRING:
+    @staticmethod
+    def substringAfter(string: STRING, match: STRING) -> STRING:
         if string is None or match is None:
             return None
 
@@ -129,7 +138,8 @@ class DefaultStringLib:
 
         return self.evaluateMatches(input, pattern, flags)
 
-    def split(self, string: STRING, delimiter: STRING) -> LIST:
+    @staticmethod
+    def split(string: STRING, delimiter: STRING) -> LIST:
         if string is None or delimiter is None:
             return None
         if string.strip() == "" or delimiter.strip() == "":

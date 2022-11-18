@@ -17,5 +17,6 @@ from jdmn.runtime.external.ExternalFunctionExecutor import ExternalFunctionExecu
 
 
 class DefaultExternalFunctionExecutor(ExternalFunctionExecutor):
-    def execute(self, className: str, methodName: str, args: List[Any]) -> Any:
+    @staticmethod
+    def execute(className: str, methodName: str, args: List[Any]) -> Any:
         raise DMNRuntimeException("External execution is not supported")

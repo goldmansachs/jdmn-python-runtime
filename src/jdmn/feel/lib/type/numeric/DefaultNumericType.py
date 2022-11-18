@@ -26,13 +26,16 @@ class DefaultNumericType(BaseType):
         BaseType.__init__(self)
         self.numericComparator = NumericComparator()
 
-    def isNumber(self, value: Any) -> bool:
+    @staticmethod
+    def isNumber(value: Any) -> bool:
         return isinstance(value, Decimal)
 
-    def numericValue(self, value: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def numericValue(value: DECIMAL) -> DECIMAL:
         return value
 
-    def numericIs(self, first: DECIMAL, second: DECIMAL) -> Optional[bool]:
+    @staticmethod
+    def numericIs(first: DECIMAL, second: DECIMAL) -> Optional[bool]:
         if first is None or second is None:
             return first == second
 
@@ -77,7 +80,8 @@ class DefaultNumericType(BaseType):
     def numericDivide(self, first: DECIMAL, second: DECIMAL) -> Optional[Optional[Decimal]]:
         return self.decimalNumericDivide(first, second)
 
-    def numericUnaryMinus(self, first: DECIMAL) -> Optional[Optional[Decimal]]:
+    @staticmethod
+    def numericUnaryMinus(first: DECIMAL) -> Optional[Optional[Decimal]]:
         if first is None:
             return None
 
