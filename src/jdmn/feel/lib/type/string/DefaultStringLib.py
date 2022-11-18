@@ -122,21 +122,21 @@ class DefaultStringLib:
         i = string.find(match)
         return "" if i == -1 else string[i + len(match):]
 
-    def replace(self, input: STRING, pattern: STRING, replacement: STRING, flags: STRING) -> STRING:
-        if input is None or pattern is None or replacement is None:
+    def replace(self, input_: STRING, pattern: STRING, replacement: STRING, flags: STRING) -> STRING:
+        if input_ is None or pattern is None or replacement is None:
             return None
         if flags is None:
             flags = ""
 
-        return self.evaluateReplace(input, pattern, replacement, flags)
+        return self.evaluateReplace(input_, pattern, replacement, flags)
 
-    def matches(self, input: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
-        if input is None or pattern is None:
+    def matches(self, input_: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
+        if input_ is None or pattern is None:
             return None
         if flags is None:
             flags = ""
 
-        return self.evaluateMatches(input, pattern, flags)
+        return self.evaluateMatches(input_, pattern, flags)
 
     @staticmethod
     def split(string: STRING, delimiter: STRING) -> LIST:
@@ -159,19 +159,19 @@ class DefaultStringLib:
             result.append(token)
         return result
 
-    def evaluateReplace(self, input: str, pattern: str, replacement: str, flags: str) -> str:
+    def evaluateReplace(self, input_: str, pattern: str, replacement: str, flags: str) -> str:
         expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
-        return self.evaluateXPath(input, expression)
+        return self.evaluateXPath(input_, expression)
 
-    def evaluateMatches(self, input: str, pattern: str, flags: str) -> bool:
+    def evaluateMatches(self, input_: str, pattern: str, flags: str) -> bool:
         expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
-        value = self.evaluateXPath(input, expression)
+        value = self.evaluateXPath(input_, expression)
         return len(value) != 0
 
     @staticmethod
-    def evaluateXPath(input: str, expression: str):
+    def evaluateXPath(input_: str, expression: str):
         # Read document
-        xmlStr = "<root>" + input + "</root>"
+        xmlStr = "<root>" + input_ + "</root>"
         root = etree.fromstring(xmlStr)
 
         # Evaluate xpath

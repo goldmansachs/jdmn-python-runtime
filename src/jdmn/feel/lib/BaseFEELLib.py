@@ -1029,17 +1029,17 @@ class BaseFEELLib(FEELLib):
         return result
 
     @staticmethod
-    def elementAt(list: LIST, number: DECIMAL) -> Any:
-        if list is None:
+    def elementAt(list_: LIST, number: DECIMAL) -> Any:
+        if list_ is None:
             return None
 
         index = int(number)
 
-        listSize = len(list)
-        if 1 <= index and index <= listSize:
-            return list[index - 1]
-        elif -listSize <= index and index <= -1:
-            return list[listSize + index]
+        listSize = len(list_)
+        if 1 <= index <= listSize:
+            return list_[index - 1]
+        elif -listSize <= index <= -1:
+            return list_[listSize + index]
         else:
             return None
 
