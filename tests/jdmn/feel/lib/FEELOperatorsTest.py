@@ -1204,7 +1204,7 @@ class FEELOperatorsTest(TestCase):
 
     @staticmethod
     def makeList(*args) -> List[Any]:
-        return [x for x in args]
+        return list(args)
 
     def assertEqualsNumber(self, expected: Any, actual: Any, delta: float = None):
         if isinstance(expected, str):

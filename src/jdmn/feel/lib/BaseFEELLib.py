@@ -998,7 +998,7 @@ class BaseFEELLib(FEELLib):
             return []
         else:
             range_ = self.intRange(isOpenStart, start, isOpenEnd, end)
-            return [x for x in range_]
+            return list(range_)
 
     def intRange(self, isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
         if start is None or end is None:
