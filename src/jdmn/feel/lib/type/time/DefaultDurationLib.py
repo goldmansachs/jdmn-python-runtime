@@ -65,8 +65,8 @@ class DefaultDurationLib:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
-        hh, mm = divmod(mm, 60)
+        mm, _ = divmod(seconds, 60)
+        hh, _ = divmod(mm, 60)
         return hh
 
     @staticmethod
@@ -75,8 +75,8 @@ class DefaultDurationLib:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
-        hh, mm = divmod(mm, 60)
+        mm, _ = divmod(seconds, 60)
+        _, mm = divmod(mm, 60)
         return mm
 
     @staticmethod
@@ -85,7 +85,7 @@ class DefaultDurationLib:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
+        _, ss = divmod(seconds, 60)
         return ss
 
     @staticmethod
