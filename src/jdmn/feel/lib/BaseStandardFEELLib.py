@@ -349,19 +349,19 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def replace(self, input: STRING, pattern: STRING, replacement: STRING, flags: STRING = "") -> STRING:
+    def replace(self, input_: STRING, pattern: STRING, replacement: STRING, flags: STRING = "") -> STRING:
         try:
-            return self.stringLib.replace(input, pattern, replacement, flags)
+            return self.stringLib.replace(input_, pattern, replacement, flags)
         except Exception as e:
-            message: STRING = "replace({}, {}, {}, {})".format(input, pattern, replacement, flags)
+            message: STRING = "replace({}, {}, {}, {})".format(input_, pattern, replacement, flags)
             self.logError(message, e)
             return None
 
-    def matches(self, input: STRING, pattern: STRING, flags: STRING = "") -> BOOLEAN:
+    def matches(self, input_: STRING, pattern: STRING, flags: STRING = "") -> BOOLEAN:
         try:
-            return self.stringLib.matches(input, pattern, flags)
+            return self.stringLib.matches(input_, pattern, flags)
         except Exception as e:
-            message: STRING = "matches({}, {}, {})".format(input, pattern, flags)
+            message: STRING = "matches({}, {}, {})".format(input_, pattern, flags)
             self.logError(message, e)
             return None
 
