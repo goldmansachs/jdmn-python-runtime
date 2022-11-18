@@ -625,9 +625,9 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertTrue(self.getLib().matches("abracadabra", "^abra"))
 
         input_: STRING = "Kaum hat dies der Hahn gesehen,\n" \
-                        "Fangt er auch schon an zu krahen:\n" \
-                        "Kikeriki! Kikikerikih!!\n" \
-                        "Tak, tak, tak! - da kommen sie.\n"
+                         "Fangt er auch schon an zu krahen:\n" \
+                         "Kikeriki! Kikikerikih!!\n" \
+                         "Tak, tak, tak! - da kommen sie.\n"
 
         self.assertFalse(self.getLib().matches(input_, "Kaum.*krahen"))
         self.assertTrue(self.getLib().matches(input_, "Kaum.*krahen", "s"))
