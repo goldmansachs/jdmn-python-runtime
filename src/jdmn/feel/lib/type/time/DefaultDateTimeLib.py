@@ -159,7 +159,7 @@ class DefaultDateTimeLib:
     def fixDateTimeFormat(literal: STRING) -> STRING:
         if literal is None:
             return None
-        if (literal.startswith("T")):
+        if literal.startswith("T"):
             literal = literal[1:]
         timeZoneStartIndex = len(literal) - 5
         if 0 <= timeZoneStartIndex < len(literal):
@@ -191,41 +191,41 @@ class DefaultDateTimeLib:
     # Date properties
     #
     @staticmethod
-    def year(date: DATE) -> INTEGER:
-        if date is None:
+    def year(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.year
+        return date_.year
 
     def yearDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.year(dateTime)
 
     @staticmethod
-    def month(date: DATE) -> INTEGER:
-        if date is None:
+    def month(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.month
+        return date_.month
 
     def monthDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.month(dateTime)
 
     @staticmethod
-    def day(date: DATE) -> INTEGER:
-        if date is None:
+    def day(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.day
+        return date_.day
 
     def dayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.day(dateTime)
 
     @staticmethod
-    def weekday(date: DATE) -> INTEGER:
-        if date is None:
+    def weekday(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.weekday() + 1
+        return date_.weekday() + 1
 
     def weekdayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.weekday(dateTime)
@@ -234,70 +234,70 @@ class DefaultDateTimeLib:
     # Time properties
     #
     @staticmethod
-    def hour(time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    def hour(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.hour
+        return time_.hour
 
     @staticmethod
-    def minute(time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    def minute(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.minute
+        return time_.minute
 
     @staticmethod
-    def second(time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    def second(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.second
+        return time_.second
 
-    def timeOffset(self, time: TIME_OR_DATE_TIME) -> DURATION:
-        if time is None:
+    def timeOffset(self, time_: TIME_OR_DATE_TIME) -> DURATION:
+        if time_ is None:
             return None
 
-        return self.toDuration(time.tzinfo)
+        return self.toDuration(time_.tzinfo)
 
     @staticmethod
-    def timezone(time: TIME_OR_DATE_TIME) -> STRING:
-        if time is None:
+    def timezone(time_: TIME_OR_DATE_TIME) -> STRING:
+        if time_ is None:
             return None
 
-        return time.tzname()
+        return time_.tzname()
 
     #
     # Temporal functions
     #
     @staticmethod
-    def dayOfYear(date: DATE) -> INTEGER:
-        if date is None:
+    def dayOfYear(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.timetuple().tm_yday
+        return date_.timetuple().tm_yday
 
     @staticmethod
-    def dayOfWeek(date: DATE) -> STRING:
-        if date is None:
+    def dayOfWeek(date_: DATE) -> STRING:
+        if date_ is None:
             return None
 
-        dow: int = date.isocalendar()[2]
+        dow: int = date_.isocalendar()[2]
         return DAY_NAMES[dow]
 
     @staticmethod
-    def weekOfYear(date: DATE) -> INTEGER:
-        if (date is None):
+    def weekOfYear(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.isocalendar()[1]
+        return date_.isocalendar()[1]
 
     @staticmethod
-    def monthOfYear(date: DATE) -> STRING:
-        if date is None:
+    def monthOfYear(date_: DATE) -> STRING:
+        if date_ is None:
             return None
 
-        moy: int = date.month
+        moy: int = date_.month
         return MONTH_NAMES[moy - 1]
 
     #
