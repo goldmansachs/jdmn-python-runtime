@@ -36,5 +36,12 @@ class Annotation:
 
         return True
 
+    def __hash__(self):
+        result = 0
+        result = 31 * result + (0 if self.decisionName is None else hash(self.decisionName))
+        result = 31 * result + (0 if self.ruleIndex is None else hash(self.ruleIndex))
+        result = 31 * result + (0 if self.annotation is None else hash(self.annotation))
+        return result
+
     def __str__(self) -> str:
         return "Annotation('{0}', {1}, '{2}')".format(self.decisionName, self.ruleIndex, self.annotation)

@@ -32,5 +32,11 @@ class Pair:
 
         return self.left == other.left and self.right == other.right
 
+    def __hash__(self):
+        result = 0
+        result = 31 * result + (0 if self.left is None else hash(self.left))
+        result = 31 * result + (0 if self.right is None else hash(self.right))
+        return result
+
     def __str__(self) -> str:
         return "Pair({0}, {1})".format(self.left, self.right)

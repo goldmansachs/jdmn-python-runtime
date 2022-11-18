@@ -58,3 +58,8 @@ class Context:
             return False
 
         return self.map == other.map
+
+    def __hash__(self):
+        result = 0
+        result = 31 * result + (0 if self.map is None else hash(self.map))
+        return result
