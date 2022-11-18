@@ -16,7 +16,6 @@ from jdmn.feel.lib.type.time.DefaultBaseDateTimeComparator import DefaultBaseDat
 
 
 class DefaultDurationComparator(DefaultBaseDateTimeComparator):
-
     def compareTo(self, first: DURATION, second: DURATION) -> int:
         firstValue = self.calendarType.durationValue(first)
         secondValue = self.calendarType.durationValue(second)
