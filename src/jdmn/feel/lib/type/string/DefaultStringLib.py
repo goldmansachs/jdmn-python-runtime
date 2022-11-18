@@ -33,7 +33,8 @@ class DefaultStringLib:
 
         return str(from_)
 
-    def print(self, from_: TIME_OR_DATE_TIME) -> str:
+    @staticmethod
+    def print(from_: TIME_OR_DATE_TIME) -> str:
         tz = from_.tzinfo
         if isinstance(tz, ZoneInfo):
             copy = from_
@@ -43,32 +44,36 @@ class DefaultStringLib:
         else:
             return from_.isoformat()
 
-    def contains(self, string: STRING, match: STRING) -> BOOLEAN:
+    @staticmethod
+    def contains(string: STRING, match: STRING) -> BOOLEAN:
         if string is None or match is None:
             return None
 
         return match in string
 
-    def startsWith(self, string: Optional[str], match: Optional[str]) -> Optional[bool]:
+    @staticmethod
+    def startsWith(string: Optional[str], match: Optional[str]) -> Optional[bool]:
         if string is None or match is None:
             return None
 
         return string.startswith(match)
 
-    def endsWith(self, string: STRING, match: STRING) -> BOOLEAN:
+    @staticmethod
+    def endsWith(string: STRING, match: STRING) -> BOOLEAN:
         if string is None or match is None:
             return None
 
         return string.endswith(match)
 
-    def stringLength(self, string: STRING) -> INTEGER:
+    @staticmethod
+    def stringLength(string: STRING) -> INTEGER:
         if string is None:
             return None
 
         # The number of Unicode code units in the string
-        bytes = string.encode('utf-16', 'surrogatepass')
+        bytes_ = string.encode('utf-16', 'surrogatepass')
         # The number of characters (Unicode code point)
-        transformed = bytes.decode('utf-16')
+        transformed = bytes_.decode('utf-16')
         result = len(transformed)
         return result
 
@@ -87,49 +92,54 @@ class DefaultStringLib:
         result = self.substringCodePoints(normal, start, end)
         return result
 
-    def upperCase(self, string: STRING) -> STRING:
+    @staticmethod
+    def upperCase(string: STRING) -> STRING:
         if string is None:
             return None
 
         return string.upper()
 
-    def lowerCase(self, string: STRING) -> STRING:
+    @staticmethod
+    def lowerCase(string: STRING) -> STRING:
         if string is None:
             return None
 
         return string.lower()
 
-    def substringBefore(self, string: STRING, match: STRING) -> STRING:
+    @staticmethod
+    def substringBefore(string: STRING, match: STRING) -> STRING:
         if string is None or match is None:
             return None
 
         i = string.find(match)
         return "" if i == -1 else string[0:i]
 
-    def substringAfter(self, string: STRING, match: STRING) -> STRING:
+    @staticmethod
+    def substringAfter(string: STRING, match: STRING) -> STRING:
         if string is None or match is None:
             return None
 
         i = string.find(match)
         return "" if i == -1 else string[i + len(match):]
 
-    def replace(self, input: STRING, pattern: STRING, replacement: STRING, flags: STRING) -> STRING:
-        if input is None or pattern is None or replacement is None:
+    def replace(self, input_: STRING, pattern: STRING, replacement: STRING, flags: STRING) -> STRING:
+        if input_ is None or pattern is None or replacement is None:
             return None
         if flags is None:
             flags = ""
 
-        return self.evaluateReplace(input, pattern, replacement, flags)
+        return self.evaluateReplace(input_, pattern, replacement, flags)
 
-    def matches(self, input: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
-        if input is None or pattern is None:
+    def matches(self, input_: STRING, pattern: STRING, flags: STRING) -> BOOLEAN:
+        if input_ is None or pattern is None:
             return None
         if flags is None:
             flags = ""
 
-        return self.evaluateMatches(input, pattern, flags)
+        return self.evaluateMatches(input_, pattern, flags)
 
-    def split(self, string: STRING, delimiter: STRING) -> LIST:
+    @staticmethod
+    def split(string: STRING, delimiter: STRING) -> LIST:
         if string is None or delimiter is None:
             return None
         if string.strip() == "" or delimiter.strip() == "":
@@ -149,19 +159,19 @@ class DefaultStringLib:
             result.append(token)
         return result
 
-    def evaluateReplace(self, input: str, pattern: str, replacement: str, flags: str) -> str:
+    def evaluateReplace(self, input_: str, pattern: str, replacement: str, flags: str) -> str:
         expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
-        return self.evaluateXPath(input, expression)
+        return self.evaluateXPath(input_, expression)
 
-    def evaluateMatches(self, input: str, pattern: str, flags: str) -> bool:
+    def evaluateMatches(self, input_: str, pattern: str, flags: str) -> bool:
         expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
-        value = self.evaluateXPath(input, expression)
+        value = self.evaluateXPath(input_, expression)
         return len(value) != 0
 
     @staticmethod
-    def evaluateXPath(input: str, expression: str):
+    def evaluateXPath(input_: str, expression: str):
         # Read document
-        xmlStr = "<root>" + input + "</root>"
+        xmlStr = "<root>" + input_ + "</root>"
         root = etree.fromstring(xmlStr)
 
         # Evaluate xpath

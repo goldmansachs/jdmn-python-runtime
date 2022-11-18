@@ -40,5 +40,6 @@ class NumericRoundingMode(Enum):
                 return mode
         return NumericRoundingMode.UNKNOWN
 
-    def allowedValues(self):
+    @staticmethod
+    def allowedValues():
         return [x for x in NumericRoundingMode if x != NumericRoundingMode.UNKNOWN]

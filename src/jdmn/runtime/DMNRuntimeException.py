@@ -12,4 +12,4 @@
 #
 class DMNRuntimeException(Exception):
     def __init__(self, *args, **kwargs):
-        pass
+        Exception.__init__(self, *args, **kwargs)

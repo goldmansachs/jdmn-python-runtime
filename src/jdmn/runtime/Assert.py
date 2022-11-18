@@ -69,26 +69,33 @@ class Assert(TestCase):
         else:
             self.assertEqual(expected, actual, message)
 
-    def isNumber(self, obj: Any) -> bool:
+    @staticmethod
+    def isNumber(obj: Any) -> bool:
         return isinstance(obj, Decimal)
 
-    def isString(self, obj: Any) -> bool:
+    @staticmethod
+    def isString(obj: Any) -> bool:
         return isinstance(obj, str)
 
-    def isBoolean(self, obj: Any) -> bool:
+    @staticmethod
+    def isBoolean(obj: Any) -> bool:
         return isinstance(obj, bool)
 
-    def isDate(self, obj: Any) -> bool:
+    @staticmethod
+    def isDate(obj: Any) -> bool:
         return isinstance(obj, datetime.date)
 
-    def isTime(self, obj: Any) -> bool:
+    @staticmethod
+    def isTime(obj: Any) -> bool:
         return isinstance(obj, datetime.time)
 
-    def isDateTime(self, obj: Any) -> bool:
+    @staticmethod
+    def isDateTime(obj: Any) -> bool:
         return isinstance(obj, datetime.datetime)
 
-    def isDuration(self, obj: Any) -> bool:
-        return isinstance(obj, isodate.Duration) or isinstance(obj, datetime.timedelta)
+    @staticmethod
+    def isDuration(obj: Any) -> bool:
+        return isinstance(obj, (isodate.Duration, datetime.timedelta))
 
     def isDateTimeValue(self, obj: Any) -> bool:
         return self.isDate(obj) \
@@ -96,21 +103,26 @@ class Assert(TestCase):
                or self.isDateTime(obj) \
                or self.isDuration(obj)
 
-    def isList(self, obj: Any) -> bool:
+    @staticmethod
+    def isList(obj: Any) -> bool:
         return isinstance(obj, list)
 
-    def isContext(self, obj: Any) -> bool:
+    @staticmethod
+    def isContext(obj: Any) -> bool:
         return isinstance(obj, Context)
 
-    def isComplex(self, obj: Any) -> bool:
+    @staticmethod
+    def isComplex(obj: Any) -> bool:
         return isinstance(obj, DMNType.DMNType)
 
-    def normalizeDateTime(self, obj: Any) -> Any:
+    @staticmethod
+    def normalizeDateTime(obj: Any) -> Any:
         if obj is None:
             return None
         return obj
 
-    def normalizeNumber(self, obj: Any) -> Any:
+    @staticmethod
+    def normalizeNumber(obj: Any) -> Any:
         if obj is None:
             return None
         if isinstance(obj, str):

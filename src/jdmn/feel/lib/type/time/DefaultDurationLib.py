@@ -20,13 +20,15 @@ from jdmn.feel.lib.Types import STRING, DURATION, INTEGER, DATE_OR_DATE_TIME
 
 
 class DefaultDurationLib:
-    def duration(self, from_: STRING) -> DURATION:
+    @staticmethod
+    def duration(from_: STRING) -> DURATION:
         if from_ is None:
             return None
 
         return isodate.parse_duration(from_)
 
-    def yearsAndMonthsDuration(self, from_: DATE_OR_DATE_TIME, to: DATE_OR_DATE_TIME) -> DURATION:
+    @staticmethod
+    def yearsAndMonthsDuration(from_: DATE_OR_DATE_TIME, to: DATE_OR_DATE_TIME) -> DURATION:
         if from_ is None or to is None:
             return None
 
@@ -36,51 +38,58 @@ class DefaultDurationLib:
         delta = relativedelta(to, from_)
         return Duration(years=delta.years, months=delta.months)
 
-    def years(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def years(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.years
 
-    def months(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def months(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.months
 
-    def days(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def days(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         return duration.days
 
-    def hours(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def hours(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
-        hh, mm = divmod(mm, 60)
+        mm, _ = divmod(seconds, 60)
+        hh, _ = divmod(mm, 60)
         return hh
 
-    def minutes(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def minutes(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
-        hh, mm = divmod(mm, 60)
+        mm, _ = divmod(seconds, 60)
+        _, mm = divmod(mm, 60)
         return mm
 
-    def seconds(self, duration: DURATION) -> INTEGER:
+    @staticmethod
+    def seconds(duration: DURATION) -> INTEGER:
         if duration is None:
             return None
 
         seconds = duration.seconds
-        mm, ss = divmod(seconds, 60)
+        _, ss = divmod(seconds, 60)
         return ss
 
-    def abs(self, duration: DURATION) -> DURATION:
+    @staticmethod
+    def abs(duration: DURATION) -> DURATION:
         if duration is None:
             return None
 

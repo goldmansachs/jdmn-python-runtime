@@ -23,7 +23,8 @@ class DefaultStringRangeLibTest(AbstractRangeLibTest):
 
     feelLib = DefaultStandardFEELLib()
 
-    def makePoint(self, number: int) -> COMPARABLE:
+    @staticmethod
+    def makePoint(number: int) -> COMPARABLE:
         if number < 0 or number > 60:
             raise Exception("Illegal second field")
         return "{0:03d}".format(number)

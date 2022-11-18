@@ -965,13 +965,15 @@ class BaseFEELLib(FEELLib):
     #
     # Conversion functions
     #
-    def asList(self, *args) -> LIST:
+    @staticmethod
+    def asList(*args) -> LIST:
         if len(args) == 0:
             return []
         else:
             return list(args)
 
-    def asElement(self, list_: LIST) -> Any:
+    @staticmethod
+    def asElement(list_: LIST) -> Any:
         if list_ is None:
             return None
         elif len(list_) == 1:
@@ -998,9 +1000,10 @@ class BaseFEELLib(FEELLib):
             return []
         else:
             range_ = self.intRange(isOpenStart, start, isOpenEnd, end)
-            return [x for x in range_]
+            return list(range_)
 
-    def intRange(self, isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
+    @staticmethod
+    def intRange(isOpenStart: bool, start: DECIMAL, isOpenEnd: bool, end: DECIMAL):
         if start is None or end is None:
             return None
 
@@ -1011,7 +1014,8 @@ class BaseFEELLib(FEELLib):
         else:
             return range(startValue, endValue - 1, -1)
 
-    def flattenFirstLevel(self, list_: LIST) -> LIST:
+    @staticmethod
+    def flattenFirstLevel(list_: LIST) -> LIST:
         if list_ is None:
             return None
 
@@ -1024,21 +1028,23 @@ class BaseFEELLib(FEELLib):
 
         return result
 
-    def elementAt(self, list: LIST, number: DECIMAL) -> Any:
-        if list is None:
+    @staticmethod
+    def elementAt(list_: LIST, number: DECIMAL) -> Any:
+        if list_ is None:
             return None
 
         index = int(number)
 
-        listSize = len(list)
-        if 1 <= index and index <= listSize:
-            return list[index - 1]
-        elif -listSize <= index and index <= -1:
-            return list[listSize + index]
+        listSize = len(list_)
+        if 1 <= index <= listSize:
+            return list_[index - 1]
+        elif -listSize <= index <= -1:
+            return list_[listSize + index]
         else:
             return None
 
-    def ruleMatches(self, eventListener: EventListener, rule: Rule, *operands) -> bool:
+    @staticmethod
+    def ruleMatches(eventListener: EventListener, rule: Rule, *operands) -> bool:
         if (operands is None or len(operands) == 0):
             return False
         else:
@@ -1054,7 +1060,7 @@ class BaseFEELLib(FEELLib):
             return True
 
     def valueOf(self, number: int) -> DECIMAL:
-        pass
+        raise NotImplementedError()
 
     def intValue(self, number: DECIMAL) -> int:
-        pass
+        raise NotImplementedError()

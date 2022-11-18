@@ -17,8 +17,8 @@ from jdmn.feel.lib.type.time.DefaultCalendarType import DefaultCalendarType
 
 class DefaultBaseDateTimeComparator(BaseDateTimeComparator):
     def __init__(self):
-        super().__init__()
         self.calendarType = DefaultCalendarType()
+        BaseDateTimeComparator.__init__(self)
 
     def compareTo(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
         firstValue = self.calendarType.value(first)

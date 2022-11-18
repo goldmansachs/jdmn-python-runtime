@@ -17,9 +17,6 @@ from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
 
 
 class BaseDateTimeComparator(RelationalComparator):
-    def __init__(self):
-        super().__init__()
-
     def compare(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[int]:
         if first is None or second is None:
             return None
@@ -31,7 +28,7 @@ class BaseDateTimeComparator(RelationalComparator):
                 lambda: True,
                 lambda: False,
                 lambda:False,
-                lambda: type(first) == type(second) and self.compareTo(first, second) == 0
+                lambda: type(first) is type(second) and self.compareTo(first, second) == 0
         ])
 
     def lessThan(self, first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> Optional[bool]:
@@ -39,7 +36,7 @@ class BaseDateTimeComparator(RelationalComparator):
                 lambda: None,
                 lambda: None,
                 lambda: None,
-                lambda: type(first) == type(second) and self.compareTo(first, second) == -1
+                lambda: type(first) is type(second) and self.compareTo(first, second) == -1
             ])
 
     @staticmethod

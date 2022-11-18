@@ -46,7 +46,7 @@ class DefaultDateTimeLib:
             if isinstance(arg, str):
                 # From literal
                 result = self.parseDate(arg)
-            elif isinstance(arg, datetime) or isinstance(arg, date):
+            elif isinstance(arg, (datetime, date)):
                 # From date or datetime
                 result = self.toDate(arg)
             else:
@@ -73,7 +73,7 @@ class DefaultDateTimeLib:
                     result = self.mergeTzInfo(arg, time_, parts[1])
                 else:
                     result = self.parseTime(arg)
-            elif isinstance(arg, time) or isinstance(arg, datetime) or isinstance(arg, date):
+            elif isinstance(arg, (time, datetime, date)):
                 # From date, time or datetime
                 result = self.toTime(arg)
             else:
@@ -155,15 +155,16 @@ class DefaultDateTimeLib:
 
     # Fix the format 2016-08-01T11:00:00.000+0000 to 2016-08-01T11:00:00.000+00:00
     # and T11:00:00.000+0000 to 11:00:00.000+00:00
-    def fixDateTimeFormat(self, literal: STRING) -> STRING:
+    @staticmethod
+    def fixDateTimeFormat(literal: STRING) -> STRING:
         if literal is None:
             return None
-        if (literal.startswith("T")):
+        if literal.startswith("T"):
             literal = literal[1:]
         timeZoneStartIndex = len(literal) - 5
         if 0 <= timeZoneStartIndex < len(literal):
             timeZoneStart = literal[timeZoneStartIndex]
-            if timeZoneStart == '+' or timeZoneStart == '-':
+            if timeZoneStart in ('+', '-'):
                 timeZoneOffset = literal[timeZoneStartIndex + 1:]
                 literal = literal[0:timeZoneStartIndex + 1] + timeZoneOffset[0:2] + ":" + timeZoneOffset[2:]
         # Python does not support Z or z as tzinfo
@@ -171,7 +172,8 @@ class DefaultDateTimeLib:
         literal = literal.replace("Z", "+00:00")
         return literal
 
-    def mergeTzInfo(self, arg, t: TIME_OR_DATE_TIME, zoneId: str) -> TIME_OR_DATE_TIME:
+    @staticmethod
+    def mergeTzInfo(arg, t: TIME_OR_DATE_TIME, zoneId: str) -> TIME_OR_DATE_TIME:
         if t.tzinfo is None:
             tz = ZoneInfo(zoneId)
             if tz is None:
@@ -188,38 +190,42 @@ class DefaultDateTimeLib:
     #
     # Date properties
     #
-    def year(self, date: DATE) -> INTEGER:
-        if date is None:
+    @staticmethod
+    def year(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.year
+        return date_.year
 
     def yearDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.year(dateTime)
 
-    def month(self, date: DATE) -> INTEGER:
-        if date is None:
+    @staticmethod
+    def month(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.month
+        return date_.month
 
     def monthDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.month(dateTime)
 
-    def day(self, date: DATE) -> INTEGER:
-        if date is None:
+    @staticmethod
+    def day(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.day
+        return date_.day
 
     def dayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.day(dateTime)
 
-    def weekday(self, date: DATE) -> INTEGER:
-        if date is None:
+    @staticmethod
+    def weekday(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.weekday() + 1
+        return date_.weekday() + 1
 
     def weekdayDateTime(self, dateTime: DATE_TIME) -> INTEGER:
         return self.weekday(dateTime)
@@ -227,69 +233,78 @@ class DefaultDateTimeLib:
     #
     # Time properties
     #
-    def hour(self, time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    @staticmethod
+    def hour(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.hour
+        return time_.hour
 
-    def minute(self, time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    @staticmethod
+    def minute(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.minute
+        return time_.minute
 
-    def second(self, time: TIME_OR_DATE_TIME) -> INTEGER:
-        if time is None:
+    @staticmethod
+    def second(time_: TIME_OR_DATE_TIME) -> INTEGER:
+        if time_ is None:
             return None
 
-        return time.second
+        return time_.second
 
-    def timeOffset(self, time: TIME_OR_DATE_TIME) -> DURATION:
-        if time is None:
+    def timeOffset(self, time_: TIME_OR_DATE_TIME) -> DURATION:
+        if time_ is None:
             return None
 
-        return self.toDuration(time.tzinfo)
+        return self.toDuration(time_.tzinfo)
 
-    def timezone(self, time: TIME_OR_DATE_TIME) -> STRING:
-        if time is None:
+    @staticmethod
+    def timezone(time_: TIME_OR_DATE_TIME) -> STRING:
+        if time_ is None:
             return None
 
-        return time.tzname()
+        return time_.tzname()
 
     #
     # Temporal functions
     #
-    def dayOfYear(self, date: DATE) -> INTEGER:
-        if date is None:
+    @staticmethod
+    def dayOfYear(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.timetuple().tm_yday
+        return date_.timetuple().tm_yday
 
-    def dayOfWeek(self, date: DATE) -> STRING:
-        if date is None:
+    @staticmethod
+    def dayOfWeek(date_: DATE) -> STRING:
+        if date_ is None:
             return None
 
-        dow: int = date.isocalendar()[2]
+        dow: int = date_.isocalendar()[2]
         return DAY_NAMES[dow]
 
-    def weekOfYear(self, date: DATE) -> INTEGER:
-        if (date is None):
+    @staticmethod
+    def weekOfYear(date_: DATE) -> INTEGER:
+        if date_ is None:
             return None
 
-        return date.isocalendar()[1]
+        return date_.isocalendar()[1]
 
-    def monthOfYear(self, date: DATE) -> STRING:
-        if date is None:
+    @staticmethod
+    def monthOfYear(date_: DATE) -> STRING:
+        if date_ is None:
             return None
 
-        moy: int = date.month
+        moy: int = date_.month
         return MONTH_NAMES[moy - 1]
 
     #
     # Extra conversion functions
     #
-    def toDate(self, from_: Any) -> DATE:
+    @staticmethod
+    def toDate(from_: Any) -> DATE:
         if isinstance(from_, datetime):
             return from_.date()
         elif isinstance(from_, date):
@@ -308,7 +323,8 @@ class DefaultDateTimeLib:
         else:
             return None
 
-    def toDateTime(self, from_: Any) -> DATE_TIME:
+    @staticmethod
+    def toDateTime(from_: Any) -> DATE_TIME:
         if isinstance(from_, datetime):
             return from_
         elif isinstance(from_, date):
@@ -316,7 +332,8 @@ class DefaultDateTimeLib:
         else:
             return None
 
-    def toDuration(self, info: tzinfo) -> DURATION:
+    @staticmethod
+    def toDuration(info: tzinfo) -> DURATION:
         if info is None:
             return None
 
@@ -324,7 +341,8 @@ class DefaultDateTimeLib:
         seconds = int(delta.total_seconds())
         return Duration(seconds=seconds)
 
-    def toTzinfo(self, duration: DURATION) -> tzinfo:
+    @staticmethod
+    def toTzinfo(duration: DURATION) -> tzinfo:
         if duration is None:
             return None
 

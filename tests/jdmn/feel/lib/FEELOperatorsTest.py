@@ -1181,7 +1181,8 @@ class FEELOperatorsTest(TestCase):
     #
     # Common
     #
-    def getLib(self) -> BaseStandardFEELLib:
+    @staticmethod
+    def getLib() -> BaseStandardFEELLib:
         return DefaultStandardFEELLib()
 
     def makeNumber(self, literal: Any) -> Decimal:
@@ -1204,7 +1205,7 @@ class FEELOperatorsTest(TestCase):
 
     @staticmethod
     def makeList(*args) -> List[Any]:
-        return [x for x in args]
+        return list(args)
 
     def assertEqualsNumber(self, expected: Any, actual: Any, delta: float = None):
         if isinstance(expected, str):
@@ -1238,8 +1239,10 @@ class FEELOperatorsTest(TestCase):
 
         self.assertEqual(expected, actual)
 
-    def assertEqualsList(self, expected: Any, actual: Any):
+    @staticmethod
+    def assertEqualsList(expected: Any, actual: Any):
         Assert().assertEquals(expected, str(actual))
 
-    def assertEqualsUnicodeString(self, expected: Any, actual: Any):
+    @staticmethod
+    def assertEqualsUnicodeString(expected: Any, actual: Any):
         Assert().assertEquals(expected, actual)

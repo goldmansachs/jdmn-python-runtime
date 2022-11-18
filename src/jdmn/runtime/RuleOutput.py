@@ -23,5 +23,6 @@ class RuleOutput:
     def setMatched(self, matched: bool) -> None:
         self.matched = matched
 
-    def sort(self, rules: List['RuleOutput']) -> List['RuleOutput']:
+    @staticmethod
+    def sort(rules: List['RuleOutput']) -> List['RuleOutput']:
         return rules

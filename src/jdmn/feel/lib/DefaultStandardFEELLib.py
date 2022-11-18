@@ -23,13 +23,15 @@ class DefaultStandardFEELLib(BaseStandardFEELLib):
     #
     # Extra conversion functions
     #
-    def valueOf(self, number: INTEGER) -> DECIMAL:
+    @staticmethod
+    def valueOf(number: INTEGER) -> DECIMAL:
         if number is None:
             return None
         else:
             return Decimal(number)
 
-    def intValue(self, number: DECIMAL) -> INTEGER:
+    @staticmethod
+    def intValue(number: DECIMAL) -> INTEGER:
         if number is None:
             return None
         else:

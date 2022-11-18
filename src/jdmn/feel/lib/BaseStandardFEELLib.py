@@ -349,19 +349,19 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def replace(self, input: STRING, pattern: STRING, replacement: STRING, flags: STRING = "") -> STRING:
+    def replace(self, input_: STRING, pattern: STRING, replacement: STRING, flags: STRING = "") -> STRING:
         try:
-            return self.stringLib.replace(input, pattern, replacement, flags)
+            return self.stringLib.replace(input_, pattern, replacement, flags)
         except Exception as e:
-            message: STRING = "replace({}, {}, {}, {})".format(input, pattern, replacement, flags)
+            message: STRING = "replace({}, {}, {}, {})".format(input_, pattern, replacement, flags)
             self.logError(message, e)
             return None
 
-    def matches(self, input: STRING, pattern: STRING, flags: STRING = "") -> BOOLEAN:
+    def matches(self, input_: STRING, pattern: STRING, flags: STRING = "") -> BOOLEAN:
         try:
-            return self.stringLib.matches(input, pattern, flags)
+            return self.stringLib.matches(input_, pattern, flags)
         except Exception as e:
-            message: STRING = "matches({}, {}, {})".format(input, pattern, flags)
+            message: STRING = "matches({}, {}, {})".format(input_, pattern, flags)
             self.logError(message, e)
             return None
 
@@ -626,27 +626,27 @@ class BaseStandardFEELLib(BaseFEELLib):
     # List functions
     #
 
-    def listContains(self, list: LIST, element: Any) -> BOOLEAN:
+    def listContains(self, list_: LIST, element: Any) -> BOOLEAN:
         try:
-            return self.listLib.listContains(list, element)
+            return self.listLib.listContains(list_, element)
         except Exception as e:
-            message: STRING = "listContains({}, {})".format(list, element)
+            message: STRING = "listContains({}, {})".format(list_, element)
             self.logError(message, e)
             return None
 
-    def append(self, list: LIST, *items):
+    def append(self, list_: LIST, *items):
         try:
-            return self.listLib.append(list, *items)
+            return self.listLib.append(list_, *items)
         except Exception as e:
-            message: STRING = "append({}, {})".format(list, *items)
+            message: STRING = "append({}, {})".format(list_, *items)
             self.logError(message, e)
             return None
 
-    def count(self, list: LIST) -> DECIMAL:
+    def count(self, list_: LIST) -> DECIMAL:
         try:
-            return self.numberLib.count(list)
+            return self.numberLib.count(list_)
         except Exception as e:
-            message = "count({})".format(list)
+            message = "count({})".format(list_)
             self.logError(message, e)
             return None
 
@@ -674,11 +674,11 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def sublist(self, list: LIST, startPosition: DECIMAL, length: DECIMAL = None) -> LIST:
+    def sublist(self, list_: LIST, startPosition: DECIMAL, length: DECIMAL = None) -> LIST:
         try:
-            return self.listLib.sublist(list, self.intValue(startPosition), self.intValue(length))
+            return self.listLib.sublist(list_, self.intValue(startPosition), self.intValue(length))
         except Exception as e:
-            message: STRING = "sublist({}, {}, {})".format(list, startPosition, length)
+            message: STRING = "sublist({}, {}, {})".format(list_, startPosition, length)
             self.logError(message, e)
             return None
 
@@ -690,34 +690,34 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def insertBefore(self, list: LIST, position: DECIMAL, newItem: Any) -> LIST:
+    def insertBefore(self, list_: LIST, position: DECIMAL, newItem: Any) -> LIST:
         try:
-            return self.listLib.insertBefore(list, self.intValue(position), newItem)
+            return self.listLib.insertBefore(list_, self.intValue(position), newItem)
         except Exception as e:
-            message: STRING = "insertBefore({}, {}, {})".format(list, position, newItem)
+            message: STRING = "insertBefore({}, {}, {})".format(list_, position, newItem)
             self.logError(message, e)
             return None
 
-    def remove(self, list: LIST, position: Any):
+    def remove(self, list_: LIST, position: Any):
         try:
-            return self.listLib.remove(list, self.intValue(position))
+            return self.listLib.remove(list_, self.intValue(position))
         except Exception as e:
-            message: STRING = "remove({})".format(list)
+            message: STRING = "remove({})".format(list_)
             self.logError(message, e)
             return None
 
-    def reverse(self, list: LIST) -> LIST:
+    def reverse(self, list_: LIST) -> LIST:
         try:
-            return self.listLib.reverse(list)
+            return self.listLib.reverse(list_)
         except Exception as e:
-            message: STRING = "reverse({})".format(list)
+            message: STRING = "reverse({})".format(list_)
             self.logError(message, e)
             return None
 
-    def indexOf(self, list: LIST, match: Any) -> LIST:
+    def indexOf(self, list_: LIST, match: Any) -> LIST:
         result = []
-        if list is not None:
-            for i, o in enumerate(list):
+        if list_ is not None:
+            for i, o in enumerate(list_):
                 if o is None and match is None or o is not None and o == match:
                     result.append(self.valueOf(i + 1))
         return result
@@ -730,19 +730,19 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def distinctValues(self, list: LIST) -> LIST:
+    def distinctValues(self, list_: LIST) -> LIST:
         try:
-            return self.listLib.distinctValues(list)
+            return self.listLib.distinctValues(list_)
         except Exception as e:
-            message: STRING = "distinctValues({})".format(list)
+            message: STRING = "distinctValues({})".format(list_)
             self.logError(message, e)
             return None
 
-    def flatten(self, list: LIST) -> LIST:
+    def flatten(self, list_: LIST) -> LIST:
         try:
-            return self.listLib.flatten(list)
+            return self.listLib.flatten(list_)
         except Exception as e:
-            message: STRING = "flatten({})".format(list)
+            message: STRING = "flatten({})".format(list_)
             self.logError(message, e)
             return None
 
@@ -778,18 +778,18 @@ class BaseStandardFEELLib(BaseFEELLib):
             self.logError(message, e)
             return None
 
-    def collect(self, result: LIST, list: LIST) -> None:
+    def collect(self, result: LIST, list_: LIST) -> None:
         try:
-            self.listLib.collect(result, list)
+            self.listLib.collect(result, list_)
         except Exception as e:
-            message: STRING = "collect({}, {})".format(result, list)
+            message: STRING = "collect({}, {})".format(result, list_)
             self.logError(message, e)
 
-    def sort(self, list: LIST, precedes: LambdaExpression) -> LIST:
+    def sort(self, list_: LIST, precedes: LambdaExpression) -> LIST:
         try:
-            return self.listLib.sort(list, precedes)
+            return self.listLib.sort(list_, precedes)
         except Exception as e:
-            message: STRING = "sort({})".format(list)
+            message: STRING = "sort({})".format(list_)
             self.logError(message, e)
             return None
 

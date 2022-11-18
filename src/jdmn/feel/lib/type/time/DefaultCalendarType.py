@@ -38,10 +38,12 @@ class DefaultCalendarType(BaseType):
     def isDateTime(obj: Any) -> bool:
         return isinstance(obj, datetime)
 
-    def isDuration(self, value: Any):
-        return isinstance(value, Duration) or isinstance(value, timedelta)
+    @staticmethod
+    def isDuration(value: Any):
+        return isinstance(value, (Duration, timedelta))
 
-    def isYearsAndMonthsDuration(self, value):
+    @staticmethod
+    def isYearsAndMonthsDuration(value):
         if isinstance(value, Duration):
             return not (value.years == 0 and value.months == 0) and value.tdelta.total_seconds() == 0.0
         elif isinstance(value, timedelta):
@@ -49,7 +51,8 @@ class DefaultCalendarType(BaseType):
         else:
             return False
 
-    def isDaysAndTimeDuration(self, value: Any):
+    @staticmethod
+    def isDaysAndTimeDuration(value: Any):
         if isinstance(value, Duration):
             return value.years == 0 and value.months == 0 and value.tdelta.total_seconds() != 0.0
         elif isinstance(value, timedelta):
@@ -104,7 +107,8 @@ class DefaultCalendarType(BaseType):
             value -= time_.tzinfo.utcoffset(self.EP).seconds
         return value
 
-    def dateTimeValue(self, datetime_: DATE_TIME) -> Optional[int]:
+    @staticmethod
+    def dateTimeValue(datetime_: DATE_TIME) -> Optional[int]:
         if datetime_ is None:
             return None
 
@@ -115,7 +119,8 @@ class DefaultCalendarType(BaseType):
         timestamp = datetime_.timestamp()
         return int(timestamp)
 
-    def canNotSubtract(self, first: DATE_TIME, second: DATE_TIME) -> bool:
+    @staticmethod
+    def canNotSubtract(first: DATE_TIME, second: DATE_TIME) -> bool:
         return first.tzinfo is None and second.tzinfo is not None or first.tzinfo is not None and second.tzinfo is None
 
     def durationValue(self, duration: Duration) -> INTEGER:
@@ -146,7 +151,8 @@ class DefaultCalendarType(BaseType):
 
         return int(duration.total_seconds())
 
-    def sameTzInfo(self, tz1: isodate.tzinfo, tz2: isodate.tzinfo) -> bool:
+    @staticmethod
+    def sameTzInfo(tz1: isodate.tzinfo, tz2: isodate.tzinfo) -> bool:
         if tz1 is tz2 or tz1 == tz2:
             return True
         else:

@@ -63,7 +63,8 @@ class DefaultDateTimeType(DefaultCalendarType):
         durationInSeconds = self.dateTimeValue(first) - self.dateTimeValue(second)
         return Duration(seconds=durationInSeconds)
 
-    def dateTimeAddDuration(self, datetime_: Optional[datetime], duration_: Optional[Duration]) -> Optional[datetime]:
+    @staticmethod
+    def dateTimeAddDuration(datetime_: Optional[datetime], duration_: Optional[Duration]) -> Optional[datetime]:
         if datetime_ is None or duration_ is None:
             return None
 

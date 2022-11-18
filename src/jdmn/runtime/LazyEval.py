@@ -27,6 +27,7 @@ class LazyEval:
     def __init__(self, supplier: typing.Callable):
         self.supplier = supplier
         self.isValueSet = False
+        self.value = None
 
     def getOrCompute(self) -> typing.Any:
         return self.value if self.isValueSet else self.compute()

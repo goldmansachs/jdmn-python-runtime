@@ -15,4 +15,4 @@ from jdmn.runtime.ExecutionContext import ExecutionContext
 
 class DMNDecision:
     def applyRequest(self, input_: dict, executionContext_: ExecutionContext):
-        pass
+        raise NotImplementedError()

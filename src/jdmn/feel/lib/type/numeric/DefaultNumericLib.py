@@ -21,7 +21,8 @@ from jdmn.runtime.NumericRoundingMode import NumericRoundingMode
 
 
 class DefaultNumericLib:
-    def number(self, literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> DECIMAL:
+    @staticmethod
+    def number(literal: STRING, groupingSeparator: STRING = None, decimalSeparator: STRING = None) -> DECIMAL:
         if not literal:
             return None
         if not (" " == groupingSeparator or "." == groupingSeparator or "," == groupingSeparator or groupingSeparator is None):
@@ -44,7 +45,8 @@ class DefaultNumericLib:
         return self.round(n, scale, NumericRoundingMode.HALF_EVEN)
 
     # Extension to DMN 1.3
-    def round(self, n: DECIMAL, scale: DECIMAL, mode: NumericRoundingMode) -> DECIMAL:
+    @staticmethod
+    def round(n: DECIMAL, scale: DECIMAL, mode: NumericRoundingMode) -> DECIMAL:
         if n is None or scale is None or mode is None or mode == NumericRoundingMode.UNKNOWN:
             return None
 
@@ -91,13 +93,15 @@ class DefaultNumericLib:
             return None
         return self.round(n, scale, NumericRoundingMode.ROUND_CEILING)
 
-    def abs(self, n: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def abs(n: DECIMAL) -> DECIMAL:
         if n is None:
             return None
 
         return n.copy_abs()
 
-    def intModulo(self, dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def intModulo(dividend: DECIMAL, divisor: DECIMAL) -> DECIMAL:
         if dividend is None or divisor is None:
             return None
 
@@ -110,19 +114,22 @@ class DefaultNumericLib:
         # dividend - divisor*floor(dividend/divisor)
         return dividend - (divisor * self.floor(dividend / divisor, Decimal(0)))
 
-    def sqrt(self, number: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def sqrt(number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
         return number.sqrt(context=DefaultNumericType.DECIMAL128)
 
-    def log(self, number: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def log(number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
         return number.ln(context=DefaultNumericType.DECIMAL128)
 
-    def exp(self, number: DECIMAL) -> DECIMAL:
+    @staticmethod
+    def exp(number: DECIMAL) -> DECIMAL:
         if number is None:
             return None
 
@@ -143,13 +150,15 @@ class DefaultNumericLib:
     #
     # List functions
     #
-    def count(self, list_: List[Any]) -> DECIMAL:
+    @staticmethod
+    def count(list_: List[Any]) -> DECIMAL:
         if list_ is None:
             return Decimal(0)
         else:
             return Decimal(len(list_))
 
-    def min(self, *operands) -> DECIMAL:
+    @staticmethod
+    def min(*operands) -> DECIMAL:
         if len(operands) == 0:
             return None
         if len(operands) == 1:
@@ -164,7 +173,8 @@ class DefaultNumericLib:
                 result = opd
         return result
 
-    def max(self, *operands) -> DECIMAL:
+    @staticmethod
+    def max(*operands) -> DECIMAL:
         if len(operands) == 0:
             return None
         if len(operands) == 1:
@@ -179,7 +189,8 @@ class DefaultNumericLib:
                 result = opd
         return result
 
-    def sum(self, *args) -> DECIMAL:
+    @staticmethod
+    def sum(*args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -194,10 +205,11 @@ class DefaultNumericLib:
         if len(operands) == 0:
             return None
 
-        sum = self.sum(operands)
-        return DefaultNumericType.decimalNumericDivide(sum, Decimal(len(operands)))
+        sum_ = self.sum(operands)
+        return DefaultNumericType.decimalNumericDivide(sum_, Decimal(len(operands)))
 
-    def product(self, *args) -> DECIMAL:
+    @staticmethod
+    def product(*args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -207,7 +219,8 @@ class DefaultNumericLib:
             result = result * opd
         return result
 
-    def median(self, *args) -> DECIMAL:
+    @staticmethod
+    def median(*args) -> DECIMAL:
         operands = varArgToList(*args)
         if len(operands) == 0:
             return None
@@ -239,14 +252,15 @@ class DefaultNumericLib:
         stddev = self.sqrt(variance)
         return stddev
 
-    def mode(self, *args) -> Optional[List[Decimal]]:
+    @staticmethod
+    def mode(*args) -> Optional[List[Decimal]]:
         if (args is None):
             return None
         operands = varArgToList(*args)
         if len(operands) == 0:
             return []
 
-        max = -1
+        max_ = -1
         modes = []
         countMap = defaultdict(int)
         for n in operands:
@@ -254,11 +268,11 @@ class DefaultNumericLib:
                 return None
             countMap[n] += 1
             count = countMap[n]
-            if count > max:
-                max = count
+            if count > max_:
+                max_ = count
 
         for key, value in countMap.items():
-            if value == max:
+            if value == max_:
                 modes.append(key)
 
         sortedModes = sorted(modes)
