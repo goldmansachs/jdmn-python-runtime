@@ -163,7 +163,7 @@ class DefaultDateTimeLib:
         timeZoneStartIndex = len(literal) - 5
         if 0 <= timeZoneStartIndex < len(literal):
             timeZoneStart = literal[timeZoneStartIndex]
-            if timeZoneStart == '+' or timeZoneStart == '-':
+            if timeZoneStart in ('+', '-'):
                 timeZoneOffset = literal[timeZoneStartIndex + 1:]
                 literal = literal[0:timeZoneStartIndex + 1] + timeZoneOffset[0:2] + ":" + timeZoneOffset[2:]
         # Python does not support Z or z as tzinfo
