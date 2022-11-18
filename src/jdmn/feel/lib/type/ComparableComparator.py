@@ -31,7 +31,7 @@ class ComparableComparator(RelationalComparator):
             lambda: True,
             lambda: False,
             lambda: False,
-            lambda: type(first) == type(second) and self.compareTo(first, second) == 0
+            lambda: type(first) is type(second) and self.compareTo(first, second) == 0
         ])
 
     def lessThan(self, first: comparable, second: comparable) -> BOOLEAN:
@@ -39,7 +39,7 @@ class ComparableComparator(RelationalComparator):
             lambda: None,
             lambda: None,
             lambda: None,
-            lambda: type(first) == type(second) and self.compareTo(first, second) < 0
+            lambda: type(first) is type(second) and self.compareTo(first, second) < 0
         ])
 
     def compareTo(self, first: comparable, second: comparable) -> int:
