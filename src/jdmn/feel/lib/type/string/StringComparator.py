@@ -15,8 +15,6 @@ from jdmn.feel.lib.type.ComparableComparator import ComparableComparator
 
 
 class StringComparator(ComparableComparator):
-    def __init__(self):
-        super().__init__()
 
     @staticmethod
     def compareTo(first: str, second: str) -> int:

@@ -20,8 +20,6 @@ comparable = Union[float, str, datetime.date, datetime.time, datetime.datetime]
 
 
 class ComparableComparator(RelationalComparator):
-    def __init__(self):
-        super().__init__()
 
     def compare(self, first: comparable, second: comparable) -> int:
         return self.compareTo(first, second)

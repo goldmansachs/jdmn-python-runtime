@@ -17,8 +17,6 @@ from jdmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBooleanLogicU
 
 
 class RelationalComparator(EqualityComparator):
-    def __init__(self):
-        super().__init__()
 
     def compare(self, first: Any, second: Any) -> int:
         pass
