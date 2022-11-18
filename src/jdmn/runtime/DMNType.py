@@ -15,4 +15,4 @@ from jdmn.runtime.Context import Context
 
 class DMNType():
     def toContext(self) -> Context:
-        pass
+        raise NotImplementedError()

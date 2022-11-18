@@ -17,7 +17,7 @@ from jdmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBooleanLogicU
 
 class EqualityComparator:
     def equalTo(self, first: Any, second: Any) -> Optional[bool]:
-        pass
+        raise NotImplementedError()
 
     def notEqualTo(self, first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().not_(self.equalTo(first, second))

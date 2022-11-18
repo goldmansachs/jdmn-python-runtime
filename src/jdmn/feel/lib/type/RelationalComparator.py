@@ -18,10 +18,10 @@ from jdmn.feel.lib.type.bool.TernaryBooleanLogicUtil import TernaryBooleanLogicU
 
 class RelationalComparator(EqualityComparator):
     def compare(self, first: Any, second: Any) -> int:
-        pass
+        raise NotImplementedError()
 
     def lessThan(self, first: Any, second: Any) -> Optional[bool]:
-        pass
+        raise NotImplementedError()
 
     def greaterThan(self, first: Any, second: Any) -> Optional[bool]:
         return self.lessThan(second, first)
