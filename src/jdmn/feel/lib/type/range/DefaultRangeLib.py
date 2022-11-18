@@ -358,9 +358,7 @@ class DefaultRangeLib:
         elif self.isRange(arg1) and self.isRange(arg2):
             range1 = arg1
             range2 = arg2
-            # range1.end
-            included = range2.end
-            included
+            # range1.end included = range2.end included
             # and range1.end = range2.end
             # and (range1.start > range2.start or (range1.start = range2.start and ( not (range1.start included) or range2.start included)))
             #
