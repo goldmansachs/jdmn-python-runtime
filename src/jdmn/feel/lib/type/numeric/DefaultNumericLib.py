@@ -205,8 +205,8 @@ class DefaultNumericLib:
         if len(operands) == 0:
             return None
 
-        sum = self.sum(operands)
-        return DefaultNumericType.decimalNumericDivide(sum, Decimal(len(operands)))
+        sum_ = self.sum(operands)
+        return DefaultNumericType.decimalNumericDivide(sum_, Decimal(len(operands)))
 
     @staticmethod
     def product(*args) -> DECIMAL:
@@ -260,7 +260,7 @@ class DefaultNumericLib:
         if len(operands) == 0:
             return []
 
-        max = -1
+        max_ = -1
         modes = []
         countMap = defaultdict(int)
         for n in operands:
@@ -268,11 +268,11 @@ class DefaultNumericLib:
                 return None
             countMap[n] += 1
             count = countMap[n]
-            if count > max:
-                max = count
+            if count > max_:
+                max_ = count
 
         for key, value in countMap.items():
-            if value == max:
+            if value == max_:
                 modes.append(key)
 
         sortedModes = sorted(modes)

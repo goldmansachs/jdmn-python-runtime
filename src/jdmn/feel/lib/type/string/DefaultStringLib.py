@@ -71,9 +71,9 @@ class DefaultStringLib:
             return None
 
         # The number of Unicode code units in the string
-        bytes = string.encode('utf-16', 'surrogatepass')
+        bytes_ = string.encode('utf-16', 'surrogatepass')
         # The number of characters (Unicode code point)
-        transformed = bytes.decode('utf-16')
+        transformed = bytes_.decode('utf-16')
         result = len(transformed)
         return result
 
