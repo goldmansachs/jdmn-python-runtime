@@ -624,16 +624,16 @@ class BaseStandardFEELLibTest(BaseFEELLibTest):
         self.assertFalse(self.getLib().matches("abracadabra", "^bra"))
         self.assertTrue(self.getLib().matches("abracadabra", "^abra"))
 
-        input: STRING = "Kaum hat dies der Hahn gesehen,\n" \
+        input_: STRING = "Kaum hat dies der Hahn gesehen,\n" \
                         "Fangt er auch schon an zu krahen:\n" \
                         "Kikeriki! Kikikerikih!!\n" \
                         "Tak, tak, tak! - da kommen sie.\n"
 
-        self.assertFalse(self.getLib().matches(input, "Kaum.*krahen"))
-        self.assertTrue(self.getLib().matches(input, "Kaum.*krahen", "s"))
-        self.assertTrue(self.getLib().matches(input, "^Kaum.*gesehen,$", "m"))
-        self.assertFalse(self.getLib().matches(input, "^Kaum.*gesehen,$"))
-        self.assertTrue(self.getLib().matches(input, "kiki", "i"))
+        self.assertFalse(self.getLib().matches(input_, "Kaum.*krahen"))
+        self.assertTrue(self.getLib().matches(input_, "Kaum.*krahen", "s"))
+        self.assertTrue(self.getLib().matches(input_, "^Kaum.*gesehen,$", "m"))
+        self.assertFalse(self.getLib().matches(input_, "^Kaum.*gesehen,$"))
+        self.assertTrue(self.getLib().matches(input_, "kiki", "i"))
 
     def testSplit(self):
         self.assertIsNone(self.getLib().split(None, None))
