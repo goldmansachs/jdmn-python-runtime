@@ -21,13 +21,16 @@ class DefaultBooleanType(BaseType):
     def __init__(self):
         BaseType.__init__(self)
 
-    def isBoolean(self, value: Any) -> bool:
+    @staticmethod
+    def isBoolean(value: Any) -> bool:
         return isinstance(value, bool)
 
-    def booleanValue(self, value: Optional[bool]) -> Optional[bool]:
+    @staticmethod
+    def booleanValue(value: Optional[bool]) -> Optional[bool]:
         return value
 
-    def booleanNot(self, operand: Any) -> Optional[bool]:
+    @staticmethod
+    def booleanNot(operand: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().not_(operand)
 
     def booleanOr(self, *args) -> Optional[bool]:
@@ -40,7 +43,8 @@ class DefaultBooleanType(BaseType):
             result = self.binaryBooleanOr(result, opd)
         return result
 
-    def binaryBooleanOr(self, first: Any, second: Any) -> Optional[bool]:
+    @staticmethod
+    def binaryBooleanOr(first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().or_(first, second)
 
     def booleanAnd(self, *args) -> Optional[bool]:
@@ -53,7 +57,8 @@ class DefaultBooleanType(BaseType):
             result = self.binaryBooleanAnd(result, opd)
         return result
 
-    def binaryBooleanAnd(self, first: Any, second: Any) -> Optional[bool]:
+    @staticmethod
+    def binaryBooleanAnd(first: Any, second: Any) -> Optional[bool]:
         return TernaryBooleanLogicUtil().and_(first, second)
 
     def booleanIs(self, first: Optional[bool], second: Optional[bool]) -> Optional[bool]:

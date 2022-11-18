@@ -14,7 +14,8 @@ import jdmn.runtime.Pair
 
 
 class PairComparator:
-    def compare(self, o1: jdmn.runtime.Pair.Pair, o2: jdmn.runtime.Pair.Pair) -> int:
+    @staticmethod
+    def compare(o1: jdmn.runtime.Pair.Pair, o2: jdmn.runtime.Pair.Pair) -> int:
         priority1 = o1.getRight()
         priority2 = o2.getRight()
         if priority1 is None and priority2 is None:

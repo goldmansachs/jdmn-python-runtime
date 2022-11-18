@@ -21,10 +21,12 @@ class DefaultListType(BaseType):
         BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
-    def isList(self, value: Any) -> bool:
+    @staticmethod
+    def isList(value: Any) -> bool:
         return isinstance(value, List)
 
-    def listValue(self, value: Optional[List[Any]]) -> Optional[List[Any]]:
+    @staticmethod
+    def listValue(value: Optional[List[Any]]) -> Optional[List[Any]]:
         return value
 
     def listIs(self, list1: Optional[List[Any]], list2: Optional[List[Any]]) -> Optional[bool]:

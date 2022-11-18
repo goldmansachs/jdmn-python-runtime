@@ -663,13 +663,16 @@ class DefaultRangeLib:
     def checkArguments(arg1: POINT_RANGE_UNION, arg2: POINT_RANGE_UNION) -> bool:
         return arg1 is None or arg2 is None
 
-    def isPoint(self, arg1):
+    @staticmethod
+    def isPoint(arg1):
         return not isinstance(arg1, Range)
 
-    def isRange(self, arg1):
+    @staticmethod
+    def isRange(arg1):
         return isinstance(arg1, Range)
 
-    def resolveComparator(self, arg):
+    @staticmethod
+    def resolveComparator(arg):
         key = type(arg)
         cmp = COMPARATOR_MAP.get(key)
         return cmp

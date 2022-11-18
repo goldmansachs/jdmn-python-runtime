@@ -23,10 +23,12 @@ class DefaultRangeType(BaseType):
         BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
-    def isRange(self, value: Any) -> bool:
+    @staticmethod
+    def isRange(value: Any) -> bool:
         return isinstance(value, Range)
 
-    def rangeValue(self, value: RANGE) -> RANGE:
+    @staticmethod
+    def rangeValue(value: RANGE) -> RANGE:
         if isinstance(value, Range):
             return value
         else:

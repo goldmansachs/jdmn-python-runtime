@@ -16,7 +16,8 @@ from jdmn.feel.lib.Utils import varArgToList
 
 
 class DefaultBooleanLib:
-    def all(self, *args) -> Optional[bool]:
+    @staticmethod
+    def all(*args) -> Optional[bool]:
         operands = varArgToList(*args)
 
         oneFalse = False
@@ -33,7 +34,8 @@ class DefaultBooleanLib:
         else:
             return None
 
-    def any(self, *args) -> Optional[bool]:
+    @staticmethod
+    def any(*args) -> Optional[bool]:
         operands = varArgToList(*args)
 
         oneTrue = False

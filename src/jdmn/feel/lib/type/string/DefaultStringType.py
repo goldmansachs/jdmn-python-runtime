@@ -22,13 +22,16 @@ class DefaultStringType(BaseType):
         BaseType.__init__(self)
         self.stringComparator = StringComparator()
 
-    def isString(self, value: Any) -> bool:
+    @staticmethod
+    def isString(value: Any) -> bool:
         return isinstance(value, str)
 
-    def stringValue(self, value: STRING) -> STRING:
+    @staticmethod
+    def stringValue(value: STRING) -> STRING:
         return value
 
-    def stringIs(self, first: STRING, second: STRING) -> Optional[bool]:
+    @staticmethod
+    def stringIs(first: STRING, second: STRING) -> Optional[bool]:
         return first is second
 
     def stringEqual(self, first: STRING, second: STRING) -> Optional[bool]:
@@ -49,7 +52,8 @@ class DefaultStringType(BaseType):
     def stringGreaterEqualThan(self, first: STRING, second: STRING) -> Optional[bool]:
         return self.stringComparator.greaterEqualThan(first, second)
 
-    def stringAdd(self, first: STRING, second: STRING) -> STRING:
+    @staticmethod
+    def stringAdd(first: STRING, second: STRING) -> STRING:
         if first is None or second is None:
             return None
         else:

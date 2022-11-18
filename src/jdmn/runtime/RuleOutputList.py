@@ -73,7 +73,8 @@ class RuleOutputList:
         else:
             raise DMNRuntimeException("Not supported multiple hit policy '{}'.".format(hitPolicy.name))
 
-    def sort(self, matchedRuleOutputs: List[RuleOutput]) -> List[RuleOutput]:
+    @staticmethod
+    def sort(matchedRuleOutputs: List[RuleOutput]) -> List[RuleOutput]:
         if len(matchedRuleOutputs) == 0:
             return matchedRuleOutputs
         else:

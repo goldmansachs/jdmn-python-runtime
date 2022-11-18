@@ -18,13 +18,15 @@ from jdmn.runtime.LambdaExpression import LambdaExpression
 
 
 class DefaultListLib:
-    def listContains(self, list_: LIST, element: Any) -> BOOLEAN:
+    @staticmethod
+    def listContains(list_: LIST, element: Any) -> BOOLEAN:
         if list_ is None:
             return None
 
         return element in list_
 
-    def append(self, list_: LIST, *items) -> LIST:
+    @staticmethod
+    def append(list_: LIST, *items) -> LIST:
         result = []
         if list_ is not None:
             result.extend(list_)
@@ -49,7 +51,8 @@ class DefaultListLib:
         endIndex = len(list_) if length is None else startIndex + length
         return list_[startIndex: endIndex]
 
-    def concatenate(self, *lists) -> LIST:
+    @staticmethod
+    def concatenate(*lists) -> LIST:
         result = []
         if lists is not None:
             for list_ in lists:
@@ -69,14 +72,16 @@ class DefaultListLib:
         result.insert(position, newItem)
         return result
 
-    def remove(self, list_: LIST, position: INTEGER) -> LIST:
+    @staticmethod
+    def remove(list_: LIST, position: INTEGER) -> LIST:
         result = []
         if list_ is not None:
             result.extend(list_)
         result.pop(position - 1)
         return result
 
-    def reverse(self, list_: LIST) -> LIST:
+    @staticmethod
+    def reverse(list_: LIST) -> LIST:
         result = []
         if list_ is not None:
             result = list_.copy()
@@ -90,7 +95,8 @@ class DefaultListLib:
                 result.extend(list_)
         return self.distinctValues(result)
 
-    def distinctValues(self, list1: LIST) -> LIST:
+    @staticmethod
+    def distinctValues(list1: LIST) -> LIST:
         result = []
         if list1 is not None:
             for element in list1:
@@ -113,7 +119,8 @@ class DefaultListLib:
                 else:
                     result.append(obj)
 
-    def sort(self, list_: LIST, precedes: LambdaExpression) -> LIST:
+    @staticmethod
+    def sort(list_: LIST, precedes: LambdaExpression) -> LIST:
         clone = []
         clone.extend(list_)
         clone.sort(key=cmp_to_key(lambda o1, o2: -1 if precedes.apply(o1, o2) else (0 if o1 == o2 else 1)))

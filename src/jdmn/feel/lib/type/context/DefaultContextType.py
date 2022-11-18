@@ -23,10 +23,12 @@ class DefaultContextType(BaseType):
         BaseType.__init__(self)
         self.booleanType = DefaultBooleanType()
 
-    def isContext(self, value: Any) -> bool:
+    @staticmethod
+    def isContext(value: Any) -> bool:
         return isinstance(value, Context)
 
-    def contextValue(self, value: CONTEXT) -> CONTEXT:
+    @staticmethod
+    def contextValue(value: CONTEXT) -> CONTEXT:
         if isinstance(value, Context):
             return value
         else:
