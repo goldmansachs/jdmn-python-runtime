@@ -227,4 +227,4 @@ class AbstractRangeLibTest(TestCase):
         return Range(startIncluded == "[", self.makePoint(start), endIncluded == "]", self.makePoint(end))
 
     def makePoint(self, number: int) -> COMPARABLE:
-        pass
+        raise NotImplementedError()

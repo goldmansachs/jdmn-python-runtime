@@ -15,13 +15,13 @@ from typing import Any
 
 class Cache:
     def contains(self, key: str) -> bool:
-        pass
+        raise NotImplementedError()
 
     def bind(self, key: str, value: Any) -> None:
-        pass
+        raise NotImplementedError()
 
     def lookup(self, key: str) -> Any:
-        pass
+        raise NotImplementedError()
 
     def clear(self) -> None:
-        pass
+        raise NotImplementedError()
