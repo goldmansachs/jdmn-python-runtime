@@ -29,13 +29,13 @@ class LoggingEventListener(EventListener):
         self.logger.info("End %s '%s' with output '%s' in %sms", element.elementKind.displayName, element.name, output, duration)
 
     def startRule(self, element: DRGElement, rule: Rule) -> None:
-        raise NotImplementedError()
+        self.logger.debug("Start rule %s for '%s'", rule.index, element.name)
 
     def matchRule(self, element: DRGElement, rule: Rule) -> None:
-        raise NotImplementedError()
+        self.logger.debug("Match rule %s for '%s'", rule.index, element.name)
 
     def endRule(self, element: DRGElement, rule: Rule, output: Any) -> None:
-        self.logger.debug("Rule %s fired with output '%s'", rule.index, output)
+        self.logger.debug("End rule %s for '%s' with output '%s'", rule.index, element.name, output)
 
     def matchColumn(self, rule: Rule, columnIndex: int, result: Any) -> None:
         self.logger.debug("Test %s checked with output '%s'", columnIndex, result)
