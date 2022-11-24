@@ -23,19 +23,19 @@ class NopEventListener(EventListener):
         EventListener.__init__(self)
 
     def startDRGElement(self, element: DRGElement, arguments: Arguments) -> None:
-        pass # nothing
+        pass  # nothing to do
 
     def endDRGElement(self, element: DRGElement, arguments: Arguments, output: Any, duration: int) -> None:
-        pass
+        pass  # nothing to do
 
     def startRule(self, element: DRGElement, rule: Rule) -> None:
-        pass
+        pass  # nothing to do
 
     def matchRule(self, element: DRGElement, rule: Rule) -> None:
-        pass
+        pass  # nothing to do
 
     def endRule(self, element: DRGElement, rule: Rule, result: Any) -> None:
-        pass
+        pass  # nothing to do
 
     def matchColumn(self, rule: Rule, columnIndex: int, result: Any) -> None:
-        pass
+        pass  # nothing to do
