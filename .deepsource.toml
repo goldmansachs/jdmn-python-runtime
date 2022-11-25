@@ -1,11 +1,11 @@
 version = 1
 
 [[analyzers]]
-name = "python"
+name = "test-coverage"
 enabled = true
 
 [[analyzers]]
-name = "test-coverage"
+name = "python"
 enabled = true
 
   [analyzers.meta]
