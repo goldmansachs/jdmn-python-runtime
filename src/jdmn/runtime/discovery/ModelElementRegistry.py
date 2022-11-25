@@ -32,9 +32,9 @@ class ModelElementRegistry:
         if value is None:
             self.map[qName] = className
         elif value != className:
-            raise DMNRuntimeException("Name '{}' is not unique".format(qName))
+            raise DMNRuntimeException(f"Name '{qName}' is not unique")
         else:
-            self.LOGGER.warning("Name '%s' and value '%s' were already registered", qName, className)
+            self.LOGGER.warning(f"Name '{qName}' and value '{className}' were already registered")
 
     def discover(self, qName: str) -> str:
         return self.map[qName]

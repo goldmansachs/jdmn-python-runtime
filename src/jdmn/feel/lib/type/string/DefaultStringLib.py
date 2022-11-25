@@ -40,7 +40,7 @@ class DefaultStringLib:
             copy = from_
             copy = copy.replace(tzinfo=None)
             isoformat = copy.isoformat()
-            return "{}@{}".format(isoformat, str(tz))
+            return f"{isoformat}@{str(tz)}"
         else:
             return from_.isoformat()
 
@@ -160,11 +160,11 @@ class DefaultStringLib:
         return result
 
     def evaluateReplace(self, input_: str, pattern: str, replacement: str, flags: str) -> str:
-        expression = "replace(/root, '{}', '{}', '{}')".format(pattern, replacement, flags)
+        expression = f"replace(/root, '{pattern}', '{replacement}', '{flags}')"
         return self.evaluateXPath(input_, expression)
 
     def evaluateMatches(self, input_: str, pattern: str, flags: str) -> bool:
-        expression = "/root[matches(., '{}', '{}')]".format(pattern, flags)
+        expression = f"/root[matches(., '{pattern}', '{flags}')]"
         value = self.evaluateXPath(input_, expression)
         return len(value) != 0
 

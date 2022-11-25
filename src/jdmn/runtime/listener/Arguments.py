@@ -15,7 +15,7 @@ from typing import Any
 
 class Arguments(dict):
     def __str__(self):
-        return ", ".join(["{0}= '{1}'".format(key, value) for key, value in self.items()])
+        return ", ".join([f"{key}= '{value}'" for key, value in self.items()])
 
     def get(self, key: str) -> Any:
         return self[key]

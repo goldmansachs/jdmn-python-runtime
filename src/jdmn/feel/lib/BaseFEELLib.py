@@ -54,7 +54,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.isNumber(value)
         except Exception as e:
-            message = "isNumber({})".format(value)
+            message = f"isNumber({value})"
             self.logError(message, e)
             return False
 
@@ -62,7 +62,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericValue(value)
         except Exception as e:
-            message = "numericValue({})".format(value)
+            message = f"numericValue({value})"
             self.logError(message, e)
             return None
 
@@ -70,7 +70,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericIs(first, second)
         except Exception as e:
-            message = "numericIs({}, {})".format(first, second)
+            message = f"numericIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -78,7 +78,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericEqual(first, second)
         except Exception as e:
-            message = "numericEqual({}, {})".format(first, second)
+            message = f"numericEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -86,7 +86,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericNotEqual(first, second)
         except Exception as e:
-            message = "numericNotEqual({}, {})".format(first, second)
+            message = f"numericNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -94,7 +94,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericLessThan(first, second)
         except Exception as e:
-            message = "numericLessThan({}, {})".format(first, second)
+            message = f"numericLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -102,7 +102,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericGreaterThan(first, second)
         except Exception as e:
-            message = "numericGreaterThan({}, {})".format(first, second)
+            message = f"numericGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -110,7 +110,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericLessEqualThan(first, second)
         except Exception as e:
-            message = "numericLessEqualThan({}, {})".format(first, second)
+            message = f"numericLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -118,7 +118,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericGreaterEqualThan(first, second)
         except Exception as e:
-            message = "numericGreaterEqualThan({}, {})".format(first, second)
+            message = f"numericGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -126,7 +126,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericAdd(first, second)
         except Exception as e:
-            message = "numericAdd({}, {})".format(first, second)
+            message = f"numericAdd({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -134,7 +134,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericSubtract(first, second)
         except Exception as e:
-            message = "numericSubtract({}, {})".format(first, second)
+            message = f"numericSubtract({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -142,7 +142,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericMultiply(first, second)
         except Exception as e:
-            message = "numericMultiply({}, {})".format(first, second)
+            message = f"numericMultiply({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -150,7 +150,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericDivide(first, second)
         except Exception as e:
-            message = "numericDivide({}, {})".format(first, second)
+            message = f"numericDivide({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -158,7 +158,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericUnaryMinus(first)
         except Exception as e:
-            message = "numericUnaryMinus({}".format(first)
+            message = f"numericUnaryMinus({first})"
             self.logError(message, e)
             return None
 
@@ -166,7 +166,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.numericType.numericExponentiation(first, second)
         except Exception as e:
-            message = "numericExponentiation({}, {})".format(first, second)
+            message = f"numericExponentiation({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -177,7 +177,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.isBoolean(value)
         except Exception as e:
-            message = "isBoolean({})".format(value)
+            message = f"isBoolean({value})"
             self.logError(message, e)
             return False
 
@@ -185,7 +185,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanValue(value)
         except Exception as e:
-            message = "booleanValue({})".format(value)
+            message = f"booleanValue({value})"
             self.logError(message, e)
             return None
 
@@ -193,7 +193,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanIs(first, second)
         except Exception as e:
-            message = "booleanIs({}, {})".format(first, second)
+            message = f"booleanIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -201,7 +201,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanEqual(first, second)
         except Exception as e:
-            message = "booleanEqual({}, {})".format(first, second)
+            message = f"booleanEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -209,7 +209,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanNotEqual(first, second)
         except Exception as e:
-            message = "booleanNotEqual({}, {})".format(first, second)
+            message = f"booleanNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -217,7 +217,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanNot(operand)
         except Exception as e:
-            message = "booleanNot({})".format(operand)
+            message = f"booleanNot({operand})"
             self.logError(message, e)
             return None
 
@@ -225,7 +225,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanOr(*operands)
         except Exception as e:
-            message = "booleanOr({})".format(operands)
+            message = f"booleanOr({operands})"
             self.logError(message, e)
             return None
 
@@ -233,7 +233,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.binaryBooleanOr(first, second)
         except Exception as e:
-            message = "binaryBooleanOr({}, {})".format(first, second)
+            message = f"binaryBooleanOr({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -241,7 +241,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.booleanAnd(*operands)
         except Exception as e:
-            message = "booleanAnd({})".format(operands)
+            message = f"booleanAnd({operands})"
             self.logError(message, e)
             return None
 
@@ -249,7 +249,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.booleanType.binaryBooleanAnd(first, second)
         except Exception as e:
-            message = "binaryBooleanAnd({}, {})".format(first, second)
+            message = f"binaryBooleanAnd({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -260,7 +260,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.isString(value)
         except Exception as e:
-            message = "isString({})".format(value)
+            message = f"isString({value})"
             self.logError(message, e)
             return False
 
@@ -268,7 +268,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringValue(value)
         except Exception as e:
-            message = "stringValue({})".format(value)
+            message = f"stringValue({value})"
             self.logError(message, e)
             return None
 
@@ -276,7 +276,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringIs(first, second)
         except Exception as e:
-            message = "stringIs({}, {})".format(first, second)
+            message = f"stringIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -284,7 +284,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringEqual(first, second)
         except Exception as e:
-            message = "stringEqual({}, {})".format(first, second)
+            message = f"stringEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -292,7 +292,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringNotEqual(first, second)
         except Exception as e:
-            message = "stringNotEqual({}, {})".format(first, second)
+            message = f"stringNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -300,7 +300,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringLessThan(first, second)
         except Exception as e:
-            message = "stringLessThan({}, {})".format(first, second)
+            message = f"stringLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -308,7 +308,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringGreaterThan(first, second)
         except Exception as e:
-            message = "stringGreaterThan({}, {})".format(first, second)
+            message = f"stringGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -316,7 +316,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringLessEqualThan(first, second)
         except Exception as e:
-            message = "stringLessEqualThan({}, {})".format(first, second)
+            message = f"stringLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -324,7 +324,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringGreaterEqualThan(first, second)
         except Exception as e:
-            message = "({}, {})".format(first, second)
+            message = f"stringGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -332,7 +332,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.stringType.stringAdd(first, second)
         except Exception as e:
-            message = "stringAdd({}, {})".format(first, second)
+            message = f"stringAdd({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -343,7 +343,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.isDate(value)
         except Exception as e:
-            message = "isDate({})".format(value)
+            message = f"isDate({value})"
             self.logError(message, e)
             return False
 
@@ -351,7 +351,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateValue(date)
         except Exception as e:
-            message = "dateValue({})".format(date)
+            message = f"dateValue({date})"
             self.logError(message, e)
             return None
 
@@ -359,7 +359,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateIs(first, second)
         except Exception as e:
-            message = "dateIs({}, {})".format(first, second)
+            message = f"dateIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -367,7 +367,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateEqual(first, second)
         except Exception as e:
-            message = "dateEqual({}, {})".format(first, second)
+            message = f"dateEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -375,7 +375,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateNotEqual(first, second)
         except Exception as e:
-            message = "dateNotEqual({}, {})".format(first, second)
+            message = f"dateNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -383,7 +383,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateLessThan(first, second)
         except Exception as e:
-            message = "dateLessThan({}, {})".format(first, second)
+            message = f"dateLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -391,7 +391,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateGreaterThan(first, second)
         except Exception as e:
-            message = "dateGreaterThan({}, {})".format(first, second)
+            message = f"dateGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -399,7 +399,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateLessEqualThan(first, second)
         except Exception as e:
-            message = "dateLessEqualThan({}, {})".format(first, second)
+            message = f"dateLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -407,7 +407,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateGreaterEqualThan(first, second)
         except Exception as e:
-            message = "dateGreaterEqualThan({}, {})".format(first, second)
+            message = f"dateGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -417,7 +417,7 @@ class BaseFEELLib(FEELLib):
             dateTime2: DATE_TIME = self.toDateTime(second)
             return self.dateTimeType.dateTimeSubtract(dateTime1, dateTime2)
         except Exception as e:
-            message = "dateSubtract({}, {})".format(first, second)
+            message = f"dateSubtract({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -425,7 +425,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateAddDuration(date, duration)
         except Exception as e:
-            message = "dateAddDuration({}, {})".format(date, duration)
+            message = f"dateAddDuration({date}, {duration})"
             self.logError(message, e)
             return None
 
@@ -433,7 +433,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateType.dateSubtractDuration(date, duration)
         except Exception as e:
-            message = "dateSubtractDuration({}, {})".format(date, duration)
+            message = f"dateSubtractDuration({date}, {duration})"
             self.logError(message, e)
             return None
 
@@ -444,7 +444,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.isTime(value)
         except Exception as e:
-            message = "isTime({})".format(value)
+            message = f"isTime({value})"
             self.logError(message, e)
             return False
 
@@ -452,7 +452,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeValue(time)
         except Exception as e:
-            message = "timeValue({})".format(time)
+            message = f"timeValue({time})"
             self.logError(message, e)
             return None
 
@@ -460,7 +460,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeIs(first, second)
         except Exception as e:
-            message = "timeIs({}, {})".format(first, second)
+            message = f"timeIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -468,7 +468,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeEqual(first, second)
         except Exception as e:
-            message = "timeEqual({}, {})".format(first, second)
+            message = f"timeEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -476,7 +476,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeNotEqual(first, second)
         except Exception as e:
-            message = "timeNotEqual({}, {})".format(first, second)
+            message = f"timeNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -484,7 +484,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeLessThan(first, second)
         except Exception as e:
-            message = "timeLessThan({}, {})".format(first, second)
+            message = f"timeLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -492,7 +492,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeGreaterThan(first, second)
         except Exception as e:
-            message = "timeGreaterThan({}, {})".format(first, second)
+            message = f"timeGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -500,7 +500,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeLessEqualThan(first, second)
         except Exception as e:
-            message = "timeLessEqualThan({}, {})".format(first, second)
+            message = f"timeLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -508,7 +508,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeGreaterEqualThan(first, second)
         except Exception as e:
-            message = "timeGreaterEqualThan({}, {})".format(first, second)
+            message = f"timeGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -516,7 +516,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeSubtract(first, second)
         except Exception as e:
-            message = "timeSubtract({}, {})".format(first, second)
+            message = f"timeSubtract({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -524,7 +524,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeAddDuration(time, duration)
         except Exception as e:
-            message = "timeAddDuration({}, {})".format(time, duration)
+            message = f"timeAddDuration({time}, {duration})"
             self.logError(message, e)
             return None
 
@@ -532,7 +532,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.timeType.timeSubtractDuration(time, duration)
         except Exception as e:
-            message = "timeSubtractDuration({}, {})".format(time, duration)
+            message = f"timeSubtractDuration({time}, {duration})"
             self.logError(message, e)
             return None
 
@@ -543,7 +543,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.isDateTime(value)
         except Exception as e:
-            message = "isDateTime({})".format(value)
+            message = f"isDateTime({value})"
             self.logError(message, e)
             return False
 
@@ -551,7 +551,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeValue(dateTime)
         except Exception as e:
-            message = "dateTimeValue({})".format(dateTime)
+            message = f"dateTimeValue({dateTime})"
             self.logError(message, e)
             return None
 
@@ -559,7 +559,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeIs(first, second)
         except Exception as e:
-            message = "dateTimeIs({}, {})".format(first, second)
+            message = f"dateTimeIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -567,7 +567,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeEqual(first, second)
         except Exception as e:
-            message = "dateTimeEqual({}, {})".format(first, second)
+            message = f"dateTimeEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -575,7 +575,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeNotEqual(first, second)
         except Exception as e:
-            message = "dateTimeNotEqual({}, {})".format(first, second)
+            message = f"dateTimeNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -583,7 +583,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeLessThan(first, second)
         except Exception as e:
-            message = "dateTimeLessThan({}, {})".format(first, second)
+            message = f"dateTimeLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -591,7 +591,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeGreaterThan(first, second)
         except Exception as e:
-            message = "dateTimeGreaterThan({}, {})".format(first, second)
+            message = f"dateTimeGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -599,7 +599,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeLessEqualThan(first, second)
         except Exception as e:
-            message = "dateTimeLessEqualThan({}, {})".format(first, second)
+            message = f"dateTimeLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -607,7 +607,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeGreaterEqualThan(first, second)
         except Exception as e:
-            message = "dateTimeGreaterEqualThan({}, {})".format(first, second)
+            message = f"dateTimeGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -620,7 +620,7 @@ class BaseFEELLib(FEELLib):
 
             return self.dateTimeType.dateTimeSubtract(first, second)
         except Exception as e:
-            message = "dateTimeSubtract({}, {})".format(first, second)
+            message = f"dateTimeSubtract({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -628,7 +628,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeAddDuration(dateTime, duration)
         except Exception as e:
-            message = "dateTimeAddDuration({}, {})".format(dateTime, duration)
+            message = f"dateTimeAddDuration({dateTime}, {duration})"
             self.logError(message, e)
             return None
 
@@ -636,7 +636,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.dateTimeType.dateTimeSubtractDuration(dateTime, duration)
         except Exception as e:
-            message = "dateTimeSubtractDuration({}, {})".format(dateTime, duration)
+            message = f"dateTimeSubtractDuration({dateTime}, {duration})"
             self.logError(message, e)
             return None
 
@@ -647,7 +647,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.isDuration(value)
         except Exception as e:
-            message = "isDuration({})".format(value)
+            message = f"isDuration({value})"
             self.logError(message, e)
             return False
 
@@ -655,7 +655,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.isYearsAndMonthsDuration(value)
         except Exception as e:
-            message = "isYearsAndMonthsDuration({})".format(value)
+            message = f"isYearsAndMonthsDuration({value})"
             self.logError(message, e)
             return False
 
@@ -663,7 +663,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.isDaysAndTimeDuration(value)
         except Exception as e:
-            message = "isDaysAndTimeDuration({})".format(value)
+            message = f"isDaysAndTimeDuration({value})"
             self.logError(message, e)
             return False
 
@@ -671,7 +671,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationIs(first, second)
         except Exception as e:
-            message = "durationIs({}, {})".format(first, second)
+            message = f"durationIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -679,7 +679,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationValue(duration)
         except Exception as e:
-            message = "durationValue({})".format(duration)
+            message = f"durationValue({duration})"
             self.logError(message, e)
             return None
 
@@ -687,7 +687,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationEqual(first, second)
         except Exception as e:
-            message = "durationEqual({}, {})".format(first, second)
+            message = f"durationEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -695,7 +695,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationNotEqual(first, second)
         except Exception as e:
-            message = "durationNotEqual({}, {})".format(first, second)
+            message = f"durationNotEqual({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -703,7 +703,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationLessThan(first, second)
         except Exception as e:
-            message = "durationLessThan({}, {})".format(first, second)
+            message = f"durationLessThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -711,7 +711,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationGreaterThan(first, second)
         except Exception as e:
-            message = "durationGreaterThan({}, {})".format(first, second)
+            message = f"durationGreaterThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -719,7 +719,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationLessEqualThan(first, second)
         except Exception as e:
-            message = "durationLessEqualThan({}, {})".format(first, second)
+            message = f"durationLessEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -727,7 +727,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationGreaterEqualThan(first, second)
         except Exception as e:
-            message = "durationGreaterEqualThan({}, {})".format(first, second)
+            message = f"durationGreaterEqualThan({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -735,7 +735,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationAdd(first, second)
         except Exception as e:
-            message = "durationAdd({}, {})".format(first, second)
+            message = f"durationAdd({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -743,7 +743,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationSubtract(first, second)
         except Exception as e:
-            message = "durationSubtract({}, {})".format(first, second)
+            message = f"durationSubtract({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -751,7 +751,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationDivide(first, second)
         except Exception as e:
-            message = "durationMultiply({}, {})".format(first, second)
+            message = f"durationMultiply({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -759,7 +759,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationMultiplyNumber(first, second)
         except Exception as e:
-            message = "durationMultiply({}, {})".format(first, second)
+            message = f"durationMultiply({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -767,7 +767,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.durationType.durationDivideNumber(first, second)
         except Exception as e:
-            message = "durationDivide({}, {})".format(first, second)
+            message = f"durationDivide({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -778,7 +778,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.listType.isList(value)
         except Exception as e:
-            message = "isList({})".format(value)
+            message = f"isList({value})"
             self.logError(message, e)
             return False
 
@@ -786,7 +786,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.listType.listValue(value)
         except Exception as e:
-            message = "listValue({})".format(value)
+            message = f"listValue({value})"
             self.logError(message, e)
             return None
 
@@ -794,7 +794,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.listType.listIs(first, second)
         except Exception as e:
-            message = "listIs({}, {})".format(first, second)
+            message = f"listIs({first}, {second})"
             self.logError(message, e)
             return None
 
@@ -802,7 +802,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.listType.listEqual(list1, list2)
         except Exception as e:
-            message = "listEqual({}, {})".format(list1, list2)
+            message = f"listEqual({list1}, {list2})"
             self.logError(message, e)
             return None
 
@@ -810,7 +810,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.listType.listNotEqual(list1, list2)
         except Exception as e:
-            message = "listNotEqual({}, {})".format(list1, list2)
+            message = f"listNotEqual({list1}, {list2})"
             self.logError(message, e)
             return None
 
@@ -821,7 +821,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.isContext(value)
         except Exception as e:
-            message = "isContext({})".format(value)
+            message = f"isContext({value})"
             self.logError(message, e)
             return False
 
@@ -829,7 +829,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.contextValue(value)
         except Exception as e:
-            message = "contextValue({})".format(value)
+            message = f"contextValue({value})"
             self.logError(message, e)
             return None
 
@@ -837,7 +837,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.contextIs(c1, c2)
         except Exception as e:
-            message = "contextIs({}, {})".format(c1, c2)
+            message = f"contextIs({c1}, {c2})"
             self.logError(message, e)
             return None
 
@@ -845,7 +845,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.contextEqual(c1, c2)
         except Exception as e:
-            message = "contextEqual({}, {})".format(c1, c2)
+            message = f"contextEqual({c1}, {c2})"
             self.logError(message, e)
             return None
 
@@ -853,7 +853,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.contextNotEqual(c1, c2)
         except Exception as e:
-            message = "contextNotEqual({}, {})".format(c1, c2)
+            message = f"contextNotEqual({c1}, {c2})"
             self.logError(message, e)
             return None
 
@@ -864,7 +864,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.getEntries(m)
         except Exception as e:
-            message = "getEntries({})".format(m)
+            message = f"getEntries({m})"
             self.logError(message, e)
             return None
 
@@ -872,7 +872,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.contextType.getValue(m, key)
         except Exception as e:
-            message = "getValue({}, {})".format(m, key)
+            message = f"getValue({m}, {key})"
             self.logError(message, e)
             return None
 
@@ -883,7 +883,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.rangeType.isRange(value)
         except Exception as e:
-            message = "isRange({})".format(value)
+            message = f"isRange({value})"
             self.logError(message, e)
             return False
 
@@ -891,7 +891,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.rangeType.rangeValue(value)
         except Exception as e:
-            message = "rangeValue({})".format(value)
+            message = f"rangeValue({value})"
             self.logError(message, e)
             return None
 
@@ -899,7 +899,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.rangeType.rangeIs(range1, range2)
         except Exception as e:
-            message = "rangeIs({}, {})".format(range1, range2)
+            message = f"rangeIs({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -907,7 +907,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.rangeType.rangeEqual(range1, range2)
         except Exception as e:
-            message = "rangeEqual({}, {})".format(range1, range2)
+            message = f"rangeEqual({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -915,7 +915,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.rangeType.rangeNotEqual(range1, range2)
         except Exception as e:
-            message = "rangeNotEqual({}, {})".format(range1, range2)
+            message = f"rangeNotEqual({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -926,7 +926,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.functionType.isFunction(value)
         except Exception as e:
-            message = "isFunction({})".format(value)
+            message = f"isFunction({value})"
             self.logError(message, e)
             return False
 
@@ -934,7 +934,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.functionType.functionValue(value)
         except Exception as e:
-            message = "functionValue({})".format(value)
+            message = f"functionValue({value})"
             self.logError(message, e)
             return None
 
@@ -942,7 +942,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.functionType.functionIs(function1, function2)
         except Exception as e:
-            message = "functionIs({}, {})".format(function1, function2)
+            message = f"functionIs({function1}, {function2})"
             self.logError(message, e)
             return None
 
@@ -950,7 +950,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.functionType.functionEqual(function1, function2)
         except Exception as e:
-            message = "functionEqual({}, {})".format(function1, function2)
+            message = f"functionEqual({function1}, {function2})"
             self.logError(message, e)
             return None
 
@@ -958,7 +958,7 @@ class BaseFEELLib(FEELLib):
         try:
             return self.functionType.functionNotEqual(function1, function2)
         except Exception as e:
-            message = "functionNotEqual({}, {})".format(function1, function2)
+            message = f"functionNotEqual({function1}, {function2})"
             self.logError(message, e)
             return None
 

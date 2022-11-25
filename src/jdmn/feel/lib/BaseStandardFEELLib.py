@@ -48,7 +48,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.number(literal, groupingSeparator, decimalSeparator)
         except Exception as e:
-            message = "number({}, {}, {})".format(literal, groupingSeparator, decimalSeparator)
+            message = f"number({literal}, {groupingSeparator}, {decimalSeparator})"
             self.logError(message, e)
             return None
 
@@ -56,7 +56,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.string(from_)
         except Exception as e:
-            message: STRING = "string({})".format(from_)
+            message: STRING = f"string({from_})"
             self.logError(message, e)
             return None
 
@@ -64,7 +64,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.date(*args)
         except Exception as e:
-            message: STRING = "date({})".format(*args)
+            message: STRING = f"date{args}"
             self.logError(message, e)
             return None
 
@@ -72,7 +72,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.time(*args)
         except Exception as e:
-            message: STRING = "time({})".format(*args)
+            message: STRING = f"time{args}"
             self.logError(message, e)
             return None
 
@@ -80,7 +80,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.dateAndTime(*args)
         except Exception as e:
-            message: STRING = "dateAndTime({})".format(*args)
+            message: STRING = f"dateAndTime{args}"
             self.logError(message, e)
             return None
 
@@ -88,7 +88,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.durationLib.duration(from_)
         except Exception as e:
-            message: STRING = "duration({})".format(from_)
+            message: STRING = f"duration({from_})"
             self.logError(message, e)
             return None
 
@@ -96,7 +96,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.durationLib.yearsAndMonthsDuration(from_, to)
         except Exception as e:
-            message: STRING = "yearsAndMonthsDURATION({}, {})".format(from_, to)
+            message: STRING = f"yearsAndMonthsDuration({from_}, {to})"
             self.logError(message, e)
             return None
 
@@ -107,7 +107,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.toDate(from_)
         except Exception as e:
-            message: STRING = "toDate({})".format(from_)
+            message: STRING = f"toDate({from_})"
             self.logError(message, e)
             return None
 
@@ -115,7 +115,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.toTime(from_)
         except Exception as e:
-            message: STRING = "toTime({})".format(from_)
+            message: STRING = f"toTime({from_})"
             self.logError(message, e)
             return None
 
@@ -123,7 +123,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.toDateTime(from_)
         except Exception as e:
-            message: STRING = "toTime({})".format(from_)
+            message: STRING = f"toTime({from_})"
             self.logError(message, e)
             return None
 
@@ -134,7 +134,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.decimal(n, scale)
         except Exception as e:
-            message: STRING = "decimal({}, {})".format(n, scale)
+            message: STRING = f"decimal({n}, {scale})"
             self.logError(message, e)
             return None
 
@@ -142,12 +142,12 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             roundingMode = NumericRoundingMode.fromName(mode)
             if roundingMode is None:
-                raise DMNRuntimeException("Unknown rounding mode '{}'. Expected one of '{}'".format(mode, NumericRoundingMode.allowedValues()))
+                raise DMNRuntimeException(f"Unknown rounding mode '{mode}'. Expected one of '{NumericRoundingMode.allowedValues()}'")
             else:
                 return self.numberLib.round(n, scale, roundingMode)
 
         except Exception as e:
-            message: STRING = "round({}, {}, {})".format(n, scale, mode)
+            message: STRING = f"round({n}, {scale}, {mode})"
             self.logError(message, e)
             return None
 
@@ -155,7 +155,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.UP)
         except Exception as e:
-            message: STRING = "roundUp({}, {})".format(n, scale)
+            message: STRING = f"roundUp({n}, {scale})"
             self.logError(message, e)
             return None
 
@@ -163,7 +163,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.DOWN)
         except Exception as e:
-            message: STRING = "roundDown({}, {})".format(n, scale)
+            message: STRING = f"roundDown({n}, {scale})"
             self.logError(message, e)
             return None
 
@@ -171,7 +171,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.HALF_UP)
         except Exception as e:
-            message: STRING = "roundHalfUp({}, {})".format(n, scale)
+            message: STRING = f"roundHalfUp({n}, {scale})"
             self.logError(message, e)
             return None
 
@@ -179,7 +179,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.round(n, scale, NumericRoundingMode.HALF_DOWN)
         except Exception as e:
-            message: STRING = "roundHalfDown({}, {})".format(n, scale)
+            message: STRING = f"roundHalfDown({n}, {scale})"
             self.logError(message, e)
             return None
 
@@ -187,7 +187,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.floor(*args)
         except Exception as e:
-            message: STRING = "floor({})".format(*args)
+            message: STRING = f"floor{args}"
             self.logError(message, e)
             return None
 
@@ -195,7 +195,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.ceiling(*args)
         except Exception as e:
-            message: STRING = "ceiling({})".format(*args)
+            message: STRING = f"ceiling{args}"
             self.logError(message, e)
             return None
 
@@ -206,7 +206,7 @@ class BaseStandardFEELLib(BaseFEELLib):
             else:
                 return self.durationLib.abs(n)
         except Exception as e:
-            message: STRING = "abs({})".format(n)
+            message: STRING = f"abs({n})"
             self.logError(message, e)
             return None
 
@@ -214,7 +214,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.intModulo(dividend, divisor)
         except Exception as e:
-            message: STRING = "modulo({}, {})".format(dividend, divisor)
+            message: STRING = f"modulo({dividend}, {divisor})"
             self.logError(message, e)
             return None
 
@@ -222,7 +222,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.modulo(dividend, divisor)
         except Exception as e:
-            message: STRING = "modulo({}, {})".format(dividend, divisor)
+            message: STRING = f"modulo({dividend}, {divisor})"
             self.logError(message, e)
             return None
 
@@ -230,7 +230,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.sqrt(number)
         except Exception as e:
-            message: STRING = "sqrt({})".format(number)
+            message: STRING = f"sqrt({number})"
             self.logError(message, e)
             return None
 
@@ -238,7 +238,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.log(number)
         except Exception as e:
-            message: STRING = "log({})".format(number)
+            message: STRING = f"log({number})"
             self.logError(message, e)
             return None
 
@@ -246,7 +246,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.exp(number)
         except Exception as e:
-            message: STRING = "exp({})".format(number)
+            message: STRING = f"exp({number})"
             self.logError(message, e)
             return None
 
@@ -254,7 +254,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.odd(number)
         except Exception as e:
-            message: STRING = "odd({})".format(number)
+            message: STRING = f"odd({number})"
             self.logError(message, e)
             return None
 
@@ -262,7 +262,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.even(number)
         except Exception as e:
-            message: STRING = "even({})".format(number)
+            message: STRING = f"even({number})"
             self.logError(message, e)
             return None
 
@@ -270,7 +270,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.mean(*args)
         except Exception as e:
-            message: STRING = "mean({})".format(str(args))
+            message: STRING = f"mean{args}"
             self.logError(message, e)
             return None
 
@@ -281,7 +281,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.contains(string, match)
         except Exception as e:
-            message: STRING = "contains({}, {})".format(string, match)
+            message: STRING = f"contains({string}, {match})"
             self.logError(message, e)
             return None
 
@@ -289,7 +289,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.startsWith(string, match)
         except Exception as e:
-            message: STRING = "startsWith({}, {})".format(string, match)
+            message: STRING = f"startsWith({string}, {match})"
             self.logError(message, e)
             return None
 
@@ -297,7 +297,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.endsWith(string, match)
         except Exception as e:
-            message: STRING = "endsWith({}, {})".format(string, match)
+            message: STRING = f"endsWith({string}, {match})"
             self.logError(message, e)
             return None
 
@@ -305,7 +305,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return None if string is None else self.valueOf(self.stringLib.stringLength(string))
         except Exception as e:
-            message: STRING = "stringLength({})".format(string)
+            message: STRING = f"stringLength({string})"
             self.logError(message, e)
             return None
 
@@ -313,7 +313,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.substring(string, self.numberLib.toNumber(startPosition), self.numberLib.toNumber(length))
         except Exception as e:
-            message: STRING = "substring({}, {}, {})".format(string, startPosition, length)
+            message: STRING = f"substring({string}, {startPosition}, {length})"
             self.logError(message, e)
             return None
 
@@ -321,7 +321,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.upperCase(string)
         except Exception as e:
-            message: STRING = "upperCase({})".format(string)
+            message: STRING = f"upperCase({string})"
             self.logError(message, e)
             return None
 
@@ -329,7 +329,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.lowerCase(string)
         except Exception as e:
-            message: STRING = "lowerCase({})".format(string)
+            message: STRING = f"lowerCase({string})"
             self.logError(message, e)
             return None
 
@@ -337,7 +337,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.substringBefore(string, match)
         except Exception as e:
-            message: STRING = "substringBefore({}, {})".format(string, match)
+            message: STRING = f"substringBefore({string}, {match})"
             self.logError(message, e)
             return None
 
@@ -345,7 +345,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.substringAfter(string, match)
         except Exception as e:
-            message: STRING = "substringAfter({}, {})".format(string, match)
+            message: STRING = f"substringAfter({string}, {match})"
             self.logError(message, e)
             return None
 
@@ -353,7 +353,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.replace(input_, pattern, replacement, flags)
         except Exception as e:
-            message: STRING = "replace({}, {}, {}, {})".format(input_, pattern, replacement, flags)
+            message: STRING = f"replace({input_}, {pattern}, {replacement}, {flags})"
             self.logError(message, e)
             return None
 
@@ -361,7 +361,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.matches(input_, pattern, flags)
         except Exception as e:
-            message: STRING = "matches({}, {}, {})".format(input_, pattern, flags)
+            message: STRING = f"matches({input_}, {pattern}, {flags})"
             self.logError(message, e)
             return None
 
@@ -369,7 +369,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.stringLib.split(string, delimiter)
         except Exception as e:
-            message: STRING = "split({}, {})".format(string, delimiter)
+            message: STRING = f"split({string}, {delimiter})"
             self.logError(message, e)
             return None
 
@@ -380,7 +380,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.booleanLib.all(*args)
         except Exception as e:
-            message = "and({})".format(*args)
+            message = f"and{args}"
             self.logError(message, e)
             return None
 
@@ -388,7 +388,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.booleanLib.all(*args)
         except Exception as e:
-            message = "and({})".format(*args)
+            message = f"and{args}"
             self.logError(message, e)
             return None
 
@@ -396,7 +396,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.booleanLib.any(*args)
         except Exception as e:
-            message = "or({})".format(*args)
+            message = f"or{args}"
             self.logError(message, e)
             return None
 
@@ -404,7 +404,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.booleanLib.any(*args)
         except Exception as e:
-            message = "or({})".format(*args)
+            message = f"or{args}"
             self.logError(message, e)
             return None
 
@@ -412,7 +412,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.booleanType.booleanNot(operand)
         except Exception as e:
-            message: STRING = "not({})".format(operand)
+            message: STRING = f"not({operand})"
             self.logError(message, e)
             return None
 
@@ -423,7 +423,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.year(date))
         except Exception as e:
-            message: STRING = "year({})".format(date)
+            message: STRING = f"year({date})"
             self.logError(message, e)
             return None
 
@@ -431,7 +431,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.month(date))
         except Exception as e:
-            message: STRING = "month({})".format(date)
+            message: STRING = f"month({date})"
             self.logError(message, e)
             return None
 
@@ -439,7 +439,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.day(date))
         except Exception as e:
-            message: STRING = "day({})".format(date)
+            message: STRING = f"day({date})"
             self.logError(message, e)
             return None
 
@@ -447,7 +447,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.weekday(date))
         except Exception as e:
-            message: STRING = "weekday({})".format(date)
+            message: STRING = f"weekday({date})"
             self.logError(message, e)
             return None
 
@@ -458,7 +458,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.hour(time))
         except Exception as e:
-            message: STRING = "hour({})".format(time)
+            message: STRING = f"hour({time})"
             self.logError(message, e)
             return None
 
@@ -466,7 +466,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.minute(time))
         except Exception as e:
-            message: STRING = "minute({})".format(time)
+            message: STRING = f"minute({time})"
             self.logError(message, e)
             return None
 
@@ -474,7 +474,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.second(time))
         except Exception as e:
-            message: STRING = "second({})".format(time)
+            message: STRING = f"second({time})"
             self.logError(message, e)
             return None
 
@@ -482,7 +482,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.timeOffset(time)
         except Exception as e:
-            message: STRING = "timeOffset({})".format(time)
+            message: STRING = f"timeOffset({time})"
             self.logError(message, e)
             return None
 
@@ -490,7 +490,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.timezone(time)
         except Exception as e:
-            message: STRING = "timezone({})".format(time)
+            message: STRING = f"timezone({time})"
             self.logError(message, e)
             return None
 
@@ -502,7 +502,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.years(duration))
         except Exception as e:
-            message: STRING = "years({})".format(duration)
+            message: STRING = f"years({duration})"
             self.logError(message, e)
             return None
 
@@ -510,7 +510,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.months(duration))
         except Exception as e:
-            message: STRING = "months({})".format(duration)
+            message: STRING = f"months({duration})"
             self.logError(message, e)
             return None
 
@@ -518,7 +518,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.days(duration))
         except Exception as e:
-            message: STRING = "days({})".format(duration)
+            message: STRING = f"days({duration})"
             self.logError(message, e)
             return None
 
@@ -526,7 +526,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.hours(duration))
         except Exception as e:
-            message: STRING = "hours({})".format(duration)
+            message: STRING = f"hours({duration})"
             self.logError(message, e)
             return None
 
@@ -534,7 +534,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.minutes(duration))
         except Exception as e:
-            message: STRING = "minutes({})".format(duration)
+            message: STRING = f"minutes({duration})"
             self.logError(message, e)
             return None
 
@@ -542,7 +542,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.durationLib.seconds(duration))
         except Exception as e:
-            message: STRING = "seconds({})".format(duration)
+            message: STRING = f"seconds({duration})"
             self.logError(message, e)
             return None
 
@@ -578,11 +578,11 @@ class BaseStandardFEELLib(BaseFEELLib):
             elif self.isContext(value1):
                 return self.contextType.contextIs(value1, value2)
             else:
-                self.logError("'{}' is not supported yet".format(value1.getClass().getSimpleName()))
+                self.logError(f"'{value1.getClass().getSimpleName()}' is not supported yet")
                 return False
 
         except Exception as e:
-            message: STRING = "is({}, {})".format(value1, value2)
+            message: STRING = f"is({value1}, {value2})"
             self.logError(message, e)
             return False
 
@@ -594,7 +594,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.dayOfYear(date))
         except Exception as e:
-            message: STRING = "dayOfYear({})".format(date)
+            message: STRING = f"dayOfYear({date})"
             self.logError(message, e)
             return None
 
@@ -602,7 +602,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.dayOfWeek(date)
         except Exception as e:
-            message: STRING = "dayOfWeek({})".format(date)
+            message: STRING = f"dayOfWeek({date})"
             self.logError(message, e)
             return None
 
@@ -610,7 +610,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.valueOf(self.dateTimeLib.weekOfYear(date))
         except Exception as e:
-            message: STRING = "weekOfYear({})".format(date)
+            message: STRING = f"weekOfYear({date})"
             self.logError(message, e)
             return None
 
@@ -618,7 +618,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.dateTimeLib.monthOfYear(date)
         except Exception as e:
-            message: STRING = "weekOfYear({})".format(date)
+            message: STRING = f"weekOfYear({date})"
             self.logError(message, e)
             return None
 
@@ -630,7 +630,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.listContains(list_, element)
         except Exception as e:
-            message: STRING = "listContains({}, {})".format(list_, element)
+            message: STRING = f"listContains({list_}, {element})"
             self.logError(message, e)
             return None
 
@@ -638,7 +638,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.append(list_, *items)
         except Exception as e:
-            message: STRING = "append({}, {})".format(list_, *items)
+            message: STRING = f"append({list_}, {items})"
             self.logError(message, e)
             return None
 
@@ -646,7 +646,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.count(list_)
         except Exception as e:
-            message = "count({})".format(list_)
+            message = f"count({list_})"
             self.logError(message, e)
             return None
 
@@ -654,7 +654,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.min(*args)
         except Exception as e:
-            message = "min({})".format(*args)
+            message = f"min{args}"
             self.logError(message, e)
             return None
 
@@ -662,7 +662,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.max(*args)
         except Exception as e:
-            message = "max({})".format(*args)
+            message = f"max{args}"
             self.logError(message, e)
             return None
 
@@ -670,7 +670,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.sum(*args)
         except Exception as e:
-            message = "sum({})".format(*args)
+            message = f"sum{args}"
             self.logError(message, e)
             return None
 
@@ -678,7 +678,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.sublist(list_, self.intValue(startPosition), self.intValue(length))
         except Exception as e:
-            message: STRING = "sublist({}, {}, {})".format(list_, startPosition, length)
+            message: STRING = f"sublist({list_}, {startPosition}, {length})"
             self.logError(message, e)
             return None
 
@@ -686,7 +686,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.concatenate(*lists)
         except Exception as e:
-            message: STRING = "concatenate({})".format(str(lists))
+            message: STRING = f"concatenate({str(lists)})"
             self.logError(message, e)
             return None
 
@@ -694,7 +694,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.insertBefore(list_, self.intValue(position), newItem)
         except Exception as e:
-            message: STRING = "insertBefore({}, {}, {})".format(list_, position, newItem)
+            message: STRING = f"insertBefore({list_}, {position}, {newItem})"
             self.logError(message, e)
             return None
 
@@ -702,7 +702,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.remove(list_, self.intValue(position))
         except Exception as e:
-            message: STRING = "remove({})".format(list_)
+            message: STRING = f"remove({list_})"
             self.logError(message, e)
             return None
 
@@ -710,7 +710,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.reverse(list_)
         except Exception as e:
-            message: STRING = "reverse({})".format(list_)
+            message: STRING = f"reverse({list_})"
             self.logError(message, e)
             return None
 
@@ -726,7 +726,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.union(*lists)
         except Exception as e:
-            message: STRING = "union({})".format(str(lists))
+            message: STRING = f"union({str(lists)})"
             self.logError(message, e)
             return None
 
@@ -734,7 +734,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.distinctValues(list_)
         except Exception as e:
-            message: STRING = "distinctValues({})".format(list_)
+            message: STRING = f"distinctValues({list_})"
             self.logError(message, e)
             return None
 
@@ -742,7 +742,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.listLib.flatten(list_)
         except Exception as e:
-            message: STRING = "flatten({})".format(list_)
+            message: STRING = f"flatten({list_})"
             self.logError(message, e)
             return None
 
@@ -750,7 +750,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.product(*args)
         except Exception as e:
-            message: STRING = "product({})".format(args)
+            message: STRING = f"product({args})"
             self.logError(message, e)
             return None
 
@@ -758,7 +758,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.median(*args)
         except Exception as e:
-            message: STRING = "median({})".format(*args)
+            message: STRING = f"median{args}"
             self.logError(message, e)
             return None
 
@@ -766,7 +766,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.stddev(*args)
         except Exception as e:
-            message: STRING = "stddev({})".format(*args)
+            message: STRING = f"stddev{args}"
             self.logError(message, e)
             return None
 
@@ -774,7 +774,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.numberLib.mode(*args)
         except Exception as e:
-            message: STRING = "mode({})".format(*args)
+            message: STRING = f"mode{args}"
             self.logError(message, e)
             return None
 
@@ -782,14 +782,14 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             self.listLib.collect(result, list_)
         except Exception as e:
-            message: STRING = "collect({}, {})".format(result, list_)
+            message: STRING = f"collect({result}, {list_})"
             self.logError(message, e)
 
     def sort(self, list_: LIST, precedes: LambdaExpression) -> LIST:
         try:
             return self.listLib.sort(list_, precedes)
         except Exception as e:
-            message: STRING = "sort({})".format(list_)
+            message: STRING = f"sort({list_})"
             self.logError(message, e)
             return None
 
@@ -801,7 +801,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.before(arg1, arg2)
         except Exception as e:
-            message: STRING = "before({}, {})".format(arg1, arg2)
+            message: STRING = f"before({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -809,7 +809,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.after(arg1, arg2)
         except Exception as e:
-            message: STRING = "after({}, {})".format(arg1, arg2)
+            message: STRING = f"after({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -817,7 +817,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.meets(range1, range2)
         except Exception as e:
-            message: STRING = "meets({}, {})".format(range1, range2)
+            message: STRING = f"meets({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -825,7 +825,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.metBy(range1, range2)
         except Exception as e:
-            message: STRING = "metBy({}, {})".format(range1, range2)
+            message: STRING = f"metBy({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -833,7 +833,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.overlaps(range1, range2)
         except Exception as e:
-            message: STRING = "overlaps({}, {})".format(range1, range2)
+            message: STRING = f"overlaps({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -841,7 +841,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.overlapsBefore(range1, range2)
         except Exception as e:
-            message: STRING = "overlapsBefore({}, {})".format(range1, range2)
+            message: STRING = f"overlapsBefore({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -849,7 +849,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.overlapsAfter(range1, range2)
         except Exception as e:
-            message: STRING = "overlapsAfter({}, {})".format(range1, range2)
+            message: STRING = f"overlapsAfter({range1}, {range2})"
             self.logError(message, e)
             return None
 
@@ -857,7 +857,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.finishes(arg1, arg2)
         except Exception as e:
-            message: STRING = "finishes({}, {})".format(arg1, arg2)
+            message: STRING = f"finishes({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -865,7 +865,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.finishedBy(arg1, arg2)
         except Exception as e:
-            message: STRING = "finishedBy({}, {})".format(arg1, arg2)
+            message: STRING = f"finishedBy({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -873,7 +873,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.includes(arg1, arg2)
         except Exception as e:
-            message: STRING = "includes({}, {})".format(arg1, arg2)
+            message: STRING = f"includes({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -881,7 +881,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.during(arg1, arg2)
         except Exception as e:
-            message: STRING = "during({}, {})".format(arg1, arg2)
+            message: STRING = f"during({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -889,7 +889,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.starts(arg1, arg2)
         except Exception as e:
-            message: STRING = "starts({}, {})".format(arg1, arg2)
+            message: STRING = f"starts({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -897,7 +897,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.startedBy(arg1, arg2)
         except Exception as e:
-            message: STRING = "startedBy({}, {})".format(arg1, arg2)
+            message: STRING = f"startedBy({arg1}, {arg2})"
             self.logError(message, e)
             return None
 
@@ -905,6 +905,6 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             return self.rangeLib.coincides(arg1, arg2)
         except Exception as e:
-            message: STRING = "coincides({}, {})".format(arg1, arg2)
+            message: STRING = f"coincides({arg1}, {arg2})"
             self.logError(message, e)
             return None

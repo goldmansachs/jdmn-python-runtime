@@ -35,7 +35,7 @@ class Assert(TestCase):
                 self.assertEqual(expected, actual, message)
             else:
                 condition = abs(expectedBD - actualBD) < self.NUMBER_COMPARISON_PRECISION
-                self.assertTrue(condition, (message + ". Expected '{0}' found '{1}'").format(expectedBD, actualBD))
+                self.assertTrue(condition, (message + f". Expected '{expectedBD}' found '{actualBD}'"))
         elif self.isBoolean(expected):
             self.assertEqual(expected, actual, message)
         elif self.isString(expected):
@@ -58,14 +58,14 @@ class Assert(TestCase):
             for key in keySet:
                 expectedMember = expected.get(key)
                 actualMember = actual.get(key)
-                self.assertEquals(expectedMember, actualMember, message + " for member '{0}'".format(key))
+                self.assertEquals(expectedMember, actualMember, message + f" for member '{key}'")
         elif self.isComplex(expected):
             for propertyName, expectedProperty in expected.__dict__.items():
                 try:
                     actualProperty = getattr(actual, propertyName)
                     self.assertEquals(expectedProperty, actualProperty, message)
                 except Exception as e:
-                    raise DMNRuntimeException("Error in '{}.{}'".format(type(expected), str(propertyName)), e)
+                    raise DMNRuntimeException(f"Error in '{type(expected)}.{str(propertyName)}'", e)
         else:
             self.assertEqual(expected, actual, message)
 

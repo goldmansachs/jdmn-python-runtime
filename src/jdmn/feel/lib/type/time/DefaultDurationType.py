@@ -66,7 +66,7 @@ class DefaultDurationType(DefaultCalendarType):
             durationInSeconds = self.secondsValue(first) + self.secondsValue(second)
             return Duration(seconds=durationInSeconds)
         else:
-            raise DMNRuntimeException("Cannot add '{}' and '{}'".format(first, second))
+            raise DMNRuntimeException(f"Cannot add '{first}' and '{second}'")
 
     def durationSubtract(self, first: DURATION, second: DURATION) -> DURATION:
         if first is None or second is None:
@@ -87,7 +87,7 @@ class DefaultDurationType(DefaultCalendarType):
             secondValue = Decimal(self.secondsValue(second))
             return self.divideNumber(firstValue, secondValue)
         else:
-            raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
+            raise DMNRuntimeException(f"Cannot divide '{first}' and '{second}'")
 
     def durationMultiplyNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         if first is None or second is None:
@@ -102,7 +102,7 @@ class DefaultDurationType(DefaultCalendarType):
             durationInSeconds = int(self.multiplyNumber(firstValue, second))
             return Duration(seconds=durationInSeconds)
         else:
-            raise DMNRuntimeException("Cannot multiply '{}' and '{}'".format(first, second))
+            raise DMNRuntimeException(f"Cannot multiply '{first}' and '{second}'")
 
     def durationDivideNumber(self, first: DURATION, second: DECIMAL) -> DURATION:
         if first is None or second is None:
@@ -117,7 +117,7 @@ class DefaultDurationType(DefaultCalendarType):
             durationInSeconds = int(self.divideNumber(firstValue, second))
             return Duration(seconds=durationInSeconds)
         else:
-            raise DMNRuntimeException("Cannot divide '{}' and '{}'".format(first, second))
+            raise DMNRuntimeException(f"Cannot divide '{first}' and '{second}'")
 
     @staticmethod
     def multiplyNumber(firstValue: DECIMAL, secondValue: DECIMAL) -> DECIMAL:

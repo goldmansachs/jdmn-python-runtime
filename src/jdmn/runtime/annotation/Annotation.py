@@ -44,4 +44,4 @@ class Annotation:
         return result
 
     def __str__(self) -> str:
-        return "Annotation('{0}', {1}, '{2}')".format(self.decisionName, self.ruleIndex, self.annotation)
+        return f"Annotation('{self.decisionName}', {self.ruleIndex}, '{self.annotation}')"
