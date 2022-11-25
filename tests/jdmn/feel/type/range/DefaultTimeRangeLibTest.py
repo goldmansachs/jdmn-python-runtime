@@ -26,4 +26,4 @@ class DefaultTimeRangeLibTest(AbstractRangeLibTest):
     def makePoint(self, number: int) -> COMPARABLE:
         if number < 0 or number > 60:
             raise Exception("Illegal second field")
-        return self.feelLib.time("12:00:{0:02d}".format(number))
+        return self.feelLib.time(f"12:00:{number:02d}")

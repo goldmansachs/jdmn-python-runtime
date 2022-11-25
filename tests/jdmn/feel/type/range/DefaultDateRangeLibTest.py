@@ -26,4 +26,4 @@ class DefaultDateRangeLibTest(AbstractRangeLibTest):
     def makePoint(self, number: int) -> COMPARABLE:
         if number < 1 or number > 31:
             raise Exception("Illegal day field")
-        return self.feelLib.date("2010-01-{0:02d}".format(number))
+        return self.feelLib.date(f"2010-01-{number:02d}")
