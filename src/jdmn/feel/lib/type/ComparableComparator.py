@@ -11,12 +11,13 @@
 # specific language governing permissions and limitations under the License.
 #
 import datetime
+import decimal
 from typing import Union
 
 from jdmn.feel.lib.Types import BOOLEAN
 from jdmn.feel.lib.type.RelationalComparator import RelationalComparator
 
-comparable = Union[float, str, datetime.date, datetime.time, datetime.datetime]
+comparable = Union[decimal.Decimal, str, datetime.date, datetime.time, datetime.datetime, datetime.timedelta]
 
 
 class ComparableComparator(RelationalComparator):

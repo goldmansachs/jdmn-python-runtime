@@ -554,7 +554,7 @@ class BaseStandardFEELLib(BaseFEELLib):
         try:
             if value1 is None or value2 is None:
                 return value1 == value2
-            elif type(value1) != type(value2):
+            elif type(value1) is not type(value2):
                 # Different kind
                 return False
             elif self.isNumber(value1):

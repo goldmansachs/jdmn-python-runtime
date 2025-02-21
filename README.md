@@ -19,7 +19,7 @@
 
 ### How to run tests
 
-```> tox -e py310``` 
+```> tox -e py312``` 
 or
 ```> python -m pytest --cov=jdmn tests/``` 
 
