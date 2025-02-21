@@ -26,4 +26,4 @@ class DefaultNumberRangeLibTest(AbstractRangeLibTest):
     def makePoint(self, number: int) -> COMPARABLE:
         if number < 0 or number > 999:
             raise Exception("Illegal duration")
-        return self.feelLib.duration("P{0:03d}Y".format(number))
+        return self.feelLib.duration(f"P{number:03d}Y")

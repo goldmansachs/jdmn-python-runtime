@@ -52,11 +52,11 @@ class DefaultNumericLib:
 
         prec = int(scale)
         if prec < 0:
-            fmt = "1E{}".format(- prec)
+            fmt = f"1E{-prec}"
         elif prec == 0:
             fmt = "1E0"
         else:
-            fmt = "1E-{}".format(prec)
+            fmt = f"1E-{prec}"
         return n.quantize(Decimal(fmt), rounding=mode.pMode)
 
     def floor(self, *args) -> DECIMAL:

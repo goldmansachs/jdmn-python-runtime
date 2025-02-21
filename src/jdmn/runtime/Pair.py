@@ -39,4 +39,4 @@ class Pair:
         return result
 
     def __str__(self) -> str:
-        return "Pair({0}, {1})".format(self.left, self.right)
+        return f"Pair({self.left}, {self.right})"

@@ -41,4 +41,4 @@ class BaseDateTimeComparator(RelationalComparator):
 
     @staticmethod
     def compareTo(first: DATE_TIME_UNION, second: DATE_TIME_UNION) -> int:
-        pass
+        pass  # do nothing

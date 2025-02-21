@@ -26,4 +26,4 @@ class DefaultDateTimeRangeLibTest(AbstractRangeLibTest):
     def makePoint(self, number: int) -> COMPARABLE:
         if number < 0 or number > 60:
             raise Exception("Illegal second field")
-        return self.feelLib.dateAndTime("2020-01-01T12:00:{0:02d}".format(number))
+        return self.feelLib.dateAndTime(f"2020-01-01T12:00:{number:02d}")

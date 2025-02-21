@@ -122,13 +122,13 @@ class DefaultDateTimeLib:
 
     def parseDate(self, arg: str) -> date:
         if not bool(self.DATE_PATTERN.match(arg)):
-            raise DMNRuntimeException("Illegal date format '{}'".format(arg))
+            raise DMNRuntimeException(f"Illegal date format '{arg}'")
 
         return date.fromisoformat(arg)
 
     def parseTime(self, arg: str) -> time:
         if not bool(self.TIME_PATTERN.match(arg)):
-            raise DMNRuntimeException("Illegal time format '{}'".format(arg))
+            raise DMNRuntimeException(f"Illegal time format '{arg}'")
 
         arg = self.fixDateTimeFormat(arg)
         #        t = time.fromisoformat(arg)
@@ -138,14 +138,14 @@ class DefaultDateTimeLib:
 
     def parseDateTime(self, arg: str) -> datetime:
         if not bool(self.DATE_TIME_PATTERN.match(arg)):
-            raise DMNRuntimeException("Illegal datetime format '{}'".format(arg))
+            raise DMNRuntimeException(f"Illegal datetime format '{arg}'")
 
         arg = self.fixDateTimeFormat(arg)
         #        dt = time.fromisoformat(arg)
         try:
             datestring, timestring = arg.split('T')
         except ValueError:
-            raise DMNRuntimeException("ISO 8601 time designator 'T' missing. Unable to parse datetime string {}".format(arg))
+            raise DMNRuntimeException(f"ISO 8601 time designator 'T' missing. Unable to parse datetime string {arg}")
 
         tmpdate = isodate.parse_date(datestring, defaultday=0, defaultmonth=0)
         tmptime = isodate.parse_time(timestring)
@@ -177,13 +177,13 @@ class DefaultDateTimeLib:
         if t.tzinfo is None:
             tz = ZoneInfo(zoneId)
             if tz is None:
-                raise DMNRuntimeException("Illegal timezone '{}'".format(zoneId))
+                raise DMNRuntimeException(f"Illegal timezone '{zoneId}'")
 
             result = t.replace(tzinfo=tz)
             return result
         else:
             if not (isinstance(time.tzinfo, isodate.tzinfo.Utc) and zoneId == "UTC"):
-                raise DMNRuntimeException("Duplicated timezone in '{}'".format(arg))
+                raise DMNRuntimeException(f"Duplicated timezone in '{arg}'")
             else:
                 return t
 
@@ -352,7 +352,7 @@ class DefaultDateTimeLib:
         if -24 <= hh <= 24:
             return FixedOffset(offset_hours=int(hh), offset_minutes=int(mm))
         else:
-            raise DMNRuntimeException("Incorrect offset {}:{}:{}".format(hh, mm, ss))
+            raise DMNRuntimeException(f"Incorrect offset {hh}:{mm}:{ss}")
 
     def isValidDateValue(self, value: DATE) -> bool:
         return self.isValidDate(value.year, value.month, value.day)

@@ -60,7 +60,7 @@ class RuleOutputList:
             else:
                 return None
         else:
-            raise DMNRuntimeException("Not supported single hit policy '{}'.".format(hitPolicy.name))
+            raise DMNRuntimeException(f"Not supported single hit policy '{hitPolicy.name}'.")
 
     def applyMultiple(self, hitPolicy: HitPolicy) -> List[RuleOutput]:
         matchedRuleOutputs = self.getMatchedRuleResults()
@@ -71,7 +71,7 @@ class RuleOutputList:
         elif (hitPolicy == HitPolicy.OUTPUT_ORDER):
             return self.sort(matchedRuleOutputs)
         else:
-            raise DMNRuntimeException("Not supported multiple hit policy '{}'.".format(hitPolicy.name))
+            raise DMNRuntimeException(f"Not supported multiple hit policy '{hitPolicy.name}'.")
 
     @staticmethod
     def sort(matchedRuleOutputs: List[RuleOutput]) -> List[RuleOutput]:

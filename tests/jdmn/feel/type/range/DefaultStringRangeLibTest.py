@@ -27,4 +27,4 @@ class DefaultStringRangeLibTest(AbstractRangeLibTest):
     def makePoint(number: int) -> COMPARABLE:
         if number < 0 or number > 60:
             raise Exception("Illegal second field")
-        return "{0:03d}".format(number)
+        return f"{number:03d}"
