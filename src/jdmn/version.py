@@ -10,5 +10,5 @@
 # "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the License for the
 # specific language governing permissions and limitations under the License.
 #
-__version__ = "1.0.4"
+__version__ = "1.0.5"
 __version_info__ = tuple(int(i) for i in __version__.split(".") if i.isdigit())
